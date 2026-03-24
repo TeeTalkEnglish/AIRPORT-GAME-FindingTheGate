@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>✈️ Airport & Work Adventure: Telling Time</title>
+  <title>✈️ Airport Adventure: Telling Time</title>
   <style>
     /* ============================================================
        RESET & BASE 
     ============================================================ */
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Segoe UI', Arial, sans-serif; background: linear-gradient(135deg, #0a1628 0%, #1a3a5c 50%, #0d2137 100%); min-height: 100vh; color: #fff; }
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: #0a1628; min-height: 100vh; color: #fff; overflow-x: hidden; }
     .screen { display: none; min-height: 100vh; padding: 20px; }
     .screen.active { display: flex; flex-direction: column; align-items: center; }
     
@@ -19,8 +19,9 @@
     @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
     .title-main { font-size: 42px; font-weight: 900; color: #ffd700; text-shadow: 0 0 30px rgba(255,215,0,0.5); letter-spacing: 2px; }
     .title-sub { font-size: 18px; color: #a8d8f0; margin: 10px 0 30px; }
-    .title-instructions { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,215,0,0.3); border-radius: 16px; padding: 24px 32px; max-width: 600px; text-align: left; margin-bottom: 30px; line-height: 1.8; font-size: 15px; color: #cce8ff; }
-    .title-instructions h3 { color: #ffd700; margin-bottom: 10px; font-size: 18px; }
+    
+    .title-instructions { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,215,0,0.3); border-radius: 16px; padding: 24px 32px; max-width: 650px; text-align: left; margin-bottom: 30px; line-height: 1.8; font-size: 15px; color: #cce8ff; }
+    .title-instructions h3 { color: #ffd700; margin-bottom: 10px; font-size: 18px; text-align: center; }
     
     /* BUTTONS */
     .btn { padding: 14px 36px; border: none; border-radius: 50px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.25s; letter-spacing: 0.5px; }
@@ -28,90 +29,94 @@
     .btn-gold { background: linear-gradient(135deg,#ffd700,#ffaa00); color:#1a1a1a; }
     .btn-green { background: linear-gradient(135deg,#4CAF50,#1b5e20); color:#fff; }
     
-    /* HUD & LAYOUT */
-    #game-hud { display: none; position: fixed; top: 0; left: 0; right: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); padding: 10px 24px; z-index: 500; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; font-size: 14px; border-bottom: 2px solid #ffd700; }
+    /* HUD */
+    #game-hud { display: none; position: fixed; top: 0; left: 0; right: 0; background: rgba(0,0,0,0.9); padding: 10px 24px; z-index: 500; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; font-size: 14px; border-bottom: 2px solid #ffd700; }
     #game-hud.visible { display: flex; }
-    .hud-item { background: rgba(255,255,255,0.1); border-radius: 20px; padding: 6px 16px; }
-    .hud-item span { color: #ffd700; font-weight: 700; }
-    #game-container { padding-top: 80px; width: 100%; max-width: 740px; display: flex; flex-direction: column; align-items: center; }
+    .hud-item { background: rgba(255,255,255,0.1); border-radius: 20px; padding: 6px 16px; color:#ffd700; font-weight:bold; }
     
-    /* TEXT & CARDS */
-    .part-title { font-size: 28px; font-weight: 800; color: #ffd700; text-align: center; margin-bottom: 6px; }
-    .part-subtitle { color: #a8d8f0; text-align: center; margin-bottom: 20px; font-size: 15px; }
-    .mission-card { background: linear-gradient(135deg, rgba(255,152,0,0.2), rgba(255,87,34,0.2)); border: 2px solid #ff9800; border-radius: 14px; padding: 18px 24px; width: 100%; margin-bottom: 22px; text-align: center; }
-    .mission-card.blue { background: linear-gradient(135deg, rgba(33,150,243,0.2), rgba(13,71,161,0.2)); border-color: #2196F3; }
-    .mission-card.green { background: linear-gradient(135deg, rgba(76,175,80,0.2), rgba(27,94,32,0.2)); border-color: #4CAF50; }
-    .mission-card h3 { color: #ffd700; margin-bottom: 8px; font-size: 17px; }
-    .mission-card p { color: #ffe0b2; line-height: 1.6; font-size: 15px; }
+    /* SPLIT SCREEN LAYOUT */
+    #game-container { padding-top: 60px; width: 100%; max-width: 800px; display: flex; flex-direction: column; gap: 20px; margin-bottom: 40px; }
     
-    /* UI ELEMENTS: Departure Board, Boarding Pass, Quizzes */
-    .departure-board { background: #000; border: 2px solid #333; border-radius: 10px; padding: 14px 18px; width: 100%; margin-bottom: 20px; font-family: 'Courier New', monospace; }
-    .dep-row { display: grid; grid-template-columns: 80px 140px 80px 80px 80px; gap: 8px; padding: 6px 0; border-bottom: 1px solid #222; font-size: 13px; color: #ff9800; }
-    .dep-row.highlight { color: #00ff41; background: rgba(0,255,65,0.05); }
-    .dep-row.header { color: #666; font-size: 11px; }
+    /* TOP HALF (INFORMATION) */
+    .top-half { position: relative; background: linear-gradient(135deg, #1a2744, #0d1b35); border: 3px solid #ffd700; border-radius: 16px; padding: 24px; min-height: 250px; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); overflow: hidden; }
     
-    .quiz-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); border-radius: 14px; padding: 20px 24px; width: 100%; margin-bottom: 16px; }
-    .quiz-question { font-size: 16px; margin-bottom: 14px; color: #cce8ff; line-height: 1.6; font-weight: bold; }
-    .quiz-options { display: grid; grid-template-columns: 1fr; gap: 10px; }
-    .quiz-opt { padding: 14px 16px; border-radius: 10px; border: 2px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: #fff; font-size: 15px; cursor: pointer; transition: all 0.2s; text-align: left; }
+    /* THE COVER/LOCK OVERLAY */
+    .info-cover { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10, 22, 40, 0.95); backdrop-filter: blur(10px); display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; z-index: 10; transition: opacity 0.4s ease; text-align: center; padding: 20px; }
+    .info-cover:hover { background: rgba(10, 22, 40, 0.85); }
+    .info-cover h2 { color: #ffd700; font-size: 24px; margin-bottom: 10px; }
+    .info-cover p { color: #a8d8f0; font-size: 16px; }
+    .info-cover .lock-icon { font-size: 50px; margin-bottom: 15px; }
+    .info-cover.hidden { opacity: 0; pointer-events: none; }
+
+    /* BOTTOM HALF (QUIZ) */
+    .bottom-half { background: rgba(255,255,255,0.05); border: 2px solid rgba(255,255,255,0.2); border-radius: 16px; padding: 24px; }
+    
+    /* UI ELEMENTS inside Top Half */
+    .departure-board { background: #000; border: 2px solid #333; border-radius: 10px; padding: 14px 18px; width: 100%; font-family: 'Courier New', monospace; }
+    .dep-row { display: grid; grid-template-columns: 80px 140px 80px 80px 80px; gap: 8px; padding: 8px 0; border-bottom: 1px solid #222; font-size: 14px; color: #ff9800; font-weight:bold; }
+    .dep-row.highlight { color: #00ff41; background: rgba(0,255,65,0.1); }
+    .dep-row.header { color: #888; font-size: 12px; }
+    
+    .chat-box { background: rgba(0,0,0,0.4); border-radius: 12px; padding: 15px; width: 100%; border: 1px solid rgba(255,255,255,0.1); }
+    .chat-bubble { display: flex; margin-bottom: 12px; width: 100%; }
+    .chat-bubble.left { justify-content: flex-start; }
+    .chat-bubble.right { justify-content: flex-end; }
+    .chat-text { max-width: 80%; padding: 12px 16px; border-radius: 12px; font-size: 16px; line-height: 1.5; }
+    .chat-bubble.left .chat-text { background: rgba(33,150,243,0.3); border: 1px solid #2196F3; border-top-left-radius: 2px; }
+    .chat-bubble.right .chat-text { background: rgba(76,175,80,0.3); border: 1px solid #4CAF50; border-top-right-radius: 2px; }
+    .chat-name { font-size: 12px; color: #aaa; margin-bottom: 4px; font-weight: bold; text-transform: uppercase; }
+
+    .boarding-pass { background: #fff; color: #1a1a1a; border-radius: 12px; display: flex; width: 100%; }
+    .bp-main { padding: 20px; flex: 1; }
+    .bp-stub { background: #0d47a1; color: #fff; padding: 20px; border-left: 2px dashed #ccc; text-align: center; display: flex; flex-direction: column; justify-content: center;}
+    .bp-city { font-size: 32px; font-weight: 900; color: #1565c0; }
+    .bp-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 15px; }
+    .bp-label { font-size: 11px; color: #888; text-transform: uppercase; font-weight:bold; }
+    .bp-val { font-size: 18px; font-weight: 900; }
+
+    /* QUIZ STYLES inside Bottom Half */
+    .student-prompt { font-size: 18px; color: #ffd700; margin-bottom: 20px; font-weight: bold; text-align: center; border-bottom: 1px dashed rgba(255,215,0,0.3); padding-bottom: 15px; }
+    .quiz-question { font-size: 18px; margin-bottom: 15px; color: #fff; font-weight: bold; }
+    .quiz-options { display: flex; flex-direction: column; gap: 12px; }
+    .quiz-opt { padding: 16px 20px; border-radius: 10px; border: 2px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: #fff; font-size: 16px; cursor: pointer; transition: all 0.2s; text-align: left; font-weight: bold; }
     .quiz-opt:hover { border-color: #ffd700; background: rgba(255,215,0,0.1); }
     .quiz-opt.correct { border-color: #4CAF50; background: rgba(76,175,80,0.2); }
     .quiz-opt.wrong { border-color: #f44336; background: rgba(244,67,54,0.2); }
     
-    .feedback-msg { margin-top: 12px; padding: 12px; border-radius: 8px; font-size: 15px; display: none; font-weight: bold; }
+    .feedback-msg { margin-top: 15px; padding: 14px; border-radius: 8px; font-size: 16px; display: none; font-weight: bold; }
     .feedback-msg.show { display: block; }
     .feedback-msg.good { background: rgba(76,175,80,0.2); color: #a5d6a7; border: 1px solid #4CAF50; }
     .feedback-msg.bad { background: rgba(244,67,54,0.2); color: #ef9a9a; border: 1px solid #f44336; }
-
-    /* CHAT BUBBLES FOR CONVERSATIONS */
-    .chat-box { background: rgba(0,0,0,0.4); border-radius: 16px; padding: 20px; margin-bottom: 20px; width: 100%; border: 1px solid rgba(255,255,255,0.1); }
-    .chat-bubble { display: flex; margin-bottom: 15px; width: 100%; }
-    .chat-bubble.left { justify-content: flex-start; }
-    .chat-bubble.right { justify-content: flex-end; }
-    .chat-text { max-width: 75%; padding: 12px 16px; border-radius: 15px; font-size: 15px; line-height: 1.5; }
-    .chat-bubble.left .chat-text { background: rgba(33,150,243,0.3); border: 1px solid #2196F3; border-top-left-radius: 2px; }
-    .chat-bubble.right .chat-text { background: rgba(76,175,80,0.3); border: 1px solid #4CAF50; border-top-right-radius: 2px; }
-    .chat-name { font-size: 11px; color: #aaa; margin-bottom: 4px; font-weight: bold; text-transform: uppercase; }
-    .translation { font-size: 13px; color: #ffd700; margin-top: 4px; font-style: italic; }
-
-    /* BOARDING PASS */
-    .boarding-pass { background: #fff; color: #1a1a1a; border-radius: 12px; display: flex; width: 100%; margin-bottom: 20px; }
-    .bp-main { padding: 20px; flex: 1; }
-    .bp-stub { background: #0d47a1; color: #fff; padding: 20px; border-left: 2px dashed #ccc; text-align: center; display: flex; flex-direction: column; justify-content: center;}
-    .bp-city { font-size: 28px; font-weight: 900; color: #1565c0; }
-    .bp-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 10px; }
-    .bp-label { font-size: 10px; color: #888; text-transform: uppercase; }
-    .bp-val { font-size: 16px; font-weight: bold; }
   </style>
 </head>
 <body>
 
 <!-- HUD -->
 <div id="game-hud">
-  <div class="hud-item">⏱️ Unit 10: Telling Time</div>
+  <div class="hud-item">✈️ Unit 10: At the Airport</div>
   <div class="hud-item">⭐ Score: <span id="hud-score">0</span></div>
-  <div class="hud-item" id="hud-part">Part 1: The Airport</div>
 </div>
 
 <!-- SCREEN 1: TITLE -->
 <div id="screen-title" class="screen active">
   <div class="title-logo">✈️</div>
-  <div class="title-main">UNIT 10: TIME & SCHEDULES</div>
-  <div class="title-sub">Airport Flights & Work Shifts 🇦🇺</div>
+  <div class="title-main">UNIT 10: AT THE AIRPORT</div>
+  <div class="title-sub">Finding the Gate & Telling Time 🇦🇺</div>
 
   <div class="title-instructions">
-    <h3>🎯 Lesson Goals (Mục tiêu bài học)</h3>
-    <ul style="margin-bottom: 10px;">
-      <li><strong>At the Airport:</strong> Ask about boarding and departure times.</li>
-      <li><strong>At Work:</strong> Talk about your shift, start times, and breaks.</li>
-    </ul>
-    <h3>📝 Key Vocabulary</h3>
-    <ul>
-      <li><strong>O'clock:</strong> Đúng giờ (6:00 = Six o'clock)</li>
-      <li><strong>Half past:</strong> Rưỡi (2:30 = Half past two)</li>
-      <li><strong>Departure / Arrival:</strong> Khởi hành / Đến nơi</li>
-      <li><strong>Morning shift / Overtime:</strong> Ca sáng / Tăng ca</li>
-      <li><strong>On time / Delayed:</strong> Đúng giờ / Bị trễ</li>
+    <h3>🗣️ How to Play: The Information Gap</h3>
+    <p style="text-align:center; margin-bottom: 15px;">This game requires <strong>teamwork</strong> between the Student and Teacher!</p>
+    
+    <div style="background: rgba(33,150,243,0.1); border-left: 4px solid #2196F3; padding: 15px; margin-bottom: 10px;">
+      <strong>🧑‍🎓 For the Student:</strong> Read the question at the bottom. You don't have the answer! You must <strong>ask your teacher</strong> a question in English to get the information.
+    </div>
+    
+    <div style="background: rgba(255,215,0,0.1); border-left: 4px solid #ffd700; padding: 15px; margin-bottom: 20px;">
+      <strong>👩‍🏫 For the Teacher:</strong> Listen to the student's question. If they ask correctly, click the <strong>"LOCK"</strong> icon to reveal the hidden information so they can answer!
+    </div>
+
+    <ul style="color: #cce8ff; font-size: 14px;">
+      <li><strong>Target Vocab:</strong> O'clock, Half past, Quarter to, Departure, Arrival, Delayed, On time.</li>
     </ul>
   </div>
 
@@ -123,24 +128,39 @@
 <!-- MAIN GAME SCREEN -->
 <div id="screen-game" class="screen">
   <div id="game-container">
-    <!-- Dynamic Content Loads Here -->
-    <div id="step-content" style="width: 100%;"></div>
-
-    <!-- Navigation -->
-    <div style="margin-top:20px; margin-bottom: 40px;">
-      <button class="btn btn-green" onclick="nextStep()" id="btn-next" style="display:none; font-size: 18px; padding: 15px 40px;">Next Step →</button>
+    
+    <!-- TOP HALF: HIDDEN INFO FOR TEACHER -->
+    <div class="top-half" id="top-panel">
+      <!-- The Cover -->
+      <div class="info-cover" id="info-cover" onclick="revealInfo()">
+        <div class="lock-icon">🔒</div>
+        <h2>Hidden Information</h2>
+        <p><strong>Student:</strong> Ask your teacher a question to unlock this!<br><strong>Teacher:</strong> Click here to reveal the clue.</p>
+      </div>
+      <!-- The Actual Content -->
+      <div id="top-content" style="width:100%;"></div>
     </div>
+
+    <!-- BOTTOM HALF: STUDENT QUIZ -->
+    <div class="bottom-half">
+      <div id="bottom-content"></div>
+      <div style="margin-top:20px; text-align: center;">
+        <button class="btn btn-green" onclick="nextStep()" id="btn-next" style="display:none; font-size: 18px; padding: 15px 40px;">Next Situation →</button>
+      </div>
+    </div>
+
   </div>
 </div>
 
 <!-- END SCREEN -->
 <div id="screen-end" class="screen">
   <div class="title-logo">🏆</div>
-  <h1 style="font-size:36px;color:#ffd700;margin-bottom:10px;">Great Job!</h1>
-  <p style="color:#a8d8f0;margin-bottom:20px; font-size: 18px;">You mastered telling time at the airport and at work!</p>
+  <h1 style="font-size:36px;color:#ffd700;margin-bottom:10px;">Flight Boarded!</h1>
+  <p style="color:#a8d8f0;margin-bottom:20px; font-size: 18px;">Great speaking practice! You successfully made it to your gate.</p>
   
-  <div class="quiz-card" style="text-align: center; max-width: 400px; margin: 0 auto 30px auto;">
-    <h2 style="color: white;">Final Score: <span id="final-score" style="color: #ffd700;">0</span></h2>
+  <div style="background: rgba(255,255,255,0.1); border: 2px solid #ffd700; border-radius: 12px; padding: 20px; text-align: center; max-width: 400px; margin: 0 auto 30px auto;">
+    <h2 style="color: white; margin-bottom: 5px;">Final Score</h2>
+    <h1 style="color: #ffd700; font-size: 48px;"><span id="final-score">0</span></h1>
   </div>
 
   <button class="btn btn-gold" onclick="location.reload()">🔄 Play Again</button>
@@ -154,274 +174,136 @@ let score = 0;
 let currentStepIndex = 0;
 
 // ==========================================
-// ALL GAME STEPS (Story Mode)
+// GAME STEPS (Split Screen Design)
 // ==========================================
 const storySteps = [
   
-  // STEP 1: DEPARTURE BOARD
+  // STEP 1: DEPARTURE TIME
   {
-    partName: "Part 1: The Airport Schedule",
-    title: "✈️ Find Your Flight",
-    subtitle: "Check the times for your flight to Sydney.",
-    render: () => `
-      <div class="mission-card">
-        <h3>🎯 YOUR MISSION</h3>
-        <p>You are at Tan Son Nhat Airport. You are flying to <strong>Sydney</strong> for your new job!<br>Look at the departure board. <strong>What time is your flight?</strong></p>
-      </div>
+    topRender: () => `
+      <h3 style="color:#ffd700; margin-bottom: 10px; text-align:center;">▶ DEPARTURE BOARD ◀</h3>
       <div class="departure-board">
         <div class="dep-row header">
           <div>TIME</div><div>DESTINATION</div><div>FLIGHT</div><div>GATE</div><div>STATUS</div>
         </div>
         <div class="dep-row"><div>08:15</div><div>Tokyo</div><div>VN202</div><div>A3</div><div style="color:#4CAF50">ON TIME</div></div>
-        <div class="dep-row highlight"><div>15:15</div><div>Sydney</div><div>VN773</div><div>B1</div><div style="color:#00ff41">ON TIME</div></div>
-        <div class="dep-row"><div>16:30</div><div>Bangkok</div><div>VN450</div><div>D12</div><div style="color:#ff4444">DELAYED</div></div>
-      </div>
-      <div class="quiz-card">
-        <div class="quiz-question">Look at the board. What time is the flight to Sydney?</div>
-        <div class="quiz-options">
-          <button class="quiz-opt" onclick="checkAns(this, false)">A) It is at quarter past eight (8:15)</button>
-          <button class="quiz-opt" onclick="checkAns(this, true)">B) It is at quarter past three (15:15)</button>
-          <button class="quiz-opt" onclick="checkAns(this, false)">C) It is at half past four (16:30)</button>
-        </div>
-        <div class="feedback-msg"></div>
-      </div>
-    `
-  },
-
-  // STEP 2: CONVERSATION 1 (AIRPORT STAFF)
-  {
-    partName: "Part 1: The Airport Schedule",
-    title: "💬 Conversation 1: Flight Times",
-    subtitle: "Ask the staff about boarding and arrival times.",
-    render: () => `
-      <div class="mission-card blue">
-        <h3>🗣️ TALK TO THE STAFF</h3>
-        <p>You need to know when to get on the plane (board) and when you arrive.</p>
-      </div>
-      <div class="chat-box">
-        <div class="chat-bubble right">
-          <div class="chat-text">
-            <div class="chat-name">You</div>
-            Excuse me, what time does the flight board? <br>
-            <div class="translation">(Xin lỗi, chuyến bay mấy giờ lên máy bay?)</div>
-          </div>
-        </div>
-        <div class="chat-bubble left">
-          <div class="chat-text">
-            <div class="chat-name">Staff</div>
-            Boarding starts at <strong>two thirty (14:30)</strong>.<br>
-            <div class="translation">(Bắt đầu lên máy bay lúc hai giờ rưỡi.)</div>
-          </div>
-        </div>
-      </div>
-      <div class="quiz-card">
-        <div class="quiz-question">How else can the staff say "two thirty" in English?</div>
-        <div class="quiz-options">
-          <button class="quiz-opt" onclick="checkAns(this, false)">A) Quarter to two</button>
-          <button class="quiz-opt" onclick="checkAns(this, true)">B) Half past two</button>
-          <button class="quiz-opt" onclick="checkAns(this, false)">C) Two o'clock</button>
-        </div>
-        <div class="feedback-msg"></div>
-      </div>
-    `
-  },
-
-  // STEP 3: VOCABULARY (Delayed vs On Time)
-  {
-    partName: "Part 1: The Airport Schedule",
-    title: "⚠️ Airport Announcements",
-    subtitle: "Listen to the speaker and understand the schedule.",
-    render: () => `
-      <div class="mission-card">
-        <h3>📢 ANNOUNCEMENT</h3>
-        <p>"Attention passengers. The flight to Bangkok is <strong>late</strong> by one hour. <br>The flight to Sydney is normal."</p>
-      </div>
-      <div class="quiz-card">
-        <div class="quiz-question">The Bangkok flight is late. What is the English vocabulary word for "Bị trễ / Muộn"?</div>
-        <div class="quiz-options">
-          <button class="quiz-opt" onclick="checkAns(this, false)">A) On time</button>
-          <button class="quiz-opt" onclick="checkAns(this, false)">B) Departure</button>
-          <button class="quiz-opt" onclick="checkAns(this, true)">C) Delayed</button>
-        </div>
-        <div class="feedback-msg"></div>
-      </div>
-      <div class="quiz-card" id="q2-container" style="display:none; margin-top: 15px;">
-        <div class="quiz-question">The Sydney flight is normal and not late. What is the English phrase for "Đúng giờ"?</div>
-        <div class="quiz-options">
-          <button class="quiz-opt" onclick="checkAns(this, true, true)">A) On time</button>
-          <button class="quiz-opt" onclick="checkAns(this, false)">B) Overtime</button>
-          <button class="quiz-opt" onclick="checkAns(this, false)">C) Morning shift</button>
-        </div>
-        <div class="feedback-msg"></div>
+        <div class="dep-row highlight"><div>15:15</div><div>Sydney</div><div>VN773</div><div>--</div><div style="color:#00ff41">ON TIME</div></div>
       </div>
     `,
-    // Special logic to show the second question after the first is answered
-    customCheck: (isCorrect) => {
-      if(isCorrect) {
-        document.getElementById('q2-container').style.display = 'block';
-        document.getElementById('btn-next').style.display = 'none'; // hide next until Q2 is done
-      }
-    }
+    bottomRender: () => `
+      <div class="student-prompt">
+        🗣️ <strong>Student:</strong> You need to fly to Sydney. Ask your teacher:<br>
+        <em>"Teacher, what time is the flight to Sydney?"</em>
+      </div>
+      <div class="quiz-question">Question 1: What time is the Departure (Khởi hành) for Sydney?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: 08:15 is the flight to Tokyo!')">A) Quarter past eight (08:15)</button>
+        <button class="quiz-opt" onclick="checkAns(this, true, 'Excellent! 15:15 is Quarter past three.')">B) Quarter past three (15:15)</button>
+        <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: Half past three is 15:30.')">C) Half past three (15:30)</button>
+      </div>
+      <div class="feedback-msg"></div>
+    `
   },
 
-  // STEP 4: BOARDING PASS
+  // STEP 2: DELAYED FLIGHT
   {
-    partName: "Part 2: Boarding",
-    title: "🛫 Getting on the Plane",
-    subtitle: "Show your boarding pass.",
-    render: () => `
-      <div class="mission-card green">
-        <h3>🎫 YOUR BOARDING PASS</h3>
-        <p>It is 14:30 (Half past two). It is time to board! Find your seat.</p>
+    topRender: () => `
+      <h3 style="color:#ffd700; margin-bottom: 10px; text-align:center;">💬 AIRPORT ANNOUNCEMENT</h3>
+      <div class="chat-box">
+        <div class="chat-bubble left">
+          <div class="chat-text">
+            <div class="chat-name">Loudspeaker / Agent</div>
+            "Attention passengers. I am sorry, but flight VN773 to Sydney is <strong>delayed</strong>."<br><br>
+            "The new departure time is exactly <strong>four o'clock (16:00)</strong>."
+          </div>
+        </div>
       </div>
+    `,
+    bottomRender: () => `
+      <div class="student-prompt">
+        🗣️ <strong>Student:</strong> You heard a noise but didn't hear the time. Ask your teacher:<br>
+        <em>"Teacher, is the flight delayed? What time does it depart now?"</em>
+      </div>
+      <div class="quiz-question">Question 2: What is the new departure time, and what does "Delayed" mean?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="checkAns(this, true, 'Perfect! Delayed means late (Bị trễ), and 16:00 is four o-clock.')">A) Four o'clock (16:00) - Delayed means "Bị trễ"</button>
+        <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: The flight is late. On time means Đúng giờ.')">B) Quarter past three (15:15) - Delayed means "Đúng giờ"</button>
+        <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: The flight is delayed, not cancelled.')">C) The flight is cancelled.</button>
+      </div>
+      <div class="feedback-msg"></div>
+    `
+  },
+
+  // STEP 3: BOARDING TIME & GATE
+  {
+    topRender: () => `
+      <h3 style="color:#ffd700; margin-bottom: 10px; text-align:center;">🎫 NEW BOARDING PASS</h3>
       <div class="boarding-pass">
         <div class="bp-main">
-          <div style="font-size:12px; color:#555; font-weight:bold;">✈️ VIETNAM AIRLINES</div>
-          <div style="display:flex; align-items:center; gap:10px; margin: 10px 0;">
-            <div class="bp-city">SGN</div><div style="color:#999;">✈</div><div class="bp-city">SYD</div>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div class="bp-city">SGN</div><div style="color:#999; font-size: 24px;">✈</div><div class="bp-city">SYD</div>
           </div>
           <div class="bp-grid">
             <div><div class="bp-label">Flight</div><div class="bp-val">VN 773</div></div>
-            <div><div class="bp-label">Gate</div><div class="bp-val">B1</div></div>
-            <div><div class="bp-label">Boarding</div><div class="bp-val">14:30</div></div>
+            <div><div class="bp-label">Gate</div><div class="bp-val" style="color: red; font-size: 24px;">B1</div></div>
+            <div><div class="bp-label">Boarding</div><div class="bp-val" style="color: green; font-size: 24px;">15:30</div></div>
           </div>
         </div>
         <div class="bp-stub">
           <div class="bp-label" style="color:#b3e5fc;">SEAT</div>
           <div style="font-size:32px; font-weight:900; color:#ffd700;">24A</div>
-          <div style="font-size:24px; margin-top:5px;">🪟</div>
         </div>
-      </div>
-      <div class="quiz-card">
-        <div class="quiz-question">What time is the Departure (Khởi hành)?</div>
-        <div class="quiz-options">
-          <button class="quiz-opt" onclick="checkAns(this, true)">A) Quarter past three (15:15)</button>
-          <button class="quiz-opt" onclick="checkAns(this, false)">B) Six o'clock (06:00)</button>
-        </div>
-        <div class="feedback-msg"></div>
-      </div>
-    `
-  },
-
-  // STEP 5: WORK SCHEDULE (IN FLIGHT WIFI)
-  {
-    partName: "Part 3: Work Schedule",
-    title: "💬 Conversation 2: Your New Job",
-    subtitle: "Use in-flight Wi-Fi to text your new manager in Sydney.",
-    render: () => `
-      <div class="mission-card blue">
-        <h3>📱 TEXT MESSAGE FROM MANAGER</h3>
-        <p>You are on the plane. Your new manager sends you a text message about your shift tomorrow.</p>
-      </div>
-      <div class="chat-box">
-        <div class="chat-bubble left">
-          <div class="chat-text">
-            <div class="chat-name">Manager (Mr. Smith)</div>
-            Hello! What time do you start tomorrow? <br>
-            <div class="translation">(Chào bạn! Ngày mai bạn bắt đầu làm lúc mấy giờ?)</div>
-          </div>
-        </div>
-        <div class="chat-bubble right">
-          <div class="chat-text">
-            <div class="chat-name">You</div>
-            I start at <strong>six o'clock</strong> in the morning. <br>
-            <div class="translation">(Tôi bắt đầu lúc 6 giờ đúng vào buổi sáng.)</div>
-          </div>
-        </div>
-        <div class="chat-bubble left">
-          <div class="chat-text">
-            <div class="chat-name">Manager</div>
-            Great. Don't be late please.
-          </div>
-        </div>
-      </div>
-      <div class="quiz-card">
-        <div class="quiz-question">How do you reply to the manager?</div>
-        <div class="quiz-options">
-          <button class="quiz-opt" onclick="checkAns(this, false)">A) Don't worry, I am delayed.</button>
-          <button class="quiz-opt" onclick="checkAns(this, true)">B) Don't worry, I am always on time.</button>
-          <button class="quiz-opt" onclick="checkAns(this, false)">C) Don't worry, I am arrival.</button>
-        </div>
-        <div class="feedback-msg"></div>
-      </div>
-    `
-  },
-
-  // STEP 6: BREAK TIMES (IN FLIGHT WIFI)
-  {
-    partName: "Part 3: Work Schedule",
-    title: "💬 Conversation 3: Break Time",
-    subtitle: "Text your new coworker about break times.",
-    render: () => `
-      <div class="mission-card green">
-        <h3>📱 TEXT MESSAGE FROM COWORKER</h3>
-        <p>You ask your coworker, Sarah, about resting during your shift.</p>
-      </div>
-      <div class="chat-box">
-        <div class="chat-bubble right">
-          <div class="chat-text">
-            <div class="chat-name">You</div>
-            What time is our break? <br>
-            <div class="translation">(Mấy giờ chúng ta được nghỉ giải lao?)</div>
-          </div>
-        </div>
-        <div class="chat-bubble left">
-          <div class="chat-text">
-            <div class="chat-name">Sarah</div>
-            We have a break at <strong>ten o'clock</strong>.<br>
-            <div class="translation">(Chúng ta nghỉ lúc 10 giờ đúng.)</div>
-          </div>
-        </div>
-      </div>
-      <div class="quiz-card">
-        <div class="quiz-question">You want to know "Nghỉ giải lao bao lâu?". What do you ask in English?</div>
-        <div class="quiz-options">
-          <button class="quiz-opt" onclick="checkAns(this, false)">A) What time is the break?</button>
-          <button class="quiz-opt" onclick="checkAns(this, true)">B) How long is the break?</button>
-          <button class="quiz-opt" onclick="checkAns(this, false)">C) When is lunch?</button>
-        </div>
-        <div class="feedback-msg"></div>
-      </div>
-    `
-  },
-
-  // STEP 7: FINAL VOCABULARY MATCH
-  {
-    partName: "Part 3: Work Schedule",
-    title: "🧠 Final Vocabulary Check",
-    subtitle: "Match the words to their meaning.",
-    render: () => `
-      <div class="mission-card">
-        <h3>📚 REVIEW: SHIFTS & OVERTIME</h3>
-        <p>Your shift is from 06:00 to 14:30. This is an early shift!</p>
-      </div>
-      <div class="quiz-card">
-        <div class="quiz-question">What is the English vocabulary word for "Ca sáng"?</div>
-        <div class="quiz-options">
-          <button class="quiz-opt" onclick="checkAns(this, true, true)">A) Morning shift</button>
-          <button class="quiz-opt" onclick="checkAns(this, false)">B) Afternoon shift</button>
-          <button class="quiz-opt" onclick="checkAns(this, false)">C) Overtime</button>
-        </div>
-        <div class="feedback-msg"></div>
-      </div>
-      <div class="quiz-card" id="q2-container" style="display:none; margin-top: 15px;">
-        <div class="quiz-question">Sometimes you have to work extra hours. What is the English word for "Tăng ca"?</div>
-        <div class="quiz-options">
-          <button class="quiz-opt" onclick="checkAns(this, false)">A) On time</button>
-          <button class="quiz-opt" onclick="checkAns(this, false)">B) Half past</button>
-          <button class="quiz-opt" onclick="checkAns(this, true, true, true)">C) Overtime</button>
-        </div>
-        <div class="feedback-msg"></div>
       </div>
     `,
-    customCheck: (isCorrect, isFinalQ) => {
-      if(isCorrect && !isFinalQ) {
-        document.getElementById('q2-container').style.display = 'block';
-        document.getElementById('btn-next').style.display = 'none'; // wait for 2nd question
-      }
-    }
-  }
+    bottomRender: () => `
+      <div class="student-prompt">
+        🗣️ <strong>Student:</strong> You need to know where to go and when. Ask your teacher:<br>
+        <em>"Teacher, what is my Gate? And what time is boarding?"</em>
+      </div>
+      <div class="quiz-question">Question 3: Look at the boarding pass details. What time do you board?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: Quarter to four is 15:45.')">A) Quarter to four (15:45)</button>
+        <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: Four o-clock (16:00) is when the flight leaves. You must board earlier!')">B) Four o'clock (16:00)</button>
+        <button class="quiz-opt" onclick="checkAns(this, true, 'Great job! Boarding is at 15:30 (Half past three) at Gate B1.')">C) Half past three (15:30)</button>
+      </div>
+      <div class="feedback-msg"></div>
+    `
+  },
 
+  // STEP 4: ARRIVAL TIME
+  {
+    topRender: () => `
+      <h3 style="color:#ffd700; margin-bottom: 10px; text-align:center;">💬 AT GATE B1</h3>
+      <div class="chat-box">
+        <div class="chat-bubble right">
+          <div class="chat-text">
+            <div class="chat-name">You</div>
+            Excuse me. What time do we arrive in Sydney?
+          </div>
+        </div>
+        <div class="chat-bubble left">
+          <div class="chat-text">
+            <div class="chat-name">Agent</div>
+            The flight takes 8 hours and 30 minutes.<br>
+            You will arrive in Sydney at <strong>half past six (06:30 AM)</strong> tomorrow morning.
+          </div>
+        </div>
+      </div>
+    `,
+    bottomRender: () => `
+      <div class="student-prompt">
+        🗣️ <strong>Student:</strong> You are at the gate. Ask your teacher:<br>
+        <em>"Teacher, what time is the Arrival (Đến nơi) in Sydney?"</em>
+      </div>
+      <div class="quiz-question">Question 4: What time do you arrive in Sydney?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: Six o-clock is exactly 06:00.')">A) Six o'clock (06:00 AM)</button>
+        <button class="quiz-opt" onclick="checkAns(this, true, 'Perfect! You arrive at 06:30 AM (Half past six).')">B) Half past six (06:30 AM)</button>
+        <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: Quarter past six is 06:15.')">C) Quarter past six (06:15 AM)</button>
+      </div>
+      <div class="feedback-msg"></div>
+    `
+  }
 ];
 
 // ==========================================
@@ -442,26 +324,26 @@ function startGame() {
 function renderStep() {
   const step = storySteps[currentStepIndex];
   
-  // Update HUD Header
-  document.getElementById('hud-part').innerText = step.partName;
+  // Reset the cover overlay so it's hidden again
+  document.getElementById('info-cover').classList.remove('hidden');
   
-  // Render HTML content
-  let html = `
-    <div class="part-title">${step.title}</div>
-    <div class="part-subtitle">${step.subtitle}</div>
-    ${step.render()}
-  `;
-  document.getElementById('step-content').innerHTML = html;
+  // Render Top and Bottom halves
+  document.getElementById('top-content').innerHTML = step.topRender();
+  document.getElementById('bottom-content').innerHTML = step.bottomRender();
   
   // Hide next button initially
   document.getElementById('btn-next').style.display = 'none';
   
-  // Change button text if it's the last step
   if (currentStepIndex === storySteps.length - 1) {
-    document.getElementById('btn-next').innerText = "Finish Course 🏆";
+    document.getElementById('btn-next').innerText = "Board Flight 🛫";
   } else {
-    document.getElementById('btn-next').innerText = "Next Step →";
+    document.getElementById('btn-next').innerText = "Next Situation →";
   }
+}
+
+// Reveal function when teacher clicks the lock
+function revealInfo() {
+  document.getElementById('info-cover').classList.add('hidden');
 }
 
 function nextStep() {
@@ -470,7 +352,6 @@ function nextStep() {
     renderStep();
     window.scrollTo(0,0);
   } else {
-    // End of game
     document.getElementById('final-score').innerText = score;
     showScreen('screen-end');
     document.getElementById('game-hud').classList.remove('visible');
@@ -478,41 +359,30 @@ function nextStep() {
 }
 
 // Check Answer Function
-// isQ2 flag handles screens with 2 questions
-// isFinalQ handles the very last question of the game to show the Next button
-function checkAns(btn, isCorrect, isQ2 = false, isFinalQ = false) {
+function checkAns(btn, isCorrect, hintMsg) {
   const feedback = btn.parentElement.nextElementSibling;
-  const currentStepData = storySteps[currentStepIndex];
 
   if (isCorrect) {
     btn.classList.add('correct');
     feedback.className = "feedback-msg show good";
-    feedback.innerHTML = "✅ Correct! Excellent job.";
+    feedback.innerHTML = "✅ " + hintMsg;
     
-    // Add Score
     score += 100;
     document.getElementById('hud-score').innerText = score;
     
-    // Disable other buttons in THIS specific question
+    // Disable all buttons in this block
     let siblings = btn.parentElement.children;
     for(let i=0; i<siblings.length; i++) {
         siblings[i].disabled = true;
     }
 
-    // Handle custom logic (like showing question 2)
-    if (currentStepData.customCheck) {
-      currentStepData.customCheck(true, isQ2);
-    }
-    
-    // Show NEXT button (if it's a standard 1-question screen, or if it's the 2nd question of a 2-question screen)
-    if (!currentStepData.customCheck || isQ2 || isFinalQ) {
-      document.getElementById('btn-next').style.display = 'inline-block';
-    }
+    // Show Next button
+    document.getElementById('btn-next').style.display = 'inline-block';
 
   } else {
     btn.classList.add('wrong');
     feedback.className = "feedback-msg show bad";
-    feedback.innerHTML = "❌ Oops, try again!";
+    feedback.innerHTML = "❌ " + hintMsg;
   }
 }
 </script>
