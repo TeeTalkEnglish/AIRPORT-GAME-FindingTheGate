@@ -36,7 +36,7 @@
     #game-container { 
       padding-top: 60px; 
       width: 100%; 
-      max-width: 1200px; /* Made wider to fit side-by-side */
+      max-width: 1200px; 
       display: flex; 
       flex-direction: row; 
       gap: 20px; 
@@ -146,7 +146,7 @@
     
     .quiz-question { font-size: 18px; margin-bottom: 15px; color: #fff; font-weight: bold; }
     .quiz-options { display: flex; flex-direction: column; gap: 12px; }
-    .quiz-opt { padding: 16px 20px; border-radius: 10px; border: 2px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: #fff; font-size: 16px; cursor: pointer; transition: all 0.2s; text-align: left; font-weight: bold; }
+    .quiz-opt { padding: 16px 20px; border-radius: 10px; border: 2px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: #fff; font-size: 18px; cursor: pointer; transition: all 0.2s; text-align: left; font-weight: bold; letter-spacing: 1px;}
     .quiz-opt:hover { border-color: #ffd700; background: rgba(255,215,0,0.1); }
     .quiz-opt.correct { border-color: #4CAF50; background: rgba(76,175,80,0.2); }
     .quiz-opt.wrong { border-color: #f44336; background: rgba(244,67,54,0.2); }
@@ -183,7 +183,7 @@
     
     <div style="background: rgba(76,175,80,0.15); border-left: 4px solid #4CAF50; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
       <strong style="color:#4CAF50;">🧳 Right Side = Passenger (Student)</strong><br>
-      <span style="font-size:14px;">You need to catch your flight! Ask the Agent questions in English to get the information you need.</span>
+      <span style="font-size:14px;">You need to catch your flight! Ask the Agent questions in English to get the information you need. <strong>Listen carefully to the time!</strong></span>
     </div>
 
     <div style="background: rgba(255,215,0,0.1); border: 1px solid rgba(255,215,0,0.3); padding: 12px; border-radius: 8px; text-align: center;">
@@ -296,11 +296,11 @@ const storySteps = [
         Ask the Check-in Agent:<br>
         <em>"Excuse me, what time is the flight to Sydney?"</em>
       </div>
-      <div class="quiz-question">What time is the Departure for Sydney?</div>
+      <div class="quiz-question">Listen to the Agent. What time is the Departure for Sydney?</div>
       <div class="quiz-options">
-        <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: 08:15 is quarter past eight. That is the Tokyo flight!')">A) Quarter past eight (08:15)</button>
-        <button class="quiz-opt" onclick="checkAns(this, true, 'Correct! Quarter past three means 15 minutes after 3:00, which is 15:15.')">B) Quarter past three (15:15)</button>
-        <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: Half past three is 15:30. A quarter is only 15 minutes.')">C) Half past three (15:30)</button>
+        <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: 08:15 is quarter past eight. That is the Tokyo flight!')">A) 08:15</button>
+        <button class="quiz-opt" onclick="checkAns(this, true, 'Correct! Quarter past three means 15 minutes after 3:00, which is 15:15.')">B) 15:15</button>
+        <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: Half past three is 15:30. A quarter is only 15 minutes.')">C) 15:30</button>
       </div>
       <div class="feedback-msg"></div>
     `
@@ -334,11 +334,11 @@ const storySteps = [
         Ask the Gate Agent:<br>
         <em>"Excuse me, is my flight delayed? What is the new departure time?"</em>
       </div>
-      <div class="quiz-question">What does "delayed" mean and what is the new time?</div>
+      <div class="quiz-question">Listen to the Agent. What does "delayed" mean and what is the new time?</div>
       <div class="quiz-options">
-        <button class="quiz-opt" onclick="checkAns(this, true, 'Correct! Delayed means the plane is late. The new time is 16:00 (four o-clock).')">A) Delayed means "late". New time: Four o'clock (16:00)</button>
-        <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: If a flight is delayed, it is NOT on time.')">B) Delayed means "on time". Same time: 15:15</button>
-        <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: The flight is not cancelled, it is just running late.')">C) The flight is cancelled</button>
+        <button class="quiz-opt" onclick="checkAns(this, true, 'Correct! Delayed means the plane is late. The new time is 16:00 (four o-clock).')">A) Meaning: Late | New time: 16:00</button>
+        <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: If a flight is delayed, it is NOT on time.')">B) Meaning: On time | Same time: 15:15</button>
+        <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: The flight is not cancelled, it is just running late.')">C) Meaning: Cancelled</button>
       </div>
       <div class="feedback-msg"></div>
     `
@@ -379,11 +379,11 @@ const storySteps = [
         Ask the Check-in Agent:<br>
         <em>"Excuse me, what gate is my flight? And what time is boarding?"</em>
       </div>
-      <div class="quiz-question">What gate do you go to, and what time is boarding?</div>
+      <div class="quiz-question">Listen to the Agent. What gate do you go to, and what time is boarding?</div>
       <div class="quiz-options">
-        <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: Gate A3 is for the Tokyo flight.')">A) Gate A3 at quarter past three (15:15)</button>
-        <button class="quiz-opt" onclick="checkAns(this, true, 'Correct! Gate B1. Half past three means 30 minutes after 3:00, which is 15:30.')">B) Gate B1 at half past three (15:30)</button>
-        <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: Four o-clock (16:00) is when the flight leaves. Boarding happens before departure.')">C) Gate B1 at four o'clock (16:00)</button>
+        <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: Gate A3 is for the Tokyo flight.')">A) Gate A3 — 15:15</button>
+        <button class="quiz-opt" onclick="checkAns(this, true, 'Correct! Gate B1. Half past three means 30 minutes after 3:00, which is 15:30.')">B) Gate B1 — 15:30</button>
+        <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: 16:00 is when the flight leaves. Boarding happens before departure.')">C) Gate B1 — 16:00</button>
       </div>
       <div class="feedback-msg"></div>
     `
@@ -417,11 +417,11 @@ const storySteps = [
         Ask the Gate Agent:<br>
         <em>"Excuse me, what time do we arrive in Sydney?"</em>
       </div>
-      <div class="quiz-question">What time is the Arrival in Sydney?</div>
+      <div class="quiz-question">Listen to the Agent. What time is the Arrival in Sydney?</div>
       <div class="quiz-options">
-        <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: Twelve o-clock means exactly 12:00. The agent said half past twelve.')">A) Twelve o'clock (12:00 PM)</button>
-        <button class="quiz-opt" onclick="checkAns(this, true, 'Correct! Half past twelve means 30 minutes after 12:00, which is 12:30 PM.')">B) Half past twelve (12:30 PM)</button>
-        <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: Quarter to one means 12:45. A quarter is only 15 minutes, but a half is 30 minutes.')">C) Quarter to one (12:45 PM)</button>
+        <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: Twelve o-clock means exactly 12:00. The agent said half past twelve.')">A) 12:00 PM</button>
+        <button class="quiz-opt" onclick="checkAns(this, true, 'Correct! Half past twelve means 30 minutes after 12:00, which is 12:30 PM.')">B) 12:30 PM</button>
+        <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: Quarter to one means 12:45. A quarter is only 15 minutes, but a half is 30 minutes.')">C) 12:45 PM</button>
       </div>
       <div class="feedback-msg"></div>
     `
@@ -454,11 +454,11 @@ const storySteps = [
         Ask the Gate Agent:<br>
         <em>"Excuse me, what time does the gate close?"</em>
       </div>
-      <div class="quiz-question">What time does the gate close? What does "quarter to four" mean?</div>
+      <div class="quiz-question">Listen to the Agent. What time does the gate close?</div>
       <div class="quiz-options">
-        <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: Quarter past four means 16:15. To means before the hour, past means after.')">A) Quarter past four (16:15)</button>
-        <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: Half past three (15:30) is when boarding begins, not when the gate closes.')">B) Half past three (15:30)</button>
-        <button class="quiz-opt" onclick="checkAns(this, true, 'Correct! Quarter to four means 15 minutes before 4:00. The gate closes at 15:45. Run! 🏃')">C) Quarter to four (15:45)</button>
+        <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: Quarter past four means 16:15. To means before the hour, past means after.')">A) 16:15</button>
+        <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: Half past three (15:30) is when boarding begins, not when the gate closes.')">B) 15:30</button>
+        <button class="quiz-opt" onclick="checkAns(this, true, 'Correct! Quarter to four means 15 minutes before 4:00. The gate closes at 15:45. Run! 🏃')">C) 15:45</button>
       </div>
       <div class="feedback-msg"></div>
     `
