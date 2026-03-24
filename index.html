@@ -865,7 +865,9 @@
     <div class="dep-row"><div>08:15</div><div>Tokyo</div><div>VN202</div><div>A3</div><div style="color:#4CAF50">✓ OPEN</div></div>
     <div class="dep-row"><div>08:45</div><div>Seoul</div><div>VN330</div><div>C7</div><div style="color:#ff9800">BOARDING</div></div>
     <div class="dep-row highlight" id="dep-highlight">
-      <div>09:00</div><div>Singapore</div><div>VN588</div><div>B1</div><div style="color:#ff4444">GO NOW!</div>
+      <div>09:00</div>
+<div>Sydney</div><div>VN402</div><div>D5</div>
+      <div style="color:#ff4444">GO NOW!</div>
     </div>
     <div class="dep-row"><div>09:30</div><div>Bangkok</div><div>VN450</div><div>D12</div><div style="color:#4CAF50">✓ OPEN</div></div>
     <div class="dep-row"><div>10:00</div><div>London</div><div>VN002</div><div>F5</div><div style="color:#4CAF50">✓ OPEN</div></div>
@@ -1069,12 +1071,30 @@ const teacherData = {
 ================================================================ */
 const gateSteps = [
   {
+  id: 'choose-destination',
+  render: () => `
+    <div class="mission-card">
+      <h3>🌍 CHOOSE YOUR DESTINATION</h3>
+      <p>Where are you flying today?</p>
+    </div>
+
+    <div class="quiz-card">
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="selectDestination('singapore')">🇸🇬 Singapore</button>
+        <button class="quiz-opt" onclick="selectDestination('australia')">🇦🇺 Sydney (Australia)</button>
+      </div>
+    </div>
+  `,
+  teacherSet: 'gate'
+}
+  
+  {
     id: 'gate-mission',
     render: () => `
       <div class="mission-card">
         <h3>🎯 YOUR MISSION</h3>
         <p>
-          You are at <strong>Hanoi Airport</strong>. You need to catch flight <strong>VN588</strong> to Singapore.<br>
+          You are at <strong>Tan Son Nhat Airport</strong>. You need to catch flight <strong>VN402</strong> to Sydney, Australia.<br>
           Check the departure board above. <strong>What gate do you need?</strong><br><br>
           📋 Look at the departure board and find your gate number!<br>
           <em>Then click "Next" when you are ready.</em>
@@ -1283,10 +1303,11 @@ const boardSteps = [
           <div class="bp-airline">✈️ VIETNAM AIRLINES</div>
           <div class="bp-route">
             <div class="bp-city">HAN</div>
-            <div class="bp-arrow">✈</div>
-            <div class="bp-city">SIN</div>
+             <div class="bp-arrow">✈</div>
+<div class="bp-city">SYD</div>
+           
           </div>
-          <div style="font-size:11px;color:#555;margin-bottom:8px;">Hanoi → Singapore</div>
+          <div style="font-size:11px;color:#555;margin-bottom:8px;">Ho Chi Minh → Sydney</div>
           <div class="bp-grid">
             <div class="bp-field">
               <div class="bp-field-label">Passenger</div>
