@@ -23,8 +23,12 @@
     .btn:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
     .btn-gold { background: linear-gradient(135deg,#ffd700,#ffaa00); color:#1a1a1a; }
     .btn-green { background: linear-gradient(135deg,#4CAF50,#1b5e20); color:#fff; }
+    
     .btn-small-blue { background: #2196F3; color: white; padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: 0.2s; }
     .btn-small-blue:hover { background: #1976D2; }
+    
+    .btn-small-green { background: #4CAF50; color: white; padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: 0.2s; }
+    .btn-small-green:hover { background: #388E3C; }
     
     #game-hud { display: none; position: fixed; top: 0; left: 0; right: 0; background: rgba(0,0,0,0.9); padding: 10px 24px; z-index: 500; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; font-size: 14px; border-bottom: 2px solid #ffd700; }
     #game-hud.visible { display: flex; }
@@ -140,9 +144,10 @@
     .bp-label { font-size: 11px; color: #888; text-transform: uppercase; font-weight:bold; }
     .bp-val { font-size: 16px; font-weight: 900; }
 
+    /* STUDENT PROMPT & HINT STYLES */
     .student-prompt { font-size: 17px; color: #a5d6a7; margin-bottom: 20px; text-align: center; border-bottom: 1px dashed rgba(76,175,80,0.3); padding-bottom: 20px; line-height: 1.6; }
     .student-prompt strong { color: #ffd700; }
-    .student-prompt em { color: #fff; font-size: 19px; }
+    .student-hint-text { background: rgba(255,215,0,0.1); border-left: 3px solid #ffd700; padding: 12px; margin-top: 15px; border-radius: 4px; font-size: 18px; color: #fff; font-style: italic; font-weight: bold; }
     
     .quiz-question { font-size: 18px; margin-bottom: 15px; color: #fff; font-weight: bold; }
     .quiz-options { display: flex; flex-direction: column; gap: 12px; }
@@ -183,7 +188,7 @@
     
     <div style="background: rgba(76,175,80,0.15); border-left: 4px solid #4CAF50; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
       <strong style="color:#4CAF50;">🧳 Right Side = Passenger (Student)</strong><br>
-      <span style="font-size:14px;">You need to catch your flight! Ask the Agent questions in English to get the information you need. <strong>Listen carefully to the time!</strong></span>
+      <span style="font-size:14px;">You need to catch your flight! Try to think of how to ask the Agent for information. <strong>If you don't know how to ask, click "Show Hint".</strong> Listen carefully to the time!</span>
     </div>
 
     <div style="background: rgba(255,215,0,0.1); border: 1px solid rgba(255,215,0,0.3); padding: 12px; border-radius: 8px; text-align: center;">
@@ -282,7 +287,7 @@ const storySteps = [
       <div id="level-1-hint" class="agent-instruction">
         <p>🗣️ Say to the Passenger:</p>
         <p class="agent-speak">"The flight to Sydney departs at a quarter past three."</p>
-        <button class="btn-small-blue" onclick="revealLevel2()">Passenger needs help?</button>
+        <button class="btn-small-blue" onclick="revealLevel2(this)">Passenger needs help?</button>
       </div>
 
       <div id="level-2-hint" class="agent-instruction" style="display:none; border-color: #ffd700; background: rgba(255,215,0,0.1);">
@@ -293,8 +298,13 @@ const storySteps = [
     rightRender: () => `
       <div class="student-prompt">
         🧳 <strong>Passenger:</strong> You need to fly to Sydney, but you don't know the departure time.<br><br>
-        Ask the Check-in Agent:<br>
-        <em>"Excuse me, what time is the flight to Sydney?"</em>
+        What should you ask the Check-in Agent? Try to ask in English!
+        <div>
+          <button class="btn-small-green" onclick="revealPassengerHint(this)">Show Hint: What to say</button>
+          <div class="student-hint-text" style="display:none;">
+            "Excuse me, what time is the flight to Sydney?"
+          </div>
+        </div>
       </div>
       <div class="quiz-question">Listen to the Agent. What time is the Departure for Sydney?</div>
       <div class="quiz-options">
@@ -320,7 +330,7 @@ const storySteps = [
       <div id="level-1-hint" class="agent-instruction">
         <p>🗣️ Say to the Passenger:</p>
         <p class="agent-speak">"I'm sorry, the flight is delayed. The new time is four o'clock."</p>
-        <button class="btn-small-blue" onclick="revealLevel2()">Passenger needs help?</button>
+        <button class="btn-small-blue" onclick="revealLevel2(this)">Passenger needs help?</button>
       </div>
 
       <div id="level-2-hint" class="agent-instruction" style="display:none; border-color: #ffd700; background: rgba(255,215,0,0.1);">
@@ -331,8 +341,13 @@ const storySteps = [
     rightRender: () => `
       <div class="student-prompt">
         🧳 <strong>Passenger:</strong> You heard an announcement but couldn't understand it clearly.<br><br>
-        Ask the Gate Agent:<br>
-        <em>"Excuse me, is my flight delayed? What is the new departure time?"</em>
+        What should you ask the Gate Agent?
+        <div>
+          <button class="btn-small-green" onclick="revealPassengerHint(this)">Show Hint: What to say</button>
+          <div class="student-hint-text" style="display:none;">
+            "Excuse me, is my flight delayed? What is the new departure time?"
+          </div>
+        </div>
       </div>
       <div class="quiz-question">Listen to the Agent. What does "delayed" mean and what is the new time?</div>
       <div class="quiz-options">
@@ -365,7 +380,7 @@ const storySteps = [
       <div id="level-1-hint" class="agent-instruction">
         <p>🗣️ Say to the Passenger:</p>
         <p class="agent-speak">"Your gate is B1. Boarding begins at half past three."</p>
-        <button class="btn-small-blue" onclick="revealLevel2()">Passenger needs help?</button>
+        <button class="btn-small-blue" onclick="revealLevel2(this)">Passenger needs help?</button>
       </div>
 
       <div id="level-2-hint" class="agent-instruction" style="display:none; border-color: #ffd700; background: rgba(255,215,0,0.1);">
@@ -376,8 +391,13 @@ const storySteps = [
     rightRender: () => `
       <div class="student-prompt">
         🧳 <strong>Passenger:</strong> You need to know where to wait for the airplane.<br><br>
-        Ask the Check-in Agent:<br>
-        <em>"Excuse me, what gate is my flight? And what time is boarding?"</em>
+        What should you ask the Check-in Agent?
+        <div>
+          <button class="btn-small-green" onclick="revealPassengerHint(this)">Show Hint: What to say</button>
+          <div class="student-hint-text" style="display:none;">
+            "Excuse me, what gate is my flight? And what time is boarding?"
+          </div>
+        </div>
       </div>
       <div class="quiz-question">Listen to the Agent. What gate do you go to, and what time is boarding?</div>
       <div class="quiz-options">
@@ -403,7 +423,7 @@ const storySteps = [
       <div id="level-1-hint" class="agent-instruction">
         <p>🗣️ Say to the Passenger:</p>
         <p class="agent-speak">"You will arrive in Sydney at half past twelve in the afternoon."</p>
-        <button class="btn-small-blue" onclick="revealLevel2()">Passenger needs help?</button>
+        <button class="btn-small-blue" onclick="revealLevel2(this)">Passenger needs help?</button>
       </div>
 
       <div id="level-2-hint" class="agent-instruction" style="display:none; border-color: #ffd700; background: rgba(255,215,0,0.1);">
@@ -414,8 +434,13 @@ const storySteps = [
     rightRender: () => `
       <div class="student-prompt">
         🧳 <strong>Passenger:</strong> You want to know when the airplane lands.<br><br>
-        Ask the Gate Agent:<br>
-        <em>"Excuse me, what time do we arrive in Sydney?"</em>
+        What should you ask the Gate Agent?
+        <div>
+          <button class="btn-small-green" onclick="revealPassengerHint(this)">Show Hint: What to say</button>
+          <div class="student-hint-text" style="display:none;">
+            "Excuse me, what time do we arrive in Sydney?"
+          </div>
+        </div>
       </div>
       <div class="quiz-question">Listen to the Agent. What time is the Arrival in Sydney?</div>
       <div class="quiz-options">
@@ -440,7 +465,7 @@ const storySteps = [
       <div id="level-1-hint" class="agent-instruction">
         <p>🗣️ Say to the Passenger:</p>
         <p class="agent-speak">"This is the final call. The gate closes at a quarter to four. Please hurry!"</p>
-        <button class="btn-small-blue" onclick="revealLevel2()">Passenger needs help?</button>
+        <button class="btn-small-blue" onclick="revealLevel2(this)">Passenger needs help?</button>
       </div>
 
       <div id="level-2-hint" class="agent-instruction" style="display:none; border-color: #ffd700; background: rgba(255,215,0,0.1);">
@@ -451,8 +476,13 @@ const storySteps = [
     rightRender: () => `
       <div class="student-prompt">
         🧳 <strong>Passenger:</strong> You hear a "final call" announcement! You're worried.<br><br>
-        Ask the Gate Agent:<br>
-        <em>"Excuse me, what time does the gate close?"</em>
+        What should you ask the Gate Agent?
+        <div>
+          <button class="btn-small-green" onclick="revealPassengerHint(this)">Show Hint: What to say</button>
+          <div class="student-hint-text" style="display:none;">
+            "Excuse me, what time does the gate close?"
+          </div>
+        </div>
       </div>
       <div class="quiz-question">Listen to the Agent. What time does the gate close?</div>
       <div class="quiz-options">
@@ -509,10 +539,16 @@ function revealInfo1() {
   leftContent.style.display = 'flex';
 }
 
-function revealLevel2() {
-  const btn = event.target;
+// Fixed function to hide button after click
+function revealLevel2(btn) {
   btn.style.display = 'none'; 
   document.getElementById('level-2-hint').style.display = 'block'; 
+}
+
+// Function to reveal the passenger's speaking prompt
+function revealPassengerHint(btn) {
+  btn.style.display = 'none';
+  btn.nextElementSibling.style.display = 'block';
 }
 
 function nextStep() {
