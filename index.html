@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>✈️ Airport Adventure: Telling Time</title>
+  <title>✈️ Airport Adventure: Telling Time & Boarding</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Segoe UI', Arial, sans-serif; background: #0a1628; min-height: 100vh; color: #fff; overflow-x: hidden; }
@@ -16,7 +16,7 @@
     .title-main { font-size: 38px; font-weight: 900; color: #ffd700; text-shadow: 0 0 30px rgba(255,215,0,0.5); letter-spacing: 2px; }
     .title-sub { font-size: 18px; color: #a8d8f0; margin: 10px 0 30px; }
     
-    .title-instructions { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,215,0,0.3); border-radius: 16px; padding: 24px 32px; max-width: 680px; text-align: left; margin-bottom: 30px; line-height: 1.8; font-size: 15px; color: #cce8ff; }
+    .title-instructions { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,215,0,0.3); border-radius: 16px; padding: 24px 32px; max-width: 720px; text-align: left; margin-bottom: 30px; line-height: 1.8; font-size: 15px; color: #cce8ff; }
     .title-instructions h3 { color: #ffd700; margin-bottom: 10px; font-size: 18px; text-align: center; }
     
     .btn { padding: 14px 36px; border: none; border-radius: 50px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.25s; letter-spacing: 0.5px; }
@@ -29,6 +29,9 @@
     
     .btn-small-green { background: #4CAF50; color: white; padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: 0.2s; }
     .btn-small-green:hover { background: #388E3C; }
+
+    .btn-reveal-quiz { background: linear-gradient(135deg, #ff9800, #f57c00); color: white; padding: 16px; width: 100%; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: 0.2s; border: 2px solid #ffd700;}
+    .btn-reveal-quiz:hover { transform: scale(1.02); }
     
     #game-hud { display: none; position: fixed; top: 0; left: 0; right: 0; background: rgba(0,0,0,0.9); padding: 10px 24px; z-index: 500; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; font-size: 14px; border-bottom: 2px solid #ffd700; }
     #game-hud.visible { display: flex; }
@@ -37,57 +40,13 @@
     /* ============================================================
        SIDE-BY-SIDE LAYOUT (LEFT & RIGHT)
     ============================================================ */
-    #game-container { 
-      padding-top: 60px; 
-      width: 100%; 
-      max-width: 1200px; 
-      display: flex; 
-      flex-direction: row; 
-      gap: 20px; 
-      align-items: stretch;
-      margin-bottom: 20px; 
-    }
+    #game-container { padding-top: 60px; width: 100%; max-width: 1200px; display: flex; flex-direction: row; gap: 20px; align-items: stretch; margin-bottom: 20px; }
+    @media (max-width: 900px) { #game-container { flex-direction: column; } }
 
-    @media (max-width: 900px) {
-      #game-container { flex-direction: column; }
-    }
-
-    /* LEFT HALF (AGENT / HIDDEN INFO) */
-    .left-half { 
-      flex: 1;
-      position: relative; 
-      background: linear-gradient(135deg, #1a2744, #0d1b35); 
-      border: 3px solid #2196F3; 
-      border-radius: 16px; 
-      padding: 24px; 
-      display: flex; 
-      flex-direction: column; 
-      align-items: center; 
-      overflow: hidden; 
-    }
-
-    .agent-badge { 
-      background: rgba(33,150,243,0.3); 
-      border: 1px solid #2196F3; 
-      padding: 6px 14px; 
-      border-radius: 20px; 
-      font-size: 13px; 
-      color: #90caf9; 
-      font-weight: bold; 
-      margin-bottom: 20px;
-    }
-
-    .info-cover { 
-      position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-      background: rgba(10, 22, 40, 0.97); 
-      backdrop-filter: blur(12px); 
-      display: flex; flex-direction: column; justify-content: center; align-items: center; 
-      cursor: pointer; z-index: 10; 
-      transition: all 0.5s ease; 
-      text-align: center; padding: 20px; 
-      border: 3px dashed rgba(33,150,243,0.4);
-      border-radius: 13px;
-    }
+    /* LEFT HALF (AGENT) */
+    .left-half { flex: 1; position: relative; background: linear-gradient(135deg, #1a2744, #0d1b35); border: 3px solid #2196F3; border-radius: 16px; padding: 24px; display: flex; flex-direction: column; align-items: center; overflow: hidden; }
+    .agent-badge { background: rgba(33,150,243,0.3); border: 1px solid #2196F3; padding: 6px 14px; border-radius: 20px; font-size: 13px; color: #90caf9; font-weight: bold; margin-bottom: 20px; text-transform: uppercase;}
+    .info-cover { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10, 22, 40, 0.97); backdrop-filter: blur(12px); display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; z-index: 10; transition: all 0.5s ease; text-align: center; padding: 20px; border: 3px dashed rgba(33,150,243,0.4); border-radius: 13px; }
     .info-cover:hover { background: rgba(10, 22, 40, 0.85); border-color: #2196F3; }
     .info-cover h2 { color: #2196F3; font-size: 22px; margin-bottom: 8px; }
     .info-cover p { color: #90caf9; font-size: 16px; line-height: 1.6; }
@@ -95,40 +54,13 @@
     .info-cover .agent-label { font-size: 14px; color: #ffd700; background: rgba(255,215,0,0.1); padding: 6px 16px; border-radius: 20px; margin-bottom: 15px; display: inline-block; font-weight: bold; }
     .info-cover.hidden { opacity: 0; pointer-events: none; }
 
-    .agent-instruction {
-      background: rgba(33,150,243,0.1);
-      border-left: 4px solid #2196F3;
-      padding: 16px;
-      margin-top: auto;
-      border-radius: 0 8px 8px 0;
-      width: 100%;
-      text-align: left;
-    }
+    .agent-instruction { background: rgba(33,150,243,0.1); border-left: 4px solid #2196F3; padding: 16px; margin-top: auto; border-radius: 0 8px 8px 0; width: 100%; text-align: left; }
     .agent-instruction p { margin-bottom: 5px; font-size: 15px; color: #e3f2fd; }
     .agent-speak { font-size: 18px; color: #ffd700; font-style: italic; font-weight: bold; }
 
-    /* RIGHT HALF (PASSENGER / QUIZ) */
-    .right-half { 
-      flex: 1;
-      background: linear-gradient(135deg, rgba(76,175,80,0.05), rgba(27,94,32,0.1)); 
-      border: 3px solid #4CAF50; 
-      border-radius: 16px; 
-      padding: 24px; 
-      display: flex;
-      flex-direction: column;
-    }
-
-    .passenger-badge { 
-      background: rgba(76,175,80,0.3); 
-      border: 1px solid #4CAF50; 
-      padding: 6px 14px; 
-      border-radius: 20px; 
-      font-size: 13px; 
-      color: #a5d6a7; 
-      font-weight: bold; 
-      align-self: center;
-      margin-bottom: 20px;
-    }
+    /* RIGHT HALF (PASSENGER) */
+    .right-half { flex: 1; background: linear-gradient(135deg, rgba(76,175,80,0.05), rgba(27,94,32,0.1)); border: 3px solid #4CAF50; border-radius: 16px; padding: 24px; display: flex; flex-direction: column; }
+    .passenger-badge { background: rgba(76,175,80,0.3); border: 1px solid #4CAF50; padding: 6px 14px; border-radius: 20px; font-size: 13px; color: #a5d6a7; font-weight: bold; align-self: center; margin-bottom: 20px; text-transform: uppercase;}
     
     /* UI ELEMENTS */
     .departure-board { background: #000; border: 2px solid #333; border-radius: 10px; padding: 14px; width: 100%; font-family: 'Courier New', monospace; }
@@ -144,7 +76,14 @@
     .bp-label { font-size: 11px; color: #888; text-transform: uppercase; font-weight:bold; }
     .bp-val { font-size: 16px; font-weight: 900; }
 
-    /* STUDENT PROMPT & HINT STYLES */
+    /* AIRPLANE LAYOUT (BOEING 737) */
+    .plane-layout { background: rgba(255,255,255,0.9); padding: 15px; border-radius: 10px; text-align: center; color: #333; font-weight: bold; margin-top: 10px; border: 3px solid #2196F3;}
+    .seat-row { display: flex; justify-content: center; gap: 10px; margin: 10px 0; font-size: 18px; }
+    .seat { background: #ccc; border-radius: 6px; padding: 8px 12px; border: 2px solid #999; }
+    .seat.target { background: #ff9800; color: white; border-color: #e65100; animation: pulse 1.5s infinite; }
+    .aisle { width: 30px; background: #eee; }
+    @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+
     .student-prompt { font-size: 17px; color: #a5d6a7; margin-bottom: 20px; text-align: center; border-bottom: 1px dashed rgba(76,175,80,0.3); padding-bottom: 20px; line-height: 1.6; }
     .student-prompt strong { color: #ffd700; }
     .student-hint-text { background: rgba(255,215,0,0.1); border-left: 3px solid #ffd700; padding: 12px; margin-top: 15px; border-radius: 4px; font-size: 18px; color: #fff; font-style: italic; font-weight: bold; }
@@ -166,34 +105,33 @@
 
 <!-- HUD -->
 <div id="game-hud">
-  <div class="hud-item">✈️ Unit 10: At the Airport</div>
+  <div class="hud-item">✈️ Unit 10: Airport & Boarding</div>
   <div class="hud-item">⭐ Score: <span id="hud-score">0</span></div>
-  <div class="hud-item" id="hud-step">Situation 1 of 5</div>
+  <div class="hud-item" id="hud-step">Situation 1 of 8</div>
 </div>
 
 <!-- SCREEN 1: TITLE -->
 <div id="screen-title" class="screen active">
   <div class="title-logo">✈️</div>
-  <div class="title-main">UNIT 10: AT THE AIRPORT</div>
-  <div class="title-sub">Finding the Gate & Telling Time 🇦🇺</div>
+  <div class="title-main">AIRPORT & BOARDING</div>
+  <div class="title-sub">Information Gap Roleplay 🇦🇺</div>
 
   <div class="title-instructions">
-    <h3>🎭 Roleplay Game: Information Gap</h3>
-    <p style="text-align:center; margin-bottom: 15px; color: #fff;">This is an English immersion roleplay between you and your teacher!</p>
+    <h3>🎭 Roleplay Game Rules</h3>
     
     <div style="background: rgba(33,150,243,0.15); border-left: 4px solid #2196F3; padding: 15px; border-radius: 8px; margin-bottom: 12px;">
-      <strong style="color:#2196F3;">👩‍✈️ Left Side = Check-in Agent (Teacher)</strong><br>
+      <strong style="color:#2196F3;">👩‍✈️ Left Side = Agent / Flight Attendant (Teacher)</strong><br>
       <span style="font-size:14px;">Wait for the passenger to ask a question. Click the lock to reveal the information. If the passenger is confused, click to reveal an easier hint!</span>
     </div>
     
     <div style="background: rgba(76,175,80,0.15); border-left: 4px solid #4CAF50; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
       <strong style="color:#4CAF50;">🧳 Right Side = Passenger (Student)</strong><br>
-      <span style="font-size:14px;">You need to catch your flight! Try to think of how to ask the Agent for information. <strong>If you don't know how to ask, click "Show Hint".</strong> Listen carefully to the time!</span>
+      <span style="font-size:14px;">You will not see the quiz questions! First, you must think of a question and ask the Agent in English. Listen to their answer, then click "Show Quiz" to answer.</span>
     </div>
 
     <div style="background: rgba(255,215,0,0.1); border: 1px solid rgba(255,215,0,0.3); padding: 12px; border-radius: 8px; text-align: center;">
       <strong style="color:#ffd700;">📝 Target English Vocabulary:</strong><br>
-      <span style="font-size: 14px;">O'clock · Half past · Quarter past · Quarter to · Departure · Arrival · Delayed · On time</span>
+      <span style="font-size: 14px;">O'clock · Half past · Quarter to · Boarding Pass · Window Seat · Aisle Seat · Row · Overhead Compartment</span>
     </div>
   </div>
 
@@ -208,13 +146,13 @@
     
     <!-- LEFT HALF: AGENT INFO -->
     <div class="left-half" id="left-panel">
-      <div class="agent-badge">👩‍✈️ AGENT'S SCREEN</div>
+      <div class="agent-badge" id="agent-badge">👩‍✈️ AGENT'S SCREEN</div>
       <div class="info-cover" id="info-cover" onclick="revealInfo1()">
-        <div class="agent-label" id="agent-title-label">👩‍✈️ CHECK-IN AGENT</div>
+        <div class="agent-label" id="agent-title-label">👩‍✈️ AGENT</div>
         <div class="lock-icon">🔒</div>
         <h2>Hidden Information</h2>
         <p>
-          <strong style="color:#ffd700;">Agent:</strong> Wait for the Passenger to speak.<br>
+          <strong style="color:#ffd700;">Teacher:</strong> Wait for the Passenger to speak.<br>
           When they ask, <strong>click here</strong>.
         </p>
       </div>
@@ -229,7 +167,6 @@
 
   </div>
   
-  <!-- NEXT BUTTON CONTAINER -->
   <div style="width: 100%; text-align: center; margin-bottom: 30px;">
     <button class="btn btn-green" onclick="nextStep()" id="btn-next" style="display:none; font-size: 20px; padding: 18px 50px; box-shadow: 0 4px 15px rgba(76,175,80,0.5);">Next Situation →</button>
   </div>
@@ -239,24 +176,24 @@
 <div id="screen-end" class="screen">
   <div class="title-logo">🛬</div>
   <h1 style="font-size:36px;color:#ffd700;margin-bottom:10px;">Welcome to Sydney! 🇦🇺</h1>
-  <p style="color:#a8d8f0;margin-bottom:5px; font-size: 18px;">Great speaking practice! The Passenger successfully boarded the flight!</p>
+  <p style="color:#a8d8f0;margin-bottom:5px; font-size: 18px;">Incredible! You navigated the airport and boarded the plane perfectly.</p>
   
   <div style="background: rgba(255,255,255,0.1); border: 2px solid #ffd700; border-radius: 12px; padding: 20px; text-align: center; max-width: 400px; margin: 25px auto;">
     <h2 style="color: white; margin-bottom: 5px;">Final Score</h2>
     <h1 style="color: #ffd700; font-size: 48px;"><span id="final-score">0</span></h1>
   </div>
 
-  <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; padding: 20px; max-width: 600px; margin: 0 auto 30px auto; text-align: left;">
-    <h3 style="color:#ffd700; text-align: center; margin-bottom: 12px;">📝 English Definitions Review</h3>
-    <table style="width:100%; font-size: 15px; border-collapse: collapse;">
-      <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);"><td style="padding: 10px; color:#ffd700; font-weight:bold; width: 30%;">O'clock</td><td style="padding: 10px;">Exactly on the hour (6:00)</td></tr>
-      <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);"><td style="padding: 10px; color:#ffd700; font-weight:bold;">Half past</td><td style="padding: 10px;">30 minutes after the hour (3:30)</td></tr>
-      <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);"><td style="padding: 10px; color:#ffd700; font-weight:bold;">Quarter past</td><td style="padding: 10px;">15 minutes after the hour (3:15)</td></tr>
-      <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);"><td style="padding: 10px; color:#ffd700; font-weight:bold;">Quarter to</td><td style="padding: 10px;">15 minutes before the next hour (3:45)</td></tr>
-      <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);"><td style="padding: 10px; color:#ffd700; font-weight:bold;">Departure</td><td style="padding: 10px;">When the plane leaves the airport</td></tr>
-      <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);"><td style="padding: 10px; color:#ffd700; font-weight:bold;">Arrival</td><td style="padding: 10px;">When the plane lands at the destination</td></tr>
-      <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);"><td style="padding: 10px; color:#ffd700; font-weight:bold;">Delayed</td><td style="padding: 10px;">The flight is running late</td></tr>
-      <tr><td style="padding: 10px; color:#ffd700; font-weight:bold;">On time</td><td style="padding: 10px;">The flight will leave at the scheduled time</td></tr>
+  <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; padding: 20px; max-width: 700px; margin: 0 auto 30px auto; text-align: left;">
+    <h3 style="color:#ffd700; text-align: center; margin-bottom: 12px;">📝 Complete Vocabulary Review</h3>
+    <table style="width:100%; font-size: 14px; border-collapse: collapse;">
+      <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);"><td style="padding: 8px; color:#ffd700; font-weight:bold; width: 30%;">Quarter past</td><td style="padding: 8px;">15 minutes after the hour (3:15)</td></tr>
+      <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);"><td style="padding: 8px; color:#ffd700; font-weight:bold;">Half past</td><td style="padding: 8px;">30 minutes after the hour (3:30)</td></tr>
+      <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);"><td style="padding: 8px; color:#ffd700; font-weight:bold;">Quarter to</td><td style="padding: 8px;">15 minutes before the next hour (3:45)</td></tr>
+      <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);"><td style="padding: 8px; color:#ffd700; font-weight:bold;">Boarding Pass</td><td style="padding: 8px;">Your ticket to get on the airplane</td></tr>
+      <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);"><td style="padding: 8px; color:#ffd700; font-weight:bold;">Window Seat</td><td style="padding: 8px;">A seat right next to the window (Seat A or F)</td></tr>
+      <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);"><td style="padding: 8px; color:#ffd700; font-weight:bold;">Aisle Seat</td><td style="padding: 8px;">A seat next to the walking path (Seat C or D)</td></tr>
+      <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);"><td style="padding: 8px; color:#ffd700; font-weight:bold;">Row</td><td style="padding: 8px;">The horizontal line of seats (Row 24)</td></tr>
+      <tr><td style="padding: 8px; color:#ffd700; font-weight:bold;">Overhead Compartment</td><td style="padding: 8px;">The storage space above your head for bags</td></tr>
     </table>
   </div>
 
@@ -274,7 +211,7 @@ const storySteps = [
   
   // ===================== SITUATION 1 =====================
   {
-    agentTitle: "👩‍✈️ Check-in Agent",
+    agentRole: "👩‍✈️ Check-in Agent",
     leftRender: () => `
       <h3 style="color:#ffd700; margin-bottom: 12px; text-align:center;">▶ DEPARTURE BOARD ◀</h3>
       <div class="departure-board">
@@ -284,13 +221,13 @@ const storySteps = [
         <div class="dep-row"><div>16:30</div><div>Bangkok</div><div>VN450</div><div>D12</div><div style="color:#ff4444">DELAYED</div></div>
       </div>
       
-      <div id="level-1-hint" class="agent-instruction">
+      <div class="agent-instruction">
         <p>🗣️ Say to the Passenger:</p>
         <p class="agent-speak">"The flight to Sydney departs at a quarter past three."</p>
         <button class="btn-small-blue" onclick="revealLevel2(this)">Passenger needs help?</button>
       </div>
 
-      <div id="level-2-hint" class="agent-instruction" style="display:none; border-color: #ffd700; background: rgba(255,215,0,0.1);">
+      <div class="agent-instruction level-2" style="display:none; border-color: #ffd700; background: rgba(255,215,0,0.1);">
         <p>🗣️ Easier Explanation:</p>
         <p class="agent-speak">"A quarter past three means fifteen fifteen (15:15)."</p>
       </div>
@@ -298,27 +235,30 @@ const storySteps = [
     rightRender: () => `
       <div class="student-prompt">
         🧳 <strong>Passenger:</strong> You need to fly to Sydney, but you don't know the departure time.<br><br>
-        What should you ask the Check-in Agent? Try to ask in English!
+        What should you ask the Check-in Agent?
         <div>
           <button class="btn-small-green" onclick="revealPassengerHint(this)">Show Hint: What to say</button>
-          <div class="student-hint-text" style="display:none;">
-            "Excuse me, what time is the flight to Sydney?"
-          </div>
+          <div class="student-hint-text" style="display:none;">"Excuse me, what time is the flight to Sydney?"</div>
         </div>
       </div>
-      <div class="quiz-question">Listen to the Agent. What time is the Departure for Sydney?</div>
-      <div class="quiz-options">
-        <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: 08:15 is quarter past eight. That is the Tokyo flight!')">A) 08:15</button>
-        <button class="quiz-opt" onclick="checkAns(this, true, 'Correct! Quarter past three means 15 minutes after 3:00, which is 15:15.')">B) 15:15</button>
-        <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: Half past three is 15:30. A quarter is only 15 minutes.')">C) 15:30</button>
+      
+      <button class="btn-reveal-quiz" onclick="revealQuiz(this)">🎧 Listen to the Agent, then click here for the Quiz</button>
+
+      <div class="quiz-container" style="display:none; margin-top: 15px;">
+        <div class="quiz-question">What time did the agent say the flight departs?</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: 08:15 is quarter past eight.')">A) 08:15</button>
+          <button class="quiz-opt" onclick="checkAns(this, true, 'Correct! Quarter past three is 15:15.')">B) 15:15</button>
+          <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: 15:30 is half past three.')">C) 15:30</button>
+        </div>
+        <div class="feedback-msg"></div>
       </div>
-      <div class="feedback-msg"></div>
     `
   },
 
   // ===================== SITUATION 2 =====================
   {
-    agentTitle: "👩‍✈️ Gate Agent",
+    agentRole: "👩‍✈️ Gate Agent",
     leftRender: () => `
       <h3 style="color:#ffd700; margin-bottom: 12px; text-align:center;">📢 FLIGHT UPDATE</h3>
       <div style="text-align: center; color: #fff; margin-bottom: 15px; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px;">
@@ -327,41 +267,44 @@ const storySteps = [
         <span style="color:#ff9800; font-size: 20px; font-weight:bold;">New Time: 16:00</span>
       </div>
 
-      <div id="level-1-hint" class="agent-instruction">
+      <div class="agent-instruction">
         <p>🗣️ Say to the Passenger:</p>
         <p class="agent-speak">"I'm sorry, the flight is delayed. The new time is four o'clock."</p>
         <button class="btn-small-blue" onclick="revealLevel2(this)">Passenger needs help?</button>
       </div>
 
-      <div id="level-2-hint" class="agent-instruction" style="display:none; border-color: #ffd700; background: rgba(255,215,0,0.1);">
+      <div class="agent-instruction level-2" style="display:none; border-color: #ffd700; background: rgba(255,215,0,0.1);">
         <p>🗣️ Easier Explanation:</p>
         <p class="agent-speak">"Delayed means the flight is late. It will leave at exactly 16:00."</p>
       </div>
     `,
     rightRender: () => `
       <div class="student-prompt">
-        🧳 <strong>Passenger:</strong> You heard an announcement but couldn't understand it clearly.<br><br>
+        🧳 <strong>Passenger:</strong> You heard a loudspeaker announcement but couldn't understand it.<br><br>
         What should you ask the Gate Agent?
         <div>
           <button class="btn-small-green" onclick="revealPassengerHint(this)">Show Hint: What to say</button>
-          <div class="student-hint-text" style="display:none;">
-            "Excuse me, is my flight delayed? What is the new departure time?"
-          </div>
+          <div class="student-hint-text" style="display:none;">"Excuse me, is my flight delayed? What is the new departure time?"</div>
         </div>
       </div>
-      <div class="quiz-question">Listen to the Agent. What does "delayed" mean and what is the new time?</div>
-      <div class="quiz-options">
-        <button class="quiz-opt" onclick="checkAns(this, true, 'Correct! Delayed means the plane is late. The new time is 16:00 (four o-clock).')">A) Meaning: Late | New time: 16:00</button>
-        <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: If a flight is delayed, it is NOT on time.')">B) Meaning: On time | Same time: 15:15</button>
-        <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: The flight is not cancelled, it is just running late.')">C) Meaning: Cancelled</button>
+      
+      <button class="btn-reveal-quiz" onclick="revealQuiz(this)">🎧 Listen to the Agent, then click here for the Quiz</button>
+
+      <div class="quiz-container" style="display:none; margin-top: 15px;">
+        <div class="quiz-question">What does "delayed" mean and what is the new time?</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="checkAns(this, true, 'Correct! Delayed means late. The new time is 16:00.')">A) Meaning: Late | New time: 16:00</button>
+          <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: Delayed means it is NOT on time.')">B) Meaning: On time | Same time: 15:15</button>
+          <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: The flight is not cancelled, just running late.')">C) Meaning: Cancelled</button>
+        </div>
+        <div class="feedback-msg"></div>
       </div>
-      <div class="feedback-msg"></div>
     `
   },
 
   // ===================== SITUATION 3 =====================
   {
-    agentTitle: "👩‍✈️ Check-in Agent",
+    agentRole: "👩‍✈️ Check-in Agent",
     leftRender: () => `
       <h3 style="color:#ffd700; margin-bottom: 12px; text-align:center;">🎫 PASSENGER INFO</h3>
       <div class="boarding-pass">
@@ -377,13 +320,13 @@ const storySteps = [
         </div>
       </div>
 
-      <div id="level-1-hint" class="agent-instruction">
+      <div class="agent-instruction">
         <p>🗣️ Say to the Passenger:</p>
         <p class="agent-speak">"Your gate is B1. Boarding begins at half past three."</p>
         <button class="btn-small-blue" onclick="revealLevel2(this)">Passenger needs help?</button>
       </div>
 
-      <div id="level-2-hint" class="agent-instruction" style="display:none; border-color: #ffd700; background: rgba(255,215,0,0.1);">
+      <div class="agent-instruction level-2" style="display:none; border-color: #ffd700; background: rgba(255,215,0,0.1);">
         <p>🗣️ Easier Explanation:</p>
         <p class="agent-speak">"You need to go to Gate B1. Boarding is at 15:30."</p>
       </div>
@@ -394,67 +337,27 @@ const storySteps = [
         What should you ask the Check-in Agent?
         <div>
           <button class="btn-small-green" onclick="revealPassengerHint(this)">Show Hint: What to say</button>
-          <div class="student-hint-text" style="display:none;">
-            "Excuse me, what gate is my flight? And what time is boarding?"
-          </div>
+          <div class="student-hint-text" style="display:none;">"Excuse me, what gate is my flight? And what time is boarding?"</div>
         </div>
       </div>
-      <div class="quiz-question">Listen to the Agent. What gate do you go to, and what time is boarding?</div>
-      <div class="quiz-options">
-        <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: Gate A3 is for the Tokyo flight.')">A) Gate A3 — 15:15</button>
-        <button class="quiz-opt" onclick="checkAns(this, true, 'Correct! Gate B1. Half past three means 30 minutes after 3:00, which is 15:30.')">B) Gate B1 — 15:30</button>
-        <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: 16:00 is when the flight leaves. Boarding happens before departure.')">C) Gate B1 — 16:00</button>
+      
+      <button class="btn-reveal-quiz" onclick="revealQuiz(this)">🎧 Listen to the Agent, then click here for the Quiz</button>
+
+      <div class="quiz-container" style="display:none; margin-top: 15px;">
+        <div class="quiz-question">What gate do you go to, and what time is boarding?</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: Gate A3 is for Tokyo.')">A) Gate A3 — 15:15</button>
+          <button class="quiz-opt" onclick="checkAns(this, true, 'Correct! Gate B1. Half past three is 15:30.')">B) Gate B1 — 15:30</button>
+          <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: 16:00 is departure time. Boarding is earlier.')">C) Gate B1 — 16:00</button>
+        </div>
+        <div class="feedback-msg"></div>
       </div>
-      <div class="feedback-msg"></div>
     `
   },
 
   // ===================== SITUATION 4 =====================
   {
-    agentTitle: "👩‍✈️ Gate Agent",
-    leftRender: () => `
-      <h3 style="color:#ffd700; margin-bottom: 12px; text-align:center;">🕐 ARRIVAL TIME</h3>
-      <div style="text-align: center; color: #fff; margin-bottom: 15px; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px;">
-        Flight Duration: 8 hours 30 minutes<br><br>
-        <span style="color:#00ff41; font-size: 20px; font-weight:bold;">Landing Time: 12:30 PM</span><br>
-        <span style="color:#aaa;">(Sydney Local Time)</span>
-      </div>
-
-      <div id="level-1-hint" class="agent-instruction">
-        <p>🗣️ Say to the Passenger:</p>
-        <p class="agent-speak">"You will arrive in Sydney at half past twelve in the afternoon."</p>
-        <button class="btn-small-blue" onclick="revealLevel2(this)">Passenger needs help?</button>
-      </div>
-
-      <div id="level-2-hint" class="agent-instruction" style="display:none; border-color: #ffd700; background: rgba(255,215,0,0.1);">
-        <p>🗣️ Easier Explanation:</p>
-        <p class="agent-speak">"That means you will land at 12:30 PM Sydney time."</p>
-      </div>
-    `,
-    rightRender: () => `
-      <div class="student-prompt">
-        🧳 <strong>Passenger:</strong> You want to know when the airplane lands.<br><br>
-        What should you ask the Gate Agent?
-        <div>
-          <button class="btn-small-green" onclick="revealPassengerHint(this)">Show Hint: What to say</button>
-          <div class="student-hint-text" style="display:none;">
-            "Excuse me, what time do we arrive in Sydney?"
-          </div>
-        </div>
-      </div>
-      <div class="quiz-question">Listen to the Agent. What time is the Arrival in Sydney?</div>
-      <div class="quiz-options">
-        <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: Twelve o-clock means exactly 12:00. The agent said half past twelve.')">A) 12:00 PM</button>
-        <button class="quiz-opt" onclick="checkAns(this, true, 'Correct! Half past twelve means 30 minutes after 12:00, which is 12:30 PM.')">B) 12:30 PM</button>
-        <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: Quarter to one means 12:45. A quarter is only 15 minutes, but a half is 30 minutes.')">C) 12:45 PM</button>
-      </div>
-      <div class="feedback-msg"></div>
-    `
-  },
-
-  // ===================== SITUATION 5 =====================
-  {
-    agentTitle: "👩‍✈️ Gate Agent",
+    agentRole: "👩‍✈️ Gate Agent",
     leftRender: () => `
       <h3 style="color:#ffd700; margin-bottom: 12px; text-align:center;">📢 FINAL CALL</h3>
       <div style="text-align: center; color: #fff; margin-bottom: 15px; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px;">
@@ -462,13 +365,13 @@ const storySteps = [
         <span style="color:#ff4444; font-size: 20px; font-weight:bold;">Closing Time: 15:45</span>
       </div>
 
-      <div id="level-1-hint" class="agent-instruction">
+      <div class="agent-instruction">
         <p>🗣️ Say to the Passenger:</p>
         <p class="agent-speak">"This is the final call. The gate closes at a quarter to four. Please hurry!"</p>
         <button class="btn-small-blue" onclick="revealLevel2(this)">Passenger needs help?</button>
       </div>
 
-      <div id="level-2-hint" class="agent-instruction" style="display:none; border-color: #ffd700; background: rgba(255,215,0,0.1);">
+      <div class="agent-instruction level-2" style="display:none; border-color: #ffd700; background: rgba(255,215,0,0.1);">
         <p>🗣️ Easier Explanation:</p>
         <p class="agent-speak">"A quarter to four means fifteen minutes before 4:00. The gate closes at 15:45."</p>
       </div>
@@ -479,18 +382,170 @@ const storySteps = [
         What should you ask the Gate Agent?
         <div>
           <button class="btn-small-green" onclick="revealPassengerHint(this)">Show Hint: What to say</button>
-          <div class="student-hint-text" style="display:none;">
-            "Excuse me, what time does the gate close?"
-          </div>
+          <div class="student-hint-text" style="display:none;">"Excuse me, what time does the gate close?"</div>
         </div>
       </div>
-      <div class="quiz-question">Listen to the Agent. What time does the gate close?</div>
-      <div class="quiz-options">
-        <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: Quarter past four means 16:15. To means before the hour, past means after.')">A) 16:15</button>
-        <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: Half past three (15:30) is when boarding begins, not when the gate closes.')">B) 15:30</button>
-        <button class="quiz-opt" onclick="checkAns(this, true, 'Correct! Quarter to four means 15 minutes before 4:00. The gate closes at 15:45. Run! 🏃')">C) 15:45</button>
+      
+      <button class="btn-reveal-quiz" onclick="revealQuiz(this)">🎧 Listen to the Agent, then click here for the Quiz</button>
+
+      <div class="quiz-container" style="display:none; margin-top: 15px;">
+        <div class="quiz-question">What time does the gate close?</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: Quarter past four means 16:15. To means before.')">A) 16:15</button>
+          <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: 15:30 is when boarding begins.')">B) 15:30</button>
+          <button class="quiz-opt" onclick="checkAns(this, true, 'Correct! Quarter to four means 15 minutes before 4:00 (15:45).')">C) 15:45</button>
+        </div>
+        <div class="feedback-msg"></div>
       </div>
-      <div class="feedback-msg"></div>
+    `
+  },
+
+  // ===================== SITUATION 5 =====================
+  {
+    agentRole: "👩‍✈️ Check-in Agent (Boarding)",
+    leftRender: () => `
+      <h3 style="color:#ffd700; margin-bottom: 12px; text-align:center;">🎫 BOARDING CHECK</h3>
+      <div style="text-align: center; color: #fff; margin-bottom: 15px;">
+        The passenger gives you their Boarding Pass.<br>
+        <span style="color:#00ff41; font-size: 20px; font-weight:bold;">Seat: 24A (Window)</span>
+      </div>
+
+      <div class="agent-instruction">
+        <p>🗣️ Start the conversation. Say to the Passenger:</p>
+        <p class="agent-speak">"Good morning! Can I see your boarding pass?"</p>
+        
+        <p style="margin-top: 10px;">🗣️ After they give it to you, say:</p>
+        <p class="agent-speak">"Thank you! You are in Seat 24A. That is a window seat."</p>
+        
+        <button class="btn-small-blue" onclick="revealLevel2(this)">Passenger needs help?</button>
+      </div>
+
+      <div class="agent-instruction level-2" style="display:none; border-color: #ffd700; background: rgba(255,215,0,0.1);">
+        <p>🗣️ Easier Explanation:</p>
+        <p class="agent-speak">"Seat 24A is right next to the window."</p>
+      </div>
+    `,
+    rightRender: () => `
+      <div class="student-prompt">
+        🧳 <strong>Passenger:</strong> You are standing at the airplane door. The agent greets you.<br><br>
+        Listen to the Agent, then give them your ticket.
+        <div>
+          <button class="btn-small-green" onclick="revealPassengerHint(this)">Show Hint: What to say</button>
+          <div class="student-hint-text" style="display:none;">"Here you go. Here is my boarding pass."</div>
+        </div>
+      </div>
+      
+      <button class="btn-reveal-quiz" onclick="revealQuiz(this)">🎧 Listen to the Agent, then click here for the Quiz</button>
+
+      <div class="quiz-container" style="display:none; margin-top: 15px;">
+        <div class="quiz-question">What is your seat number, and what type of seat is it?</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: The agent said Window seat, not Aisle seat.')">A) Seat 24C — Aisle Seat</button>
+          <button class="quiz-opt" onclick="checkAns(this, true, 'Correct! You are in 24A, which is a Window seat.')">B) Seat 24A — Window Seat</button>
+          <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: The agent said 24A, not 42A.')">C) Seat 42A — Middle Seat</button>
+        </div>
+        <div class="feedback-msg"></div>
+      </div>
+    `
+  },
+
+  // ===================== SITUATION 6 =====================
+  {
+    agentRole: "👩‍✈️ Flight Attendant",
+    leftRender: () => `
+      <h3 style="color:#ffd700; margin-bottom: 12px; text-align:center;">💺 AIRPLANE LAYOUT (BOEING 737)</h3>
+      
+      <div class="plane-layout">
+        Row 24
+        <div class="seat-row">
+          <div class="seat target">24A<br>(Window)</div>
+          <div class="seat">24B<br>(Middle)</div>
+          <div class="seat" style="border-right:4px solid #999;">24C<br>(Aisle)</div>
+          
+          <div class="aisle"></div>
+          
+          <div class="seat" style="border-left:4px solid #999;">24D<br>(Aisle)</div>
+          <div class="seat">24E<br>(Middle)</div>
+          <div class="seat">24F<br>(Window)</div>
+        </div>
+      </div>
+
+      <div class="agent-instruction">
+        <p>🗣️ Say to the Passenger:</p>
+        <p class="agent-speak">"Your seat is in Row 24 on the left side. Please put your bag in the overhead compartment."</p>
+        <button class="btn-small-blue" onclick="revealLevel2(this)">Passenger needs help?</button>
+      </div>
+
+      <div class="agent-instruction level-2" style="display:none; border-color: #ffd700; background: rgba(255,215,0,0.1);">
+        <p>🗣️ Easier Explanation:</p>
+        <p class="agent-speak">"Row 24 is the horizontal line of seats. The overhead compartment is the storage space above your head."</p>
+      </div>
+    `,
+    rightRender: () => `
+      <div class="student-prompt">
+        🧳 <strong>Passenger:</strong> You are inside the airplane. You are carrying a heavy bag.<br><br>
+        Ask the Flight Attendant where to put it.
+        <div>
+          <button class="btn-small-green" onclick="revealPassengerHint(this)">Show Hint: What to say</button>
+          <div class="student-hint-text" style="display:none;">"Excuse me, where should I put my bag?"</div>
+        </div>
+      </div>
+      
+      <button class="btn-reveal-quiz" onclick="revealQuiz(this)">🎧 Listen to the Agent, then click here for the Quiz</button>
+
+      <div class="quiz-container" style="display:none; margin-top: 15px;">
+        <div class="quiz-question">Where did the flight attendant tell you to put your bag?</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: The bag does not go near the window.')">A) Under the window seat</button>
+          <button class="quiz-opt" onclick="checkAns(this, true, 'Correct! The overhead compartment is the storage space above your head.')">B) In the overhead compartment</button>
+          <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: You cannot put bags in the aisle (lối đi), people need to walk there!')">C) In the aisle</button>
+        </div>
+        <div class="feedback-msg"></div>
+      </div>
+    `
+  },
+
+  // ===================== SITUATION 7 =====================
+  {
+    agentRole: "👩‍✈️ Flight Attendant",
+    leftRender: () => `
+      <h3 style="color:#ffd700; margin-bottom: 12px; text-align:center;">🛫 FINAL GREETING</h3>
+      <div style="text-align: center; color: #fff; margin-bottom: 15px; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px;">
+        The passenger has found their seat.
+      </div>
+
+      <div class="agent-instruction">
+        <p>🗣️ Say to the Passenger:</p>
+        <p class="agent-speak">"Please board the plane now. Have a wonderful flight!"</p>
+        <button class="btn-small-blue" onclick="revealLevel2(this)">Passenger needs help?</button>
+      </div>
+
+      <div class="agent-instruction level-2" style="display:none; border-color: #ffd700; background: rgba(255,215,0,0.1);">
+        <p>🗣️ Easier Explanation:</p>
+        <p class="agent-speak">"Get on the plane and enjoy your trip to Sydney!"</p>
+      </div>
+    `,
+    rightRender: () => `
+      <div class="student-prompt">
+        🧳 <strong>Passenger:</strong> The agent tells you to go inside.<br><br>
+        Say thank you and goodbye!
+        <div>
+          <button class="btn-small-green" onclick="revealPassengerHint(this)">Show Hint: What to say</button>
+          <div class="student-hint-text" style="display:none;">"Great! Thank you! Goodbye!"</div>
+        </div>
+      </div>
+      
+      <button class="btn-reveal-quiz" onclick="revealQuiz(this)">🎧 Listen to the Agent, then click here for the Quiz</button>
+
+      <div class="quiz-container" style="display:none; margin-top: 15px;">
+        <div class="quiz-question">What did the agent say to you?</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: She did not say the flight was delayed.')">A) The flight is delayed.</button>
+          <button class="quiz-opt" onclick="checkAns(this, true, 'Correct! She told you to board the plane and have a wonderful flight. You did it!')">B) Please board the plane now. Have a wonderful flight!</button>
+          <button class="quiz-opt" onclick="checkAns(this, false, 'Hint: She did not ask for your boarding pass again.')">C) Please show me your boarding pass.</button>
+        </div>
+        <div class="feedback-msg"></div>
+      </div>
     `
   }
 ];
@@ -517,7 +572,7 @@ function renderStep() {
   
   const cover = document.getElementById('info-cover');
   cover.classList.remove('hidden');
-  document.getElementById('agent-title-label').innerText = step.agentTitle;
+  document.getElementById('agent-title-label').innerText = step.agentRole;
   
   const leftContent = document.getElementById('left-content');
   leftContent.style.display = 'none';
@@ -527,7 +582,7 @@ function renderStep() {
   document.getElementById('btn-next').style.display = 'none';
   
   if (currentStepIndex === storySteps.length - 1) {
-    document.getElementById('btn-next').innerText = "Board the Flight! 🛫";
+    document.getElementById('btn-next').innerText = "Finish Adventure! 🏆";
   } else {
     document.getElementById('btn-next').innerText = "Next Situation →";
   }
@@ -539,14 +594,18 @@ function revealInfo1() {
   leftContent.style.display = 'flex';
 }
 
-// Fixed function to hide button after click
 function revealLevel2(btn) {
   btn.style.display = 'none'; 
-  document.getElementById('level-2-hint').style.display = 'block'; 
+  const nextDiv = btn.parentElement.nextElementSibling;
+  if(nextDiv) nextDiv.style.display = 'block'; 
 }
 
-// Function to reveal the passenger's speaking prompt
 function revealPassengerHint(btn) {
+  btn.style.display = 'none';
+  btn.nextElementSibling.style.display = 'block';
+}
+
+function revealQuiz(btn) {
   btn.style.display = 'none';
   btn.nextElementSibling.style.display = 'block';
 }
