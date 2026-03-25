@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airport Game - Asking for Directions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .game-container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            color: #2c5364;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .progress-bar-container {
+            background: #e0e0e0;
+            border-radius: 10px;
+            height: 20px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, #43cea2, #185a9d);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        .progress-text {
+            text-align: center;
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .dialogue-box {
+            background: #f0f8ff;
+            border-left: 5px solid #185a9d;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .dialogue-box .speaker {
+            font-weight: bold;
+            color: #185a9d;
+        }
+
+        .dialogue-box .speaker.you {
+            color: #43cea2;
+        }
+
+        .dialogue-line {
+            margin-bottom: 10px;
+        }
+
+        .question-box {
+            background: #fff;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .question-box h3 {
+            color: #2c5364;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .options {
+            display: grid;
+            gap: 10px;
+        }
+
+        .option-btn {
+            background: #f5f5f5;
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            padding: 15px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-btn:hover {
+            background: #e3f2fd;
+            border-color: #185a9d;
+            transform: translateX(5px);
+        }
+
+        .option-btn.correct {
+            background: #c8e6c9;
+            border-color: #4caf50;
+            color: #2e7d32;
+        }
+
+        .option-btn.wrong {
+            background: #ffcdd2;
+            border-color: #f44336;
+            color: #c62828;
+        }
+
+        .option-btn.disabled {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .option-letter {
+            background: #185a9d;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .feedback {
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            display: none;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .feedback.correct {
+            background: #c8e6c9;
+            color: #2e7d32;
+            display: block;
+        }
+
+        .feedback.wrong {
+            background: #ffcdd2;
+            color: #c62828;
+            display: block;
+        }
+
+        .next-btn {
+            background: linear-gradient(90deg, #43cea2, #185a9d);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 15px 30px;
+            font-size: 18px;
+            cursor: pointer;
+            display: none;
+            margin: 20px auto;
+            transition: transform 0.3s ease;
+        }
+
+        .next-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .score-board {
+            display: none;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .score-board h2 {
+            font-size: 32px;
+            color: #2c5364;
+            margin-bottom: 10px;
+        }
+
+        .score-board .score {
+            font-size: 60px;
+            font-weight: bold;
+            color: #43cea2;
+            margin-bottom: 10px;
+        }
+
+        .score-board .message {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .score-board .stars {
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+
+        .restart-btn {
+            background: linear-gradient(90deg, #43cea2, #185a9d);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 15px 30px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            margin: 5px;
+        }
+
+        .restart-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .back-btn {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 15px 30px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            margin: 5px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .back-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .vocab-box {
+            display: none;
+            background: #fff3e0;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .vocab-box h3 {
+            color: #e65100;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .vocab-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .vocab-table td {
+            padding: 8px 12px;
+            border-bottom: 1px solid #ffe0b2;
+        }
+
+        .vocab-table td:first-child {
+            font-weight: bold;
+            color: #e65100;
+            width: 40%;
+        }
+
+        .scene-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 18px;
+            color: #185a9d;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .nav-links a {
+            color: #185a9d;
+            text-decoration: none;
+            font-size: 14px;
+            margin: 0 10px;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        .tip-box {
+            background: #e8f5e9;
+            border-left: 5px solid #4caf50;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #2e7d32;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+
+        <div class="nav-links">
+            <a href="../index.html">⬅️ Back to Scenario 1</a>
+        </div>
+
+        <div class="header">
+            <h1>✈️ Airport Game</h1>
+            <p>Scenario 2: Asking for Directions to the Gate 🗺️</p>
+        </div>
+
+        <div class="progress-bar-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="progress-text" id="progressText">Question 1 of 11</div>
+
+        <div id="quizArea"></div>
+
+        <div class="feedback" id="feedback"></div>
+        <div class="tip-box" id="tipBox"></div>
+
+        <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Next Question ➡️</button>
+
+        <div class="score-board" id="scoreBoard">
+            <h2>🎉 Scenario 2 Complete!</h2>
+            <div class="score" id="finalScore"></div>
+            <div class="stars" id="stars"></div>
+            <div class="message" id="scoreMessage"></div>
+
+            <div class="vocab-box" id="vocabBox">
+                <h3>📚 Key Vocabulary</h3>
+                <table class="vocab-table">
+                    <tr><td>Moving walkway</td><td>A flat escalator that helps you walk faster</td></tr>
+                    <tr><td>Shuttle bus</td><td>A small bus that travels between terminals</td></tr>
+                    <tr><td>Terminal</td><td>A building in the airport for departures and arrivals</td></tr>
+                    <tr><td>Information desk</td><td>A place where you can ask for help and directions</td></tr>
+                    <tr><td>Duty-free shop</td><td>A shop where you can buy things without paying tax</td></tr>
+                    <tr><td>Hallway</td><td>A long corridor or passage in a building</td></tr>
+                    <tr><td>Boarding</td><td>The process of getting on the plane</td></tr>
+                    <tr><td>Gate</td><td>The area where you wait and board your plane</td></tr>
+                    <tr><td>Departure board</td><td>A screen showing flight times, gates, and status</td></tr>
+                </table>
+            </div>
+            <br>
+            <button class="restart-btn" onclick="restartGame()">🔄 Play Again</button>
+            <a href="../index.html" class="back-btn">⬅️ Back to Scenario 1</a>
+        </div>
+    </div>
+
+    <script>
+        const gameData = [
+            // ========== DIALOGUE 1: Airport Staff ==========
+            {
+                scene: "🧑‍✈️ Dialogue 1: Asking an Airport Staff Member",
+                dialogue: [
+                    { speaker: "You", text: "Excuse me, could you tell me how to get to Gate B15?" },
+                    { speaker: "Staff", text: "Sure! Go straight ahead, then turn left at the food court. You'll see the signs for Gates B10-B20. Gate B15 is about a 10-minute walk from here." },
+                    { speaker: "You", text: "Thank you! Is there a faster way to get there?" },
+                    { speaker: "Staff", text: "Yes, you can take the moving walkway. It's just around the corner on your right." }
+                ],
+                question: "You need to find your gate. What is the best thing to say?",
+                options: [
+                    "Where is the bathroom?",
+                    "Excuse me, could you tell me how to get to Gate B15?",
+                    "I want food.",
+                    "What time is it?"
+                ],
+                correct: 1,
+                tip: "💡 Tip: Always start with 'Excuse me' when asking for help. It's polite!"
+            },
+            {
+                scene: "",
+                dialogue: null,
+                question: "The staff says to go straight and then turn...?",
+                options: [
+                    "Right at the café",
+                    "Left at the food court",
+                    "Right at the bookshop",
+                    "Left at the bathroom"
+                ],
+                correct: 1,
+                tip: "💡 Tip: Listen carefully for direction words like 'left', 'right', 'straight ahead'."
+            },
+            {
+                scene: "",
+                dialogue: null,
+                question: "How long does it take to walk to the gate?",
+                options: [
+                    "5 minutes",
+                    "20 minutes",
+                    "10 minutes",
+                    "30 minutes"
+                ],
+                correct: 2,
+                tip: "💡 Tip: Always check how far your gate is. Some airports are very big!"
+            },
+            {
+                scene: "",
+                dialogue: null,
+                question: "What is the faster way to get to the gate?",
+                options: [
+                    "Take a taxi",
+                    "Run",
+                    "Take the elevator",
+                    "Take the moving walkway"
+                ],
+                correct: 3,
+                tip: "💡 Tip: A moving walkway is like a flat escalator. It helps you walk faster. Look for them in big airports!"
+            },
+
+            // ========== DIALOGUE 2: Another Passenger ==========
+            {
+                scene: "👤 Dialogue 2: Asking Another Passenger",
+                dialogue: [
+                    { speaker: "You", text: "Hi, excuse me. Do you know where Gate B15 is?" },
+                    { speaker: "Passenger", text: "Hmm, I'm not sure, but I think it's in Terminal 2. You might need to take the shuttle bus to get there." },
+                    { speaker: "You", text: "Oh, where can I catch the shuttle bus?" },
+                    { speaker: "Passenger", text: "I think the shuttle bus stop is near the information desk, just down the hall on your left." }
+                ],
+                question: "The passenger thinks the gate is in...?",
+                options: [
+                    "Terminal 1",
+                    "Terminal 3",
+                    "Terminal 2",
+                    "Terminal 4"
+                ],
+                correct: 2,
+                tip: "💡 Tip: Passengers can help, but they might not always be correct. It's better to also check with airport staff."
+            },
+            {
+                scene: "",
+                dialogue: null,
+                question: "How can you get to Terminal 2?",
+                options: [
+                    "Walk",
+                    "Take the shuttle bus",
+                    "Take a taxi",
+                    "Take the train"
+                ],
+                correct: 1,
+                tip: "💡 Tip: Many airports have free shuttle buses between terminals. Look for signs that say 'Terminal Transfer'."
+            },
+            {
+                scene: "",
+                dialogue: null,
+                question: "Where is the shuttle bus stop?",
+                options: [
+                    "Near the coffee shop",
+                    "Outside the airport",
+                    "Near the information desk",
+                    "At the gate"
+                ],
+                correct: 2,
+                tip: "💡 Tip: The information desk is always a good place to go if you are lost!"
+            },
+
+            // ========== DIALOGUE 3: Information Desk ==========
+            {
+                scene: "ℹ️ Dialogue 3: Asking at the Information Desk",
+                dialogue: [
+                    { speaker: "You", text: "Hello, I'm looking for Gate B15. Am I in the right terminal?" },
+                    { speaker: "Staff", text: "Yes, you are! Gate B15 is at the end of this hallway. Just follow the signs. You should see it on your right after you pass the duty-free shop." },
+                    { speaker: "You", text: "Great, thank you! How much time do I have before boarding?" },
+                    { speaker: "Staff", text: "Your flight starts boarding in 25 minutes, so you have plenty of time." }
+                ],
+                question: "Is the student in the right terminal?",
+                options: [
+                    "No",
+                    "Yes",
+                    "Maybe",
+                    "The staff doesn't know"
+                ],
+                correct: 1,
+                tip: "💡 Tip: Always check your terminal number on your boarding pass before walking too far!"
+            },
+            {
+                scene: "",
+                dialogue: null,
+                question: "What will you pass before you see the gate?",
+                options: [
+                    "A restaurant",
+                    "A bookshop",
+                    "The duty-free shop",
+                    "The bathroom"
+                ],
+                correct: 2,
+                tip: "💡 Tip: Use landmarks (like shops and restaurants) to help you find your way."
+            },
+            {
+                scene: "",
+                dialogue: null,
+                question: "How much time does the student have before boarding?",
+                options: [
+                    "10 minutes",
+                    "15 minutes",
+                    "30 minutes",
+                    "25 minutes"
+                ],
+                correct: 3,
+                tip: "💡 Tip: It's a good idea to be at your gate at least 30 minutes before departure."
+            },
+
+            // ========== BONUS QUESTION ==========
+            {
+                scene: "⭐ Bonus Question",
+                dialogue: null,
+                question: "Which of these is the MOST polite way to ask for directions?",
+                options: [
+                    "Tell me where the gate is.",
+                    "Gate B15. Now.",
+                    "Excuse me, could you tell me how to get to Gate B15?",
+                    "Hey! Where's my gate?"
+                ],
+                correct: 2,
+                tip: "💡 Tip: In English, polite phrases like 'Excuse me', 'Could you...', and 'please' make a big difference!"
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function loadQuestion() {
+            const data = gameData[currentQuestion];
+            const quizArea = document.getElementById('quizArea');
+            const feedback = document.getElementById('feedback');
+            const tipBox = document.getElementById('tipBox');
+            const nextBtn = document.getElementById('nextBtn');
+
+            // Reset
+            feedback.className = 'feedback';
+            feedback.style.display = 'none';
+            tipBox.style.display = 'none';
+            nextBtn.style.display = 'none';
+
+            let html = '';
+
+            // Scene title
+            if (data.scene) {
+                html += `<div class="scene-title">${data.scene}</div>`;
+            }
+
+            // Dialogue
+            if (data.dialogue) {
+                html += '<div class="dialogue-box">';
+                data.dialogue.forEach(line => {
+                    const speakerClass = line.speaker === 'You' ? 'you' : '';
+                    html += `<div class="dialogue-line">
+                        <span class="speaker ${speakerClass}">${line.speaker}:</span> ${line.text}
+                    </div>`;
+                });
+                html += '</div>';
+            }
+
+            // Question
+            html += '<div class="question-box">';
+            html += `<h3>❓ ${data.question}</h3>`;
+            html += '<div class="options">';
+
+            const letters = ['A', 'B', 'C', 'D'];
+            data.options.forEach((option, index) => {
+                html += `<button class="option-btn" onclick="checkAnswer(${index}, this)">
+                    <span class="option-letter">${letters[index]}</span>
+                    ${option}
+                </button>`;
+            });
+
+            html += '</div></div>';
+
+            quizArea.innerHTML = html;
+
+            // Update progress bar
+            const progress = (currentQuestion / gameData.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+            document.getElementById('progressText').textContent =
+                `Question ${currentQuestion + 1} of ${gameData.length}`;
+        }
+
+        function checkAnswer(selected, element) {
+            const data = gameData[currentQuestion];
+            const feedback = document.getElementById('feedback');
+            const tipBox = document.getElementById('tipBox');
+            const nextBtn = document.getElementById('nextBtn');
+            const options = document.querySelectorAll('.option-btn');
+
+            // Disable all options
+            options.forEach(btn => btn.classList.add('disabled'));
+
+            if (selected === data.correct) {
+                element.classList.add('correct');
+                feedback.className = 'feedback correct';
+                feedback.innerHTML = '✅ Correct! Well done! 🎉';
+                score++;
+            } else {
+                element.classList.add('wrong');
+                options[data.correct].classList.add('correct');
+                feedback.className = 'feedback wrong';
+                feedback.innerHTML = `❌ Not quite! The correct answer is: <strong>${data.options[data.correct]}</strong>`;
+            }
+
+            feedback.style.display = 'block';
+
+            // Show tip
+            if (data.tip) {
+                tipBox.innerHTML = data.tip;
+                tipBox.style.display = 'block';
+            }
+
+            nextBtn.style.display = 'block';
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+
+            if (currentQuestion >= gameData.length) {
+                showScore();
+            } else {
+                loadQuestion();
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function showScore() {
+            document.getElementById('quizArea').style.display = 'none';
+            document.getElementById('feedback').style.display = 'none';
+            document.getElementById('tipBox').style.display = 'none';
+            document.getElementById('nextBtn').style.display = 'none';
+            document.getElementById('progressBar').style.width = '100%';
+            document.getElementById('progressText').textContent = '✅ Complete!';
+
+            const scoreBoard = document.getElementById('scoreBoard');
+            const finalScore = document.getElementById('finalScore');
+            const starsEl = document.getElementById('stars');
+            const message = document.getElementById('scoreMessage');
+            const vocabBox = document.getElementById('vocabBox');
+
+            scoreBoard.style.display = 'block';
+            finalScore.textContent = `${score} / ${gameData.length}`;
+
+            let stars = '';
+            let msg = '';
+            const percentage = (score / gameData.length) * 100;
+
+            if (percentage === 100) {
+                stars = '⭐⭐⭐⭐⭐';
+                msg = '🏆 Perfect! You are an airport navigation expert! Ready for Australia!';
+            } else if (percentage >= 80) {
+                stars = '⭐⭐⭐⭐';
+                msg = '👏 Great job! You can find your way around the airport!';
+            } else if (percentage >= 60) {
+                stars = '⭐⭐⭐';
+                msg = '👍 Good effort! Practice a bit more and you\'ll be ready!';
+            } else if (percentage >= 40) {
+                stars = '⭐⭐';
+                msg = '🤔 Keep practicing! You\'re getting there!';
+            } else {
+                stars = '⭐';
+                msg = '💪 Don\'t give up! Try again and learn the phrases!';
+            }
+
+            starsEl.textContent = stars;
+            message.textContent = msg;
+            vocabBox.style.display = 'block';
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function restartGame() {
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById('quizArea').style.display = 'block';
+            document.getElementById('scoreBoard').style.display = 'none';
+            loadQuestion();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Start the game
+        loadQuestion();
+    </script>
+</body>
+</html>
