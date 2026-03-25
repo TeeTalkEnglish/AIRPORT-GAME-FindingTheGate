@@ -33,41 +33,47 @@
             font-size: 18px;
         }
 
-        .instructions {
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(255,215,0,0.3);
-            border-radius: 16px;
-            padding: 20px;
-            max-width: 900px;
-            margin: 0 auto 30px auto;
+        /* Progress Bar */
+        .progress-container {
+            max-width: 1200px;
+            margin: 0 auto 20px auto;
+        }
+
+        .progress-bar-bg {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            height: 20px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            background: linear-gradient(90deg, #43cea2, #185a9d);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        .progress-text {
             text-align: center;
-        }
-
-        .instructions h3 {
-            color: #ffd700;
-            margin-bottom: 10px;
-            font-size: 20px;
-        }
-
-        .instructions p {
             color: #a8d8f0;
-            font-size: 16px;
-            line-height: 1.6;
-        }
-
-        .instructions .highlight {
-            color: #ff6b6b;
-            font-weight: bold;
+            margin-top: 8px;
+            font-size: 14px;
         }
 
         /* ========== CONVERSATION CARDS ========== */
         .conversation-card {
             max-width: 1200px;
-            margin: 0 auto 40px auto;
+            margin: 0 auto 20px auto;
             background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,215,0,0.2);
             border-radius: 20px;
             overflow: hidden;
+            display: none;
+        }
+
+        .conversation-card.active {
+            display: block;
         }
 
         .conversation-header {
@@ -90,34 +96,19 @@
 
         .conversation-body {
             display: flex;
-            min-height: 400px;
+            min-height: 500px;
         }
 
-        /* LEFT SIDE - PASSENGER */
-        .passenger-side {
+        /* LEFT SIDE - STAFF */
+        .staff-side {
             flex: 1;
-            background: linear-gradient(180deg, #1a3a5c, #0d2137);
+            background: linear-gradient(180deg, #1c2e1c, #0d2137);
             padding: 25px;
             border-right: 3px dashed rgba(255,215,0,0.3);
-            position: relative;
         }
 
-        .passenger-side::after {
-            content: '📖 COVER THIS SIDE WITH A BOOK';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(-30deg);
-            font-size: 20px;
-            color: rgba(255,100,100,0.15);
-            font-weight: bold;
-            white-space: nowrap;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .passenger-side .side-title {
-            background: #e74c3c;
+        .staff-side .side-title {
+            background: #27ae60;
             color: white;
             padding: 10px 20px;
             border-radius: 12px;
@@ -127,15 +118,30 @@
             margin-bottom: 20px;
         }
 
-        /* RIGHT SIDE - STAFF */
-        .staff-side {
+        /* RIGHT SIDE - PASSENGER */
+        .passenger-side {
             flex: 1;
-            background: linear-gradient(180deg, #1c2e1c, #0d2137);
+            background: linear-gradient(180deg, #1a3a5c, #0d2137);
             padding: 25px;
+            position: relative;
         }
 
-        .staff-side .side-title {
-            background: #27ae60;
+        .passenger-side::after {
+            content: '📖 COVER THIS SIDE';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-30deg);
+            font-size: 20px;
+            color: rgba(255,100,100,0.1);
+            font-weight: bold;
+            white-space: nowrap;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .passenger-side .side-title {
+            background: #e74c3c;
             color: white;
             padding: 10px 20px;
             border-radius: 12px;
@@ -174,6 +180,70 @@
             margin-top: 5px;
         }
 
+        /* INPUT FIELDS */
+        .input-group {
+            background: rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 12px;
+            border-left: 4px solid #ff6b6b;
+        }
+
+        .input-group .label {
+            font-size: 12px;
+            color: #ff6b6b;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 2px solid rgba(255,255,255,0.2);
+            background: rgba(0,0,0,0.3);
+            color: #fff;
+            font-size: 16px;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #ffd700;
+        }
+
+        .input-field::placeholder {
+            color: rgba(255,255,255,0.3);
+        }
+
+        .input-field.correct {
+            border-color: #43cea2;
+            background: rgba(67, 206, 162, 0.1);
+        }
+
+        .input-field.wrong {
+            border-color: #e74c3c;
+            background: rgba(231, 76, 60, 0.1);
+        }
+
+        .answer-feedback {
+            font-size: 13px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .answer-feedback.correct {
+            color: #43cea2;
+            display: block;
+        }
+
+        .answer-feedback.wrong {
+            color: #e74c3c;
+            display: block;
+        }
+
         /* DIALOGUE SECTION */
         .dialogue-section {
             padding: 15px;
@@ -199,78 +269,11 @@
             line-height: 1.5;
         }
 
-        .phrase .speaker {
-            font-weight: bold;
-            color: #43cea2;
-        }
-
-        /* DIVIDER */
-        .divider-line {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            margin: 0;
-        }
-
-        .divider-text {
-            background: #ffd700;
-            color: #0a1628;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 14px;
-            position: absolute;
-            top: -15px;
-            z-index: 2;
-        }
-
-        /* USEFUL PHRASES BOX */
-        .phrases-box {
+        /* BUTTONS */
+        .btn-container {
             max-width: 1200px;
-            margin: 0 auto 40px auto;
-            background: rgba(255,215,0,0.05);
-            border: 1px solid rgba(255,215,0,0.2);
-            border-radius: 20px;
-            padding: 25px;
-        }
-
-        .phrases-box h3 {
-            color: #ffd700;
+            margin: 20px auto;
             text-align: center;
-            margin-bottom: 20px;
-            font-size: 22px;
-        }
-
-        .phrases-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
-        .phrase-card {
-            background: rgba(255,255,255,0.08);
-            border-radius: 12px;
-            padding: 15px;
-        }
-
-        .phrase-card .english {
-            font-size: 16px;
-            color: #fff;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        .phrase-card .usage {
-            font-size: 13px;
-            color: #a8d8f0;
-        }
-
-        /* NAV BUTTONS */
-        .nav-buttons {
-            text-align: center;
-            margin: 30px auto;
-            max-width: 1200px;
         }
 
         .nav-btn {
@@ -278,7 +281,7 @@
             color: white;
             border: none;
             border-radius: 12px;
-            padding: 15px 30px;
+            padding: 15px 40px;
             font-size: 18px;
             cursor: pointer;
             transition: transform 0.3s ease;
@@ -295,87 +298,141 @@
             background: linear-gradient(90deg, #667eea, #764ba2);
         }
 
+        .nav-btn.check {
+            background: linear-gradient(90deg, #f7971e, #ffd200);
+            color: #0a1628;
+            font-weight: bold;
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* SCORE BOARD */
+        .score-board {
+            display: none;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,215,0,0.2);
+            border-radius: 20px;
+            padding: 40px;
+        }
+
+        .score-board h2 {
+            color: #ffd700;
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .score-board .score {
+            font-size: 60px;
+            font-weight: bold;
+            color: #43cea2;
+            margin-bottom: 10px;
+        }
+
+        .score-board .stars {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .score-board .message {
+            font-size: 18px;
+            color: #a8d8f0;
+            margin-bottom: 25px;
+        }
+
+        /* VOCAB BOX */
+        .vocab-box {
+            background: rgba(255,215,0,0.05);
+            border: 1px solid rgba(255,215,0,0.2);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .vocab-box h3 {
+            color: #ffd700;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .vocab-item {
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            padding: 10px 15px;
+        }
+
+        .vocab-item .word {
+            color: #ffd700;
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .vocab-item .meaning {
+            color: #a8d8f0;
+            font-size: 13px;
+            margin-top: 3px;
+        }
+
         /* RESPONSIVE */
         @media (max-width: 768px) {
             .conversation-body {
                 flex-direction: column;
             }
 
-            .passenger-side {
+            .staff-side {
                 border-right: none;
                 border-bottom: 3px dashed rgba(255,215,0,0.3);
             }
 
-            .phrases-grid {
+            .vocab-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .title-section h1 {
+                font-size: 28px;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- ========== TITLE ========== -->
+    <!-- TITLE -->
     <div class="title-section">
         <h1>✈️ Airport Adventure</h1>
         <p>Scenario 2: Asking for Directions to the Gate 🗺️</p>
     </div>
 
-    <!-- ========== INSTRUCTIONS ========== -->
-    <div class="instructions">
-        <h3>📖 How to Play</h3>
-        <p>
-            This is a <span class="highlight">pair activity</span>! One student is the <strong>Passenger</strong> and the other is the <strong>Airport Staff</strong>.<br><br>
-            👉 The <strong>Passenger</strong> covers the <span class="highlight">LEFT side</span> with a book.<br>
-            👉 The <strong>Staff</strong> covers the <span class="highlight">RIGHT side</span> with a book.<br><br>
-            Ask each other questions to get the information you need! 🗣️
-        </p>
+    <!-- PROGRESS BAR -->
+    <div class="progress-container">
+        <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="progressBar"></div>
+        </div>
+        <div class="progress-text" id="progressText">Conversation 1 of 4</div>
     </div>
 
-    <!-- ========== CONVERSATION 1: At the Departure Board ========== -->
-    <div class="conversation-card">
+    <!-- ==================== CONVERSATION 1 ==================== -->
+    <div class="conversation-card active" id="conv1">
         <div class="conversation-header">
             <h2>🖥️ Conversation 1: At the Departure Board</h2>
             <p>The passenger needs to find their gate. They ask a staff member for help.</p>
         </div>
         <div class="conversation-body">
-            <!-- LEFT: PASSENGER -->
-            <div class="passenger-side">
-                <div class="side-title">👤 Passenger (Student A)</div>
-
-                <div class="info-item">
-                    <div class="label">Your Flight Number</div>
-                    <div class="value">QF 482</div>
-                </div>
-
-                <div class="info-item">
-                    <div class="label">Your Destination</div>
-                    <div class="value">Sydney, Australia</div>
-                </div>
-
-                <div class="info-item">
-                    <div class="label">Departure Time</div>
-                    <div class="value">14:30</div>
-                </div>
-
-                <div class="info-item">
-                    <div class="label">You Need to Find Out</div>
-                    <div class="value" style="color: #ff6b6b;">❓ What gate number?</div>
-                    <div class="detail">❓ How to get there?</div>
-                    <div class="detail">❓ How far is it?</div>
-                </div>
-
-                <div class="dialogue-section">
-                    <h4>💬 Useful Phrases for You:</h4>
-                    <div class="phrase">"Excuse me, I'm looking for my gate. My flight is QF 482."</div>
-                    <div class="phrase">"Could you tell me how to get to Gate ___?"</div>
-                    <div class="phrase">"How long will it take to walk there?"</div>
-                    <div class="phrase">"Is there a faster way to get there?"</div>
-                </div>
-            </div>
-
-            <!-- RIGHT: STAFF -->
+            <!-- LEFT: STAFF -->
             <div class="staff-side">
-                <div class="side-title">🧑‍✈️ Airport Staff (Student B)</div>
+                <div class="side-title">🧑‍✈️ Airport Staff (Student A)</div>
 
                 <div class="info-item">
                     <div class="label">Flight QF 482 - Gate Info</div>
@@ -412,50 +469,71 @@
                     <div class="phrase">"You can take the moving walkway to get there faster."</div>
                 </div>
             </div>
+
+            <!-- RIGHT: PASSENGER -->
+            <div class="passenger-side">
+                <div class="side-title">👤 Passenger (Student B)</div>
+
+                <div class="info-item">
+                    <div class="label">Your Flight Number</div>
+                    <div class="value">QF 482</div>
+                </div>
+
+                <div class="info-item">
+                    <div class="label">Your Destination</div>
+                    <div class="value">Sydney, Australia</div>
+                </div>
+
+                <div class="info-item">
+                    <div class="label">Departure Time</div>
+                    <div class="value">14:30</div>
+                </div>
+
+                <div class="input-group">
+                    <div class="label">❓ What is your gate number?</div>
+                    <input type="text" class="input-field" id="conv1_q1" placeholder="Type the gate number..." data-answer="b15">
+                    <div class="answer-feedback" id="conv1_q1_fb"></div>
+                </div>
+
+                <div class="input-group">
+                    <div class="label">❓ Which direction do you go?</div>
+                    <input type="text" class="input-field" id="conv1_q2" placeholder="Type the directions..." data-answer="go straight turn left at the food court">
+                    <div class="answer-feedback" id="conv1_q2_fb"></div>
+                </div>
+
+                <div class="input-group">
+                    <div class="label">❓ How long is the walk?</div>
+                    <input type="text" class="input-field" id="conv1_q3" placeholder="Type the walking time..." data-answer="10 minutes">
+                    <div class="answer-feedback" id="conv1_q3_fb"></div>
+                </div>
+
+                <div class="input-group">
+                    <div class="label">❓ What is the faster option?</div>
+                    <input type="text" class="input-field" id="conv1_q4" placeholder="Type the faster option..." data-answer="moving walkway">
+                    <div class="answer-feedback" id="conv1_q4_fb"></div>
+                </div>
+
+                <div class="dialogue-section">
+                    <h4>💬 Useful Phrases for You:</h4>
+                    <div class="phrase">"Excuse me, I'm looking for my gate. My flight is QF 482."</div>
+                    <div class="phrase">"Could you tell me how to get to Gate ___?"</div>
+                    <div class="phrase">"How long will it take to walk there?"</div>
+                    <div class="phrase">"Is there a faster way to get there?"</div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- ========== CONVERSATION 2: Lost in the Terminal ========== -->
-    <div class="conversation-card">
+    <!-- ==================== CONVERSATION 2 ==================== -->
+    <div class="conversation-card" id="conv2">
         <div class="conversation-header">
             <h2>😰 Conversation 2: Lost in the Terminal</h2>
             <p>The passenger is lost and asks another passenger for help.</p>
         </div>
         <div class="conversation-body">
-            <!-- LEFT: PASSENGER -->
-            <div class="passenger-side">
-                <div class="side-title">👤 Passenger (Student A)</div>
-
-                <div class="info-item">
-                    <div class="label">Your Situation</div>
-                    <div class="value">You are lost!</div>
-                    <div class="detail">You can't find Gate B15</div>
-                </div>
-
-                <div class="info-item">
-                    <div class="label">Where You Are Now</div>
-                    <div class="value">Terminal 1, near the coffee shop</div>
-                </div>
-
-                <div class="info-item">
-                    <div class="label">You Need to Find Out</div>
-                    <div class="value" style="color: #ff6b6b;">❓ Am I in the right terminal?</div>
-                    <div class="detail">❓ How do I get to the right place?</div>
-                    <div class="detail">❓ Where is the shuttle bus?</div>
-                </div>
-
-                <div class="dialogue-section">
-                    <h4>💬 Useful Phrases for You:</h4>
-                    <div class="phrase">"Excuse me, I'm a bit lost. Do you know where Gate B15 is?"</div>
-                    <div class="phrase">"Am I in the right terminal?"</div>
-                    <div class="phrase">"How do I get to Terminal 2?"</div>
-                    <div class="phrase">"Where can I catch the shuttle bus?"</div>
-                </div>
-            </div>
-
-            <!-- RIGHT: HELPFUL PASSENGER -->
+            <!-- LEFT: HELPFUL PASSENGER -->
             <div class="staff-side">
-                <div class="side-title">🙋 Helpful Passenger (Student B)</div>
+                <div class="side-title">🙋 Helpful Passenger (Student A)</div>
 
                 <div class="info-item">
                     <div class="label">Gate B15 Location</div>
@@ -488,46 +566,67 @@
                     <div class="phrase">"It's just down the hall on your left."</div>
                 </div>
             </div>
+
+            <!-- RIGHT: PASSENGER -->
+            <div class="passenger-side">
+                <div class="side-title">👤 Passenger (Student B)</div>
+
+                <div class="info-item">
+                    <div class="label">Your Situation</div>
+                    <div class="value">You are lost!</div>
+                    <div class="detail">You can't find Gate B15</div>
+                </div>
+
+                <div class="info-item">
+                    <div class="label">Where You Are Now</div>
+                    <div class="value">Terminal 1, near the coffee shop</div>
+                </div>
+
+                <div class="input-group">
+                    <div class="label">❓ Which terminal is Gate B15 in?</div>
+                    <input type="text" class="input-field" id="conv2_q1" placeholder="Type the terminal number..." data-answer="terminal 2">
+                    <div class="answer-feedback" id="conv2_q1_fb"></div>
+                </div>
+
+                <div class="input-group">
+                    <div class="label">❓ How do you get there?</div>
+                    <input type="text" class="input-field" id="conv2_q2" placeholder="Type how to get there..." data-answer="shuttle bus">
+                    <div class="answer-feedback" id="conv2_q2_fb"></div>
+                </div>
+
+                <div class="input-group">
+                    <div class="label">❓ Where is the shuttle bus stop?</div>
+                    <input type="text" class="input-field" id="conv2_q3" placeholder="Type the location..." data-answer="near the information desk">
+                    <div class="answer-feedback" id="conv2_q3_fb"></div>
+                </div>
+
+                <div class="input-group">
+                    <div class="label">❓ How long is the bus ride?</div>
+                    <input type="text" class="input-field" id="conv2_q4" placeholder="Type the travel time..." data-answer="5 minutes">
+                    <div class="answer-feedback" id="conv2_q4_fb"></div>
+                </div>
+
+                <div class="dialogue-section">
+                    <h4>💬 Useful Phrases for You:</h4>
+                    <div class="phrase">"Excuse me, I'm a bit lost. Do you know where Gate B15 is?"</div>
+                    <div class="phrase">"Am I in the right terminal?"</div>
+                    <div class="phrase">"How do I get to Terminal 2?"</div>
+                    <div class="phrase">"Where can I catch the shuttle bus?"</div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- ========== CONVERSATION 3: At the Information Desk ========== -->
-    <div class="conversation-card">
+    <!-- ==================== CONVERSATION 3 ==================== -->
+    <div class="conversation-card" id="conv3">
         <div class="conversation-header">
             <h2>ℹ️ Conversation 3: At the Information Desk</h2>
             <p>The passenger arrives at Terminal 2 and asks at the information desk.</p>
         </div>
         <div class="conversation-body">
-            <!-- LEFT: PASSENGER -->
-            <div class="passenger-side">
-                <div class="side-title">👤 Passenger (Student A)</div>
-
-                <div class="info-item">
-                    <div class="label">Your Situation</div>
-                    <div class="value">You arrived at Terminal 2</div>
-                    <div class="detail">You need final directions to Gate B15</div>
-                </div>
-
-                <div class="info-item">
-                    <div class="label">You Need to Find Out</div>
-                    <div class="value" style="color: #ff6b6b;">❓ Am I in the right terminal now?</div>
-                    <div class="detail">❓ Where exactly is Gate B15?</div>
-                    <div class="detail">❓ How much time before boarding?</div>
-                    <div class="detail">❓ Any landmarks to look for?</div>
-                </div>
-
-                <div class="dialogue-section">
-                    <h4>💬 Useful Phrases for You:</h4>
-                    <div class="phrase">"Hello, I'm looking for Gate B15. Am I in the right terminal?"</div>
-                    <div class="phrase">"Could you give me directions?"</div>
-                    <div class="phrase">"How much time do I have before boarding?"</div>
-                    <div class="phrase">"What should I look for on the way?"</div>
-                </div>
-            </div>
-
-            <!-- RIGHT: INFO DESK STAFF -->
+            <!-- LEFT: INFO DESK STAFF -->
             <div class="staff-side">
-                <div class="side-title">💁 Information Desk Staff (Student B)</div>
+                <div class="side-title">💁 Information Desk Staff (Student A)</div>
 
                 <div class="info-item">
                     <div class="label">Correct Terminal?</div>
@@ -554,8 +653,8 @@
 
                 <div class="info-item">
                     <div class="label">Extra Info</div>
-                    <div class="value">There are toilets near Gate B13</div>
-                    <div class="detail">Also a café near Gate B16</div>
+                    <div class="value">Toilets near Gate B13</div>
+                    <div class="detail">Café near Gate B16</div>
                 </div>
 
                 <div class="dialogue-section">
@@ -563,55 +662,65 @@
                     <div class="phrase">"Yes, you're in the right terminal!"</div>
                     <div class="phrase">"Gate B15 is at the end of this hallway on your right."</div>
                     <div class="phrase">"You'll pass the duty-free shop. The gate is right after it."</div>
-                    <div class="phrase">"Boarding starts in about 25 minutes, so you have plenty of time."</div>
+                    <div class="phrase">"Boarding starts in about 25 minutes."</div>
+                </div>
+            </div>
+
+            <!-- RIGHT: PASSENGER -->
+            <div class="passenger-side">
+                <div class="side-title">👤 Passenger (Student B)</div>
+
+                <div class="info-item">
+                    <div class="label">Your Situation</div>
+                    <div class="value">You arrived at Terminal 2</div>
+                    <div class="detail">You need final directions to Gate B15</div>
+                </div>
+
+                <div class="input-group">
+                    <div class="label">❓ Are you in the right terminal?</div>
+                    <input type="text" class="input-field" id="conv3_q1" placeholder="Type yes or no..." data-answer="yes">
+                    <div class="answer-feedback" id="conv3_q1_fb"></div>
+                </div>
+
+                <div class="input-group">
+                    <div class="label">❓ Where is Gate B15?</div>
+                    <input type="text" class="input-field" id="conv3_q2" placeholder="Type the location..." data-answer="end of the hallway on the right">
+                    <div class="answer-feedback" id="conv3_q2_fb"></div>
+                </div>
+
+                <div class="input-group">
+                    <div class="label">❓ What landmark will you pass?</div>
+                    <input type="text" class="input-field" id="conv3_q3" placeholder="Type the landmark..." data-answer="duty-free shop">
+                    <div class="answer-feedback" id="conv3_q3_fb"></div>
+                </div>
+
+                <div class="input-group">
+                    <div class="label">❓ How much time before boarding?</div>
+                    <input type="text" class="input-field" id="conv3_q4" placeholder="Type the time..." data-answer="25 minutes">
+                    <div class="answer-feedback" id="conv3_q4_fb"></div>
+                </div>
+
+                <div class="dialogue-section">
+                    <h4>💬 Useful Phrases for You:</h4>
+                    <div class="phrase">"Hello, I'm looking for Gate B15. Am I in the right terminal?"</div>
+                    <div class="phrase">"Could you give me directions?"</div>
+                    <div class="phrase">"How much time do I have before boarding?"</div>
+                    <div class="phrase">"What should I look for on the way?"</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- ========== CONVERSATION 4: Gate Change! ========== -->
-    <div class="conversation-card">
+    <!-- ==================== CONVERSATION 4 ==================== -->
+    <div class="conversation-card" id="conv4">
         <div class="conversation-header">
             <h2>⚠️ Conversation 4: Gate Change!</h2>
-            <p>Oh no! The gate has been changed! The passenger needs to find the new gate.</p>
+            <p>The gate has been changed! The passenger needs to find the new gate.</p>
         </div>
         <div class="conversation-body">
-            <!-- LEFT: PASSENGER -->
-            <div class="passenger-side">
-                <div class="side-title">👤 Passenger (Student A)</div>
-
-                <div class="info-item">
-                    <div class="label">Your Situation</div>
-                    <div class="value">You arrived at Gate B15</div>
-                    <div class="detail">But the screen says "GATE CHANGED"!</div>
-                </div>
-
-                <div class="info-item">
-                    <div class="label">Your Flight</div>
-                    <div class="value">QF 482 to Sydney</div>
-                    <div class="detail">Departure: 14:30</div>
-                </div>
-
-                <div class="info-item">
-                    <div class="label">You Need to Find Out</div>
-                    <div class="value" style="color: #ff6b6b;">❓ What is the new gate?</div>
-                    <div class="detail">❓ Where is the new gate?</div>
-                    <div class="detail">❓ How much time do I have?</div>
-                    <div class="detail">❓ Why was the gate changed?</div>
-                </div>
-
-                <div class="dialogue-section">
-                    <h4>💬 Useful Phrases for You:</h4>
-                    <div class="phrase">"Excuse me, it says my gate has changed. Can you help me?"</div>
-                    <div class="phrase">"What is the new gate for flight QF 482?"</div>
-                    <div class="phrase">"Where is Gate ___? Is it far from here?"</div>
-                    <div class="phrase">"Do I have enough time to get there?"</div>
-                </div>
-            </div>
-
-            <!-- RIGHT: GATE STAFF -->
+            <!-- LEFT: GATE STAFF -->
             <div class="staff-side">
-                <div class="side-title">🧑‍✈️ Gate Staff (Student B)</div>
+                <div class="side-title">🧑‍✈️ Gate Staff (Student A)</div>
 
                 <div class="info-item">
                     <div class="label">New Gate</div>
@@ -643,97 +752,290 @@
 
                 <div class="dialogue-section">
                     <h4>💬 Useful Phrases for You:</h4>
-                    <div class="phrase">"Yes, the gate has been changed to Gate B22."</div>
+                    <div class="phrase">"The gate has been changed to Gate B22."</div>
                     <div class="phrase">"There was a technical issue at Gate B15."</div>
                     <div class="phrase">"Walk straight past Gate B18. B22 is on the left."</div>
                     <div class="phrase">"Boarding starts in 15 minutes, so please hurry."</div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <!-- ========== USEFUL PHRASES SUMMARY ========== -->
-    <div class="phrases-box">
-        <h3>📚 Key Phrases for Asking Directions</h3>
-        <div class="phrases-grid">
-            <div class="phrase-card">
-                <div class="english">"Excuse me, could you tell me how to get to Gate ___?"</div>
-                <div class="usage">Polite way to ask for directions</div>
-            </div>
-            <div class="phrase-card">
-                <div class="english">"Am I in the right terminal?"</div>
-                <div class="usage">Check if you're in the correct building</div>
-            </div>
-            <div class="phrase-card">
-                <div class="english">"How long will it take to walk there?"</div>
-                <div class="usage">Find out the distance</div>
-            </div>
-            <div class="phrase-card">
-                <div class="english">"Is there a faster way to get there?"</div>
-                <div class="usage">Ask about moving walkways or shuttle buses</div>
-            </div>
-            <div class="phrase-card">
-                <div class="english">"Where can I catch the shuttle bus?"</div>
-                <div class="usage">Find transport between terminals</div>
-            </div>
-            <div class="phrase-card">
-                <div class="english">"My gate has changed. Can you help me?"</div>
-                <div class="usage">When your gate number changes</div>
-            </div>
-            <div class="phrase-card">
-                <div class="english">"Do I have enough time to get there?"</div>
-                <div class="usage">Check if you need to hurry</div>
-            </div>
-            <div class="phrase-card">
-                <div class="english">"What should I look for on the way?"</div>
-                <div class="usage">Ask about landmarks to help find your way</div>
-            </div>
-        </div>
-    </div>
+            <!-- RIGHT: PASSENGER -->
+            <div class="passenger-side">
+                <div class="side-title">👤 Passenger (Student B)</div>
 
-    <!-- ========== KEY VOCABULARY ========== -->
-    <div class="phrases-box">
-        <h3>📖 Key Vocabulary</h3>
-        <div class="phrases-grid">
-            <div class="phrase-card">
-                <div class="english">Moving walkway</div>
-                <div class="usage">A flat escalator that helps you walk faster</div>
-            </div>
-            <div class="phrase-card">
-                <div class="english">Shuttle bus</div>
-                <div class="usage">A small bus that travels between terminals</div>
-            </div>
-            <div class="phrase-card">
-                <div class="english">Terminal</div>
-                <div class="usage">A building in the airport for departures/arrivals</div>
-            </div>
-            <div class="phrase-card">
-                <div class="english">Information desk</div>
-                <div class="usage">A place where you can ask for help</div>
-            </div>
-            <div class="phrase-card">
-                <div class="english">Duty-free shop</div>
-                <div class="usage">A shop where you buy things without tax</div>
-            </div>
-            <div class="phrase-card">
-                <div class="english">Gate</div>
-                <div class="usage">The area where you wait and board your plane</div>
-            </div>
-            <div class="phrase-card">
-                <div class="english">Boarding</div>
-                <div class="usage">The process of getting on the plane</div>
-            </div>
-            <div class="phrase-card">
-                <div class="english">Departure board</div>
-                <div class="usage">A screen showing flight times, gates, and status</div>
+                <div class="info-item">
+                    <div class="label">Your Situation</div>
+                    <div class="value">You arrived at Gate B15</div>
+                    <div class="detail">But the screen says "GATE CHANGED"!</div>
+                </div>
+
+                <div class="info-item">
+                    <div class="label">Your Flight</div>
+                    <div class="value">QF 482 to Sydney</div>
+                    <div class="detail">Departure: 14:30</div>
+                </div>
+
+                <div class="input-group">
+                    <div class="label">❓ What is the new gate number?</div>
+                    <input type="text" class="input-field" id="conv4_q1" placeholder="Type the new gate..." data-answer="b22">
+                    <div class="answer-feedback" id="conv4_q1_fb"></div>
+                </div>
+
+                <div class="input-group">
+                    <div class="label">❓ Why was the gate changed?</div>
+                    <input type="text" class="input-field" id="conv4_q2" placeholder="Type the reason..." data-answer="technical issue">
+                    <div class="answer-feedback" id="conv4_q2_fb"></div>
+                </div>
+
+                <div class="input-group">
+                    <div class="label">❓ How do you get to the new gate?</div>
+                    <input type="text" class="input-field" id="conv4_q3" placeholder="Type the directions..." data-answer="walk straight past gate b18">
+                    <div class="answer-feedback" id="conv4_q3_fb"></div>
+                </div>
+
+                <div class="input-group">
+                    <div class="label">❓ How much time before boarding?</div>
+                    <input type="text" class="input-field" id="conv4_q4" placeholder="Type the time..." data-answer="15 minutes">
+                    <div class="answer-feedback" id="conv4_q4_fb"></div>
+                </div>
+
+                <div class="dialogue-section">
+                    <h4>💬 Useful Phrases for You:</h4>
+                    <div class="phrase">"Excuse me, it says my gate has changed. Can you help me?"</div>
+                    <div class="phrase">"What is the new gate for flight QF 482?"</div>
+                    <div class="phrase">"Where is Gate ___? Is it far from here?"</div>
+                    <div class="phrase">"Do I have enough time to get there?"</div>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- ========== NAV BUTTONS ========== -->
-    <div class="nav-buttons">
+    <!-- ==================== BUTTONS ==================== -->
+    <div class="btn-container" id="btnContainer">
+        <button class="nav-btn check" id="checkBtn" onclick="checkAnswers()">✅ Check Answers</button>
+        <button class="nav-btn" id="nextBtn" onclick="nextConversation()" style="display:none;">Next Conversation ➡️</button>
+    </div>
+
+    <!-- ==================== SCORE BOARD ==================== -->
+    <div class="score-board" id="scoreBoard">
+        <h2>🎉 Scenario 2 Complete!</h2>
+        <div class="score" id="finalScore"></div>
+        <div class="stars" id="stars"></div>
+        <div class="message" id="scoreMessage"></div>
+
+        <div class="vocab-box">
+            <h3>📖 Key Vocabulary</h3>
+            <div class="vocab-grid">
+                <div class="vocab-item">
+                    <div class="word">Moving walkway</div>
+                    <div class="meaning">A flat escalator that helps you walk faster</div>
+                </div>
+                <div class="vocab-item">
+                    <div class="word">Shuttle bus</div>
+                    <div class="meaning">A small bus between terminals</div>
+                </div>
+                <div class="vocab-item">
+                    <div class="word">Terminal</div>
+                    <div class="meaning">A building for departures/arrivals</div>
+                </div>
+                <div class="vocab-item">
+                    <div class="word">Information desk</div>
+                    <div class="meaning">A place to ask for help</div>
+                </div>
+                <div class="vocab-item">
+                    <div class="word">Duty-free shop</div>
+                    <div class="meaning">A shop without tax</div>
+                </div>
+                <div class="vocab-item">
+                    <div class="word">Gate</div>
+                    <div class="meaning">Where you wait and board your plane</div>
+                </div>
+                <div class="vocab-item">
+                    <div class="word">Boarding</div>
+                    <div class="meaning">Getting on the plane</div>
+                </div>
+                <div class="vocab-item">
+                    <div class="word">Departure board</div>
+                    <div class="meaning">Screen showing flight info</div>
+                </div>
+            </div>
+        </div>
+
+        <br>
+        <button class="nav-btn" onclick="restartGame()">🔄 Play Again</button>
         <a href="../index.html" class="nav-btn back">⬅️ Back to Menu</a>
     </div>
 
+    <!-- ==================== JAVASCRIPT ==================== -->
+    <script>
+        let currentConv = 1;
+        const totalConv = 4;
+        let totalScore = 0;
+        let totalQuestions = 0;
+
+        // Answer checking with flexible matching
+        function checkAnswers() {
+            const convId = `conv${currentConv}`;
+            const inputs = document.querySelectorAll(`#${convId} .input-field`);
+            let allCorrect = true;
+
+            inputs.forEach(input => {
+                const userAnswer = input.value.trim().toLowerCase();
+                const correctAnswer = input.dataset.answer.toLowerCase();
+                const feedbackEl = document.getElementById(input.id + '_fb');
+
+                totalQuestions++;
+
+                // Flexible matching - check if key words are present
+                const keywords = correctAnswer.split(' ').filter(w => w.length > 2);
+                const matchCount = keywords.filter(keyword => userAnswer.includes(keyword)).length;
+                const matchPercent = matchCount / keywords.length;
+
+                if (userAnswer === '') {
+                    input.classList.add('wrong');
+                    input.classList.remove('correct');
+                    feedbackEl.className = 'answer-feedback wrong';
+                    feedbackEl.textContent = `✗ Answer: ${input.dataset.answer}`;
+                    allCorrect = false;
+                } else if (matchPercent >= 0.6 || userAnswer.includes(correctAnswer) || correctAnswer.includes(userAnswer)) {
+                    input.classList.add('correct');
+                    input.classList.remove('wrong');
+                    feedbackEl.className = 'answer-feedback correct';
+                    feedbackEl.textContent = '✓ Correct!';
+                    totalScore++;
+                } else {
+                    input.classList.add('wrong');
+                    input.classList.remove('correct');
+                    feedbackEl.className = 'answer-feedback wrong';
+                    feedbackEl.textContent = `✗ Answer: ${input.dataset.answer}`;
+                    allCorrect = false;
+                }
+
+                input.disabled = true;
+            });
+
+            // Show next button, hide check button
+            document.getElementById('checkBtn').style.display = 'none';
+
+            if (currentConv < totalConv) {
+                document.getElementById('nextBtn').style.display = 'inline-block';
+            } else {
+                // Show finish button
+                const finishBtn = document.createElement('button');
+                finishBtn.className = 'nav-btn';
+                finishBtn.textContent = '🏁 See Results';
+                finishBtn.onclick = showScore;
+                document.getElementById('btnContainer').appendChild(finishBtn);
+            }
+        }
+
+        function nextConversation() {
+            // Hide current conversation
+            document.getElementById(`conv${currentConv}`).classList.remove('active');
+
+            // Move to next
+            currentConv++;
+
+            // Show next conversation
+            document.getElementById(`conv${currentConv}`).classList.add('active');
+
+            // Update progress bar
+            const progress = ((currentConv - 1) / totalConv) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+            document.getElementById('progressText').textContent = `Conversation ${currentConv} of ${totalConv}`;
+
+            // Reset buttons
+            document.getElementById('checkBtn').style.display = 'inline-block';
+            document.getElementById('nextBtn').style.display = 'none';
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showScore() {
+            // Hide everything
+            document.querySelectorAll('.conversation-card').forEach(card => card.classList.remove('active'));
+            document.getElementById('btnContainer').style.display = 'none';
+
+            // Update progress
+            document.getElementById('progressBar').style.width = '100%';
+            document.getElementById('progressText').textContent = '✅ Complete!';
+
+            // Show score board
+            const scoreBoard = document.getElementById('scoreBoard');
+            scoreBoard.style.display = 'block';
+
+            document.getElementById('finalScore').textContent = `${totalScore} / ${totalQuestions}`;
+
+            const percentage = (totalScore / totalQuestions) * 100;
+            let stars = '';
+            let msg = '';
+
+            if (percentage === 100) {
+                stars = '⭐⭐⭐⭐⭐';
+                msg = '🏆 Perfect! You can navigate any airport!';
+            } else if (percentage >= 80) {
+                stars = '⭐⭐⭐⭐';
+                msg = '👏 Great job! You found your gate easily!';
+            } else if (percentage >= 60) {
+                stars = '⭐⭐⭐';
+                msg = '👍 Good effort! A bit more practice and you\'re ready!';
+            } else if (percentage >= 40) {
+                stars = '⭐⭐';
+                msg = '🤔 Keep practicing! You\'re getting there!';
+            } else {
+                stars = '⭐';
+                msg = '💪 Don\'t give up! Try again!';
+            }
+
+            document.getElementById('stars').textContent = stars;
+            document.getElementById('scoreMessage').textContent = msg;
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function restartGame() {
+            currentConv = 1;
+            totalScore = 0;
+            totalQuestions = 0;
+
+            // Reset all inputs
+            document.querySelectorAll('.input-field').forEach(input => {
+                input.value = '';
+                input.disabled = false;
+                input.classList.remove('correct', 'wrong');
+            });
+
+            // Reset all feedback
+            document.querySelectorAll('.answer-feedback').forEach(fb => {
+                fb.className = 'answer-feedback';
+                fb.textContent = '';
+            });
+
+            // Show first conversation
+            document.querySelectorAll('.conversation-card').forEach(card => card.classList.remove('active'));
+            document.getElementById('conv1').classList.add('active');
+
+            // Reset buttons
+            document.getElementById('btnContainer').style.display = 'block';
+            document.getElementById('checkBtn').style.display = 'inline-block';
+            document.getElementById('nextBtn').style.display = 'none';
+
+            // Remove any extra buttons
+            const extraBtns = document.querySelectorAll('#btnContainer .nav-btn:not(#checkBtn):not(#nextBtn):not(.back)');
+            extraBtns.forEach(btn => {
+                if (btn.textContent.includes('See Results')) btn.remove();
+            });
+
+            // Reset progress
+            document.getElementById('progressBar').style.width = '0%';
+            document.getElementById('progressText').textContent = 'Conversation 1 of 4';
+
+            // Hide score board
+            document.getElementById('scoreBoard').style.display = 'none';
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
 </body>
 </html>
