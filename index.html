@@ -104,6 +104,42 @@
             font-size: 24px;
         }
 
+        .section-label {
+            text-align: left;
+            font-size: 13px;
+            color: #aaa;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            padding-left: 10px;
+            border-left: 3px solid #185a9d;
+        }
+
+        .section-label:first-of-type {
+            margin-top: 0;
+        }
+
+        .step-number {
+            background: #185a9d;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            font-weight: bold;
+            position: absolute;
+            top: -8px;
+            left: -8px;
+        }
+
+        .scenario-card {
+            position: relative;
+        }
+
         .footer {
             margin-top: 30px;
             color: #aaa;
@@ -118,46 +154,73 @@
 
         <div class="scenario-list">
 
-            <a href="./scenario1/index.html" class="scenario-card">
-                <div class="icon">🛫</div>
+            <!-- BEFORE THE FLIGHT -->
+            <div class="section-label">📋 Before the Flight</div>
+
+            <a href="https://teetalkenglish.github.io/Security-Check-AtTheAirPort-1P/" class="scenario-card" target="_blank">
+                <div class="step-number">1</div>
+                <div class="icon">🔍</div>
                 <div class="info">
-                    <h3>Scenario 1: Check-in & Security</h3>
-                    <p>Learn how to check in and go through security</p>
+                    <h3>Security Check</h3>
+                    <p>Go through the airport security screening</p>
+                </div>
+                <div class="arrow">➡️</div>
+            </a>
+
+            <!-- FINDING YOUR GATE -->
+            <div class="section-label">🏢 Finding Your Gate</div>
+
+            <a href="./scenario1/index.html" class="scenario-card">
+                <div class="step-number">2</div>
+                <div class="icon">🖥️</div>
+                <div class="info">
+                    <h3>Finding the Gate & Time</h3>
+                    <p>Read the departure board to find your gate and departure time</p>
                 </div>
                 <div class="arrow">➡️</div>
             </a>
 
             <a href="./scenario2/index.html" class="scenario-card">
+                <div class="step-number">3</div>
                 <div class="icon">🗺️</div>
                 <div class="info">
-                    <h3>Scenario 2: Asking for Directions</h3>
-                    <p>Find your gate by asking airport staff and passengers</p>
+                    <h3>Asking for Directions</h3>
+                    <p>Ask airport staff and passengers for directions to your gate</p>
                 </div>
                 <div class="arrow">➡️</div>
             </a>
 
+            <!-- BOARDING -->
+            <div class="section-label">✈️ Boarding & Flying</div>
+
             <a href="#" class="scenario-card locked">
+                <div class="step-number">4</div>
                 <div class="icon">🎫</div>
                 <div class="info">
-                    <h3>Scenario 3: Boarding the Plane</h3>
+                    <h3>Boarding the Plane</h3>
                     <p>Board the plane and find your seat</p>
                 </div>
                 <div class="lock-icon">🔒</div>
             </a>
 
             <a href="#" class="scenario-card locked">
+                <div class="step-number">5</div>
                 <div class="icon">💺</div>
                 <div class="info">
-                    <h3>Scenario 4: On the Plane</h3>
+                    <h3>On the Plane</h3>
                     <p>Talk to flight attendants and other passengers</p>
                 </div>
                 <div class="lock-icon">🔒</div>
             </a>
 
+            <!-- ARRIVING -->
+            <div class="section-label">🇦🇺 Arriving in Australia</div>
+
             <a href="#" class="scenario-card locked">
+                <div class="step-number">6</div>
                 <div class="icon">🛬</div>
                 <div class="info">
-                    <h3>Scenario 5: Arriving in Australia</h3>
+                    <h3>Arriving in Australia</h3>
                     <p>Go through customs and collect your luggage</p>
                 </div>
                 <div class="lock-icon">🔒</div>
