@@ -33,7 +33,6 @@
             font-size: 18px;
         }
 
-        /* Progress Bar */
         .progress-container {
             max-width: 1200px;
             margin: 0 auto 20px auto;
@@ -61,7 +60,6 @@
             font-size: 14px;
         }
 
-        /* Conversation Cards */
         .conversation-card {
             max-width: 1200px;
             margin: 0 auto 20px auto;
@@ -99,7 +97,6 @@
             min-height: 500px;
         }
 
-        /* LEFT SIDE - STAFF */
         .staff-side {
             flex: 1;
             background: linear-gradient(180deg, #1c2e1c, #0d2137);
@@ -118,7 +115,6 @@
             margin-bottom: 20px;
         }
 
-        /* RIGHT SIDE - PASSENGER */
         .passenger-side {
             flex: 1;
             background: linear-gradient(180deg, #1a3a5c, #0d2137);
@@ -151,7 +147,6 @@
             margin-bottom: 20px;
         }
 
-        /* Info Items */
         .info-item {
             background: rgba(255,255,255,0.08);
             border-radius: 12px;
@@ -180,7 +175,6 @@
             margin-top: 5px;
         }
 
-        /* Input Fields */
         .input-group {
             background: rgba(255,255,255,0.08);
             border-radius: 12px;
@@ -244,7 +238,6 @@
             display: block;
         }
 
-        /* Dialogue Section */
         .dialogue-section {
             padding: 15px;
             background: rgba(0,0,0,0.2);
@@ -269,7 +262,6 @@
             line-height: 1.5;
         }
 
-        /* Result Banner */
         .result-banner {
             display: none;
             max-width: 1200px;
@@ -303,7 +295,6 @@
             color: #e74c3c;
         }
 
-        /* Buttons */
         .btn-container {
             max-width: 1200px;
             margin: 20px auto;
@@ -343,10 +334,6 @@
             color: white;
         }
 
-        .nav-btn.next {
-            background: linear-gradient(90deg, #43cea2, #185a9d);
-        }
-
         .nav-btn.finish {
             background: linear-gradient(90deg, #ffd700, #f7971e);
             color: #0a1628;
@@ -357,7 +344,6 @@
             display: none !important;
         }
 
-        /* Score Board */
         .score-board {
             display: none;
             max-width: 800px;
@@ -393,7 +379,6 @@
             margin-bottom: 25px;
         }
 
-        /* Vocab Box */
         .vocab-box {
             background: rgba(255,215,0,0.05);
             border: 1px solid rgba(255,215,0,0.2);
@@ -433,21 +418,17 @@
             margin-top: 3px;
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .conversation-body {
                 flex-direction: column;
             }
-
             .staff-side {
                 border-right: none;
                 border-bottom: 3px dashed rgba(255,215,0,0.3);
             }
-
             .vocab-grid {
                 grid-template-columns: 1fr;
             }
-
             .title-section h1 {
                 font-size: 28px;
             }
@@ -456,13 +437,11 @@
 </head>
 <body>
 
-    <!-- TITLE -->
     <div class="title-section">
         <h1>✈️ Airport Adventure</h1>
         <p>Scenario 2: Asking for Directions to the Gate 🗺️</p>
     </div>
 
-    <!-- PROGRESS BAR -->
     <div class="progress-container">
         <div class="progress-bar-bg">
             <div class="progress-bar-fill" id="progressBar"></div>
@@ -470,7 +449,6 @@
         <div class="progress-text" id="progressText">Conversation 1 of 4</div>
     </div>
 
-    <!-- RESULT BANNER -->
     <div class="result-banner" id="resultBanner"></div>
 
     <!-- ==================== CONVERSATION 1 ==================== -->
@@ -483,7 +461,7 @@
             <div class="staff-side">
                 <div class="side-title">🧑‍✈️ Airport Staff (Student A)</div>
                 <div class="info-item">
-                    <div class="label">Flight QF 482 - Gate Info</div>
+                    <div class="label">Flight QF 482 - Gate</div>
                     <div class="value">Gate B15</div>
                 </div>
                 <div class="info-item">
@@ -527,29 +505,29 @@
                     <div class="value">14:30</div>
                 </div>
                 <div class="input-group">
-                    <div class="label">❓ What is your gate number?</div>
-                    <input type="text" class="input-field" data-conv="1" data-answer="b15" placeholder="Type the gate number...">
+                    <div class="label">Gate</div>
+                    <input type="text" class="input-field" data-conv="1" data-answer="b15" placeholder="Type your answer...">
                     <div class="answer-feedback"></div>
                 </div>
                 <div class="input-group">
-                    <div class="label">❓ Which direction do you go?</div>
-                    <input type="text" class="input-field" data-conv="1" data-answer="go straight turn left at the food court" placeholder="Type the directions...">
+                    <div class="label">Direction</div>
+                    <input type="text" class="input-field" data-conv="1" data-answer="go straight turn left at the food court" placeholder="Type your answer...">
                     <div class="answer-feedback"></div>
                 </div>
                 <div class="input-group">
-                    <div class="label">❓ How long is the walk?</div>
-                    <input type="text" class="input-field" data-conv="1" data-answer="10 minutes" placeholder="Type the walking time...">
+                    <div class="label">Walking Time</div>
+                    <input type="text" class="input-field" data-conv="1" data-answer="10 minutes" placeholder="Type your answer...">
                     <div class="answer-feedback"></div>
                 </div>
                 <div class="input-group">
-                    <div class="label">❓ What is the faster option?</div>
-                    <input type="text" class="input-field" data-conv="1" data-answer="moving walkway" placeholder="Type the faster option...">
+                    <div class="label">Faster Option</div>
+                    <input type="text" class="input-field" data-conv="1" data-answer="moving walkway" placeholder="Type your answer...">
                     <div class="answer-feedback"></div>
                 </div>
                 <div class="dialogue-section">
                     <h4>💬 Useful Phrases for You:</h4>
                     <div class="phrase">"Excuse me, I'm looking for my gate. My flight is QF 482."</div>
-                    <div class="phrase">"Could you tell me how to get to Gate ___?"</div>
+                    <div class="phrase">"Could you tell me how to get there?"</div>
                     <div class="phrase">"How long will it take to walk there?"</div>
                     <div class="phrase">"Is there a faster way to get there?"</div>
                 </div>
@@ -605,23 +583,23 @@
                     <div class="value">Terminal 1, near the coffee shop</div>
                 </div>
                 <div class="input-group">
-                    <div class="label">❓ Which terminal is Gate B15 in?</div>
-                    <input type="text" class="input-field" data-conv="2" data-answer="terminal 2" placeholder="Type the terminal number...">
+                    <div class="label">Terminal</div>
+                    <input type="text" class="input-field" data-conv="2" data-answer="terminal 2" placeholder="Type your answer...">
                     <div class="answer-feedback"></div>
                 </div>
                 <div class="input-group">
-                    <div class="label">❓ How do you get there?</div>
-                    <input type="text" class="input-field" data-conv="2" data-answer="shuttle bus" placeholder="Type how to get there...">
+                    <div class="label">Transport</div>
+                    <input type="text" class="input-field" data-conv="2" data-answer="shuttle bus" placeholder="Type your answer...">
                     <div class="answer-feedback"></div>
                 </div>
                 <div class="input-group">
-                    <div class="label">❓ Where is the shuttle bus stop?</div>
-                    <input type="text" class="input-field" data-conv="2" data-answer="near the information desk" placeholder="Type the location...">
+                    <div class="label">Shuttle Bus Location</div>
+                    <input type="text" class="input-field" data-conv="2" data-answer="near the information desk" placeholder="Type your answer...">
                     <div class="answer-feedback"></div>
                 </div>
                 <div class="input-group">
-                    <div class="label">❓ How long is the bus ride?</div>
-                    <input type="text" class="input-field" data-conv="2" data-answer="5 minutes" placeholder="Type the travel time...">
+                    <div class="label">Travel Time</div>
+                    <input type="text" class="input-field" data-conv="2" data-answer="5 minutes" placeholder="Type your answer...">
                     <div class="answer-feedback"></div>
                 </div>
                 <div class="dialogue-section">
@@ -664,7 +642,7 @@
                     <div class="detail">Plenty of time!</div>
                 </div>
                 <div class="info-item">
-                    <div class="label">Extra Info</div>
+                    <div class="label">Nearby Facilities</div>
                     <div class="value">Toilets near Gate B13</div>
                     <div class="detail">Café near Gate B16</div>
                 </div>
@@ -684,23 +662,23 @@
                     <div class="detail">You need final directions to Gate B15</div>
                 </div>
                 <div class="input-group">
-                    <div class="label">❓ Are you in the right terminal?</div>
-                    <input type="text" class="input-field" data-conv="3" data-answer="yes" placeholder="Type yes or no...">
+                    <div class="label">Correct Terminal?</div>
+                    <input type="text" class="input-field" data-conv="3" data-answer="yes" placeholder="Type your answer...">
                     <div class="answer-feedback"></div>
                 </div>
                 <div class="input-group">
-                    <div class="label">❓ Where is Gate B15?</div>
-                    <input type="text" class="input-field" data-conv="3" data-answer="end of the hallway on the right" placeholder="Type the location...">
+                    <div class="label">Direction</div>
+                    <input type="text" class="input-field" data-conv="3" data-answer="end of the hallway on the right" placeholder="Type your answer...">
                     <div class="answer-feedback"></div>
                 </div>
                 <div class="input-group">
-                    <div class="label">❓ What landmark will you pass?</div>
-                    <input type="text" class="input-field" data-conv="3" data-answer="duty-free shop" placeholder="Type the landmark...">
+                    <div class="label">Landmark</div>
+                    <input type="text" class="input-field" data-conv="3" data-answer="duty-free shop" placeholder="Type your answer...">
                     <div class="answer-feedback"></div>
                 </div>
                 <div class="input-group">
-                    <div class="label">❓ How much time before boarding?</div>
-                    <input type="text" class="input-field" data-conv="3" data-answer="25 minutes" placeholder="Type the time...">
+                    <div class="label">Time Before Boarding</div>
+                    <input type="text" class="input-field" data-conv="3" data-answer="25 minutes" placeholder="Type your answer...">
                     <div class="answer-feedback"></div>
                 </div>
                 <div class="dialogue-section">
@@ -767,45 +745,45 @@
                     <div class="detail">Departure: 14:30</div>
                 </div>
                 <div class="input-group">
-                    <div class="label">❓ What is the new gate number?</div>
-                    <input type="text" class="input-field" data-conv="4" data-answer="b22" placeholder="Type the new gate...">
+                    <div class="label">New Gate</div>
+                    <input type="text" class="input-field" data-conv="4" data-answer="b22" placeholder="Type your answer...">
                     <div class="answer-feedback"></div>
                 </div>
                 <div class="input-group">
-                    <div class="label">❓ Why was the gate changed?</div>
-                    <input type="text" class="input-field" data-conv="4" data-answer="technical issue" placeholder="Type the reason...">
+                    <div class="label">Reason</div>
+                    <input type="text" class="input-field" data-conv="4" data-answer="technical issue" placeholder="Type your answer...">
                     <div class="answer-feedback"></div>
                 </div>
                 <div class="input-group">
-                    <div class="label">❓ How do you get to the new gate?</div>
-                    <input type="text" class="input-field" data-conv="4" data-answer="walk straight past gate b18" placeholder="Type the directions...">
+                    <div class="label">Direction</div>
+                    <input type="text" class="input-field" data-conv="4" data-answer="walk straight past gate b18" placeholder="Type your answer...">
                     <div class="answer-feedback"></div>
                 </div>
                 <div class="input-group">
-                    <div class="label">❓ How much time before boarding?</div>
-                    <input type="text" class="input-field" data-conv="4" data-answer="15 minutes" placeholder="Type the time...">
+                    <div class="label">Time Before Boarding</div>
+                    <input type="text" class="input-field" data-conv="4" data-answer="15 minutes" placeholder="Type your answer...">
                     <div class="answer-feedback"></div>
                 </div>
                 <div class="dialogue-section">
                     <h4>💬 Useful Phrases for You:</h4>
                     <div class="phrase">"Excuse me, it says my gate has changed. Can you help me?"</div>
                     <div class="phrase">"What is the new gate for flight QF 482?"</div>
-                    <div class="phrase">"Where is Gate ___? Is it far from here?"</div>
-                    <div class="phrase">"Do I have enough time to get there?"</div>
+                    <div class="phrase">"How do I get there?"</div>
+                    <div class="phrase">"Do I have enough time?"</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- ==================== BUTTONS ==================== -->
+    <!-- BUTTONS -->
     <div class="btn-container" id="btnContainer">
         <button class="nav-btn check" id="checkBtn" onclick="checkAnswers()">✅ Check Answers</button>
         <button class="nav-btn tryagain hidden" id="tryAgainBtn" onclick="tryAgain()">🔄 Try Again</button>
-        <button class="nav-btn next hidden" id="nextBtn" onclick="nextConversation()">Next Conversation ➡️</button>
+        <button class="nav-btn hidden" id="nextBtn" onclick="nextConversation()">Next Conversation ➡️</button>
         <button class="nav-btn finish hidden" id="finishBtn" onclick="showScore()">🏁 See Results</button>
     </div>
 
-    <!-- ==================== SCORE BOARD ==================== -->
+    <!-- SCORE BOARD -->
     <div class="score-board" id="scoreBoard">
         <h2>🎉 Scenario 2 Complete!</h2>
         <div class="score" id="finalScore"></div>
@@ -855,12 +833,10 @@
         <a href="../index.html" class="nav-btn back">⬅️ Back to Menu</a>
     </div>
 
-    <!-- ==================== JAVASCRIPT ==================== -->
     <script>
         let currentConv = 1;
         const totalConv = 4;
-        let scores = {}; // Track best score per conversation
-        let checked = false;
+        let scores = {};
 
         function getInputs(convNum) {
             return document.querySelectorAll(`#conv${convNum} .input-field`);
@@ -876,7 +852,6 @@
                 const correctAnswer = input.dataset.answer.toLowerCase();
                 const feedbackEl = input.nextElementSibling;
 
-                // Flexible matching
                 const keywords = correctAnswer.split(' ').filter(w => w.length > 2);
                 const matchCount = keywords.filter(keyword => userAnswer.includes(keyword)).length;
                 const matchPercent = keywords.length > 0 ? matchCount / keywords.length : 0;
@@ -902,12 +877,10 @@
                 input.disabled = true;
             });
 
-            // Save best score for this conversation
             if (!scores[currentConv] || correct > scores[currentConv].correct) {
                 scores[currentConv] = { correct: correct, total: total };
             }
 
-            // Show result banner
             const banner = document.getElementById('resultBanner');
             if (correct === total) {
                 banner.className = 'result-banner show perfect';
@@ -920,7 +893,6 @@
                 banner.textContent = `💪 ${correct}/${total} correct. Try again!`;
             }
 
-            // Show/hide buttons
             document.getElementById('checkBtn').classList.add('hidden');
             document.getElementById('tryAgainBtn').classList.remove('hidden');
 
@@ -929,8 +901,6 @@
             } else {
                 document.getElementById('finishBtn').classList.remove('hidden');
             }
-
-            checked = true;
         }
 
         function tryAgain() {
@@ -945,78 +915,54 @@
                 feedbackEl.textContent = '';
             });
 
-            // Hide banner
             document.getElementById('resultBanner').className = 'result-banner';
-
-            // Show check, hide others
             document.getElementById('checkBtn').classList.remove('hidden');
             document.getElementById('tryAgainBtn').classList.add('hidden');
             document.getElementById('nextBtn').classList.add('hidden');
             document.getElementById('finishBtn').classList.add('hidden');
 
-            checked = false;
-
-            // Scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function nextConversation() {
-            // Hide current
             document.getElementById(`conv${currentConv}`).classList.remove('active');
-
-            // Next
             currentConv++;
-
-            // Show next
             document.getElementById(`conv${currentConv}`).classList.add('active');
 
-            // Update progress
             const progress = ((currentConv - 1) / totalConv) * 100;
             document.getElementById('progressBar').style.width = progress + '%';
             document.getElementById('progressText').textContent = `Conversation ${currentConv} of ${totalConv}`;
 
-            // Hide banner
             document.getElementById('resultBanner').className = 'result-banner';
-
-            // Reset buttons
             document.getElementById('checkBtn').classList.remove('hidden');
             document.getElementById('tryAgainBtn').classList.add('hidden');
             document.getElementById('nextBtn').classList.add('hidden');
             document.getElementById('finishBtn').classList.add('hidden');
 
-            checked = false;
-
-            // Scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function showScore() {
-            // Hide everything
             document.querySelectorAll('.conversation-card').forEach(c => c.classList.remove('active'));
             document.getElementById('btnContainer').classList.add('hidden');
             document.getElementById('resultBanner').className = 'result-banner';
 
-            // Calculate total score
             let totalCorrect = 0;
             let totalQuestions = 0;
-
             Object.values(scores).forEach(s => {
                 totalCorrect += s.correct;
                 totalQuestions += s.total;
             });
 
-            // Update progress
             document.getElementById('progressBar').style.width = '100%';
             document.getElementById('progressText').textContent = '✅ Complete!';
 
-            // Show score
             const scoreBoard = document.getElementById('scoreBoard');
             scoreBoard.style.display = 'block';
             document.getElementById('finalScore').textContent = `${totalCorrect} / ${totalQuestions}`;
 
             const percentage = totalQuestions > 0 ? (totalCorrect / totalQuestions) * 100 : 0;
-            let stars = '';
-            let msg = '';
+            let stars, msg;
 
             if (percentage === 100) {
                 stars = '⭐⭐⭐⭐⭐';
@@ -1037,47 +983,36 @@
 
             document.getElementById('stars').textContent = stars;
             document.getElementById('scoreMessage').textContent = msg;
-
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function restartGame() {
             currentConv = 1;
             scores = {};
-            checked = false;
 
-            // Reset all inputs
             document.querySelectorAll('.input-field').forEach(input => {
                 input.value = '';
                 input.disabled = false;
                 input.classList.remove('correct', 'wrong');
             });
 
-            // Reset all feedback
             document.querySelectorAll('.answer-feedback').forEach(fb => {
                 fb.className = 'answer-feedback';
                 fb.textContent = '';
             });
 
-            // Show first conversation
             document.querySelectorAll('.conversation-card').forEach(c => c.classList.remove('active'));
             document.getElementById('conv1').classList.add('active');
 
-            // Reset buttons
             document.getElementById('btnContainer').classList.remove('hidden');
             document.getElementById('checkBtn').classList.remove('hidden');
             document.getElementById('tryAgainBtn').classList.add('hidden');
             document.getElementById('nextBtn').classList.add('hidden');
             document.getElementById('finishBtn').classList.add('hidden');
 
-            // Reset banner
             document.getElementById('resultBanner').className = 'result-banner';
-
-            // Reset progress
             document.getElementById('progressBar').style.width = '0%';
             document.getElementById('progressText').textContent = 'Conversation 1 of 4';
-
-            // Hide score
             document.getElementById('scoreBoard').style.display = 'none';
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1085,3 +1020,4 @@
     </script>
 </body>
 </html>
+
