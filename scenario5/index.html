@@ -61,7 +61,7 @@
             z-index: 1;
         }
 
-        .header .plane-icon {
+        .header .icon-top {
             font-size: 2.5rem;
             margin-bottom: 5px;
             display: block;
@@ -86,6 +86,176 @@
 
         .back-btn:hover {
             background: rgba(255,255,255,0.35);
+        }
+
+        /* ========== CONTAINER ========== */
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* ========== ROLE SELECT SCREEN ========== */
+        .role-screen {
+            text-align: center;
+            padding: 30px 20px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .role-screen .big-icon {
+            font-size: 4rem;
+            margin-bottom: 15px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .role-screen h2 {
+            font-size: 1.6rem;
+            color: #1a237e;
+            margin-bottom: 8px;
+        }
+
+        .role-screen > p {
+            color: #555;
+            font-size: 1rem;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .role-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .role-card {
+            background: white;
+            border: 3px solid #e0e0e0;
+            border-radius: 20px;
+            padding: 25px 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .role-card:hover {
+            border-color: #1a237e;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(26,35,126,0.15);
+        }
+
+        .role-card.selected {
+            border-color: #1a237e;
+            background: linear-gradient(135deg, #e8eaf6, #f5f5ff);
+            box-shadow: 0 8px 25px rgba(26,35,126,0.2);
+        }
+
+        .role-card .role-avatar {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .role-card .role-name {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #1a237e;
+            margin-bottom: 5px;
+        }
+
+        .role-card .role-desc {
+            font-size: 0.85rem;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .role-card.selected .role-desc {
+            color: #333;
+        }
+
+        .role-badge {
+            display: inline-block;
+            background: #1a237e;
+            color: white;
+            padding: 3px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-top: 8px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .role-card.selected .role-badge {
+            opacity: 1;
+        }
+
+        .how-it-works {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 25px;
+            text-align: left;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+        }
+
+        .how-it-works h3 {
+            color: #1a237e;
+            margin-bottom: 12px;
+            font-size: 1.05rem;
+            text-align: center;
+        }
+
+        .how-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 8px 0;
+            font-size: 0.92rem;
+            color: #444;
+            line-height: 1.5;
+        }
+
+        .how-step .step-icon {
+            font-size: 1.3rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .start-btn {
+            background: linear-gradient(135deg, #1a237e, #283593);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: 'Nunito', sans-serif;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(26,35,126,0.3);
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        .start-btn.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .start-btn.active:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(26,35,126,0.4);
         }
 
         /* ========== PROGRESS BAR ========== */
@@ -119,92 +289,51 @@
             font-weight: 600;
         }
 
-        /* ========== MAIN CONTENT ========== */
-        .container {
-            max-width: 700px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        /* ========== START SCREEN ========== */
-        .start-screen {
-            text-align: center;
-            padding: 40px 20px;
-        }
-
-        .start-screen .plane-illustration {
-            font-size: 5rem;
-            margin-bottom: 20px;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .start-screen h2 {
-            font-size: 1.6rem;
-            color: #1a237e;
-            margin-bottom: 10px;
-        }
-
-        .start-screen p {
-            color: #555;
-            font-size: 1rem;
-            margin-bottom: 25px;
-            line-height: 1.6;
-        }
-
-        .start-btn {
-            background: linear-gradient(135deg, #1a237e, #283593);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            border-radius: 30px;
-            cursor: pointer;
-            font-family: 'Nunito', sans-serif;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 4px 15px rgba(26,35,126,0.3);
-        }
-
-        .start-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(26,35,126,0.4);
-        }
-
-        .vocab-preview {
-            background: white;
-            border-radius: 16px;
-            padding: 20px;
-            margin: 25px 0;
-            text-align: left;
-            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
-        }
-
-        .vocab-preview h3 {
-            color: #1a237e;
-            margin-bottom: 12px;
-            font-size: 1.1rem;
-        }
-
-        .vocab-preview .vocab-item {
+        /* ========== YOUR ROLE BANNER ========== */
+        .role-banner {
             display: flex;
             align-items: center;
             gap: 10px;
-            padding: 8px 0;
-            border-bottom: 1px solid #f0f0f0;
-            font-size: 0.95rem;
+            background: linear-gradient(135deg, #e8eaf6, #f5f5ff);
+            border: 2px solid #c5cae9;
+            padding: 10px 18px;
+            border-radius: 14px;
+            margin-bottom: 20px;
+            animation: fadeIn 0.4s ease;
         }
 
-        .vocab-preview .vocab-item:last-child {
-            border-bottom: none;
+        .role-banner .rb-avatar {
+            font-size: 2rem;
         }
 
-        .vocab-preview .vocab-item .emoji {
-            font-size: 1.3rem;
+        .role-banner .rb-info {
+            flex: 1;
+        }
+
+        .role-banner .rb-label {
+            font-size: 0.75rem;
+            color: #5c6bc0;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .role-banner .rb-name {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #1a237e;
+        }
+
+        .switch-role-btn {
+            background: rgba(26,35,126,0.1);
+            border: none;
+            color: #1a237e;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Nunito', sans-serif;
         }
 
         /* ========== SCENARIO CARD ========== */
@@ -262,11 +391,6 @@
             gap: 12px;
             margin-bottom: 15px;
             animation: fadeIn 0.4s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         .dialogue-bubble.npc {
@@ -328,385 +452,275 @@
         .dialogue-bubble.npc .speaker-name { color: #1a237e; }
         .dialogue-bubble.player .speaker-name { color: rgba(255,255,255,0.8); }
 
-        /* ========== CHOICES ========== */
-        .choices-container {
-            margin-top: 20px;
+        /* ===== YOUR LINE (highlighted) ===== */
+        .your-turn-label {
+            display: inline-block;
+            background: #ff9800;
+            color: white;
+            padding: 2px 10px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            animation: glow 1.5s ease-in-out infinite;
         }
 
-        .choices-container h4 {
-            color: #1a237e;
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 5px rgba(255,152,0,0.3); }
+            50% { box-shadow: 0 0 15px rgba(255,152,0,0.6); }
+        }
+
+        .partner-turn-label {
+            display: inline-block;
+            background: #9e9e9e;
+            color: white;
+            padding: 2px 10px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Hidden line (partner's line before reveal) */
+        .dialogue-bubble.hidden-line .dialogue-text {
+            background: #f0f0f0;
+            color: #aaa;
+            font-style: italic;
+            border: 2px dashed #ccc;
+        }
+
+        .dialogue-bubble.hidden-line.player .dialogue-text {
+            background: #f0f0f0;
+            color: #aaa;
+        }
+
+        .reveal-btn {
+            display: inline-block;
+            background: #1a237e;
+            color: white;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Nunito', sans-serif;
+            margin-top: 5px;
+            transition: transform 0.2s;
+        }
+
+        .reveal-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* ========== SPEAKING PROMPT ========== */
+        .speak-prompt {
+            background: linear-gradient(135deg, #fff3e0, #fff8e1);
+            border: 2px solid #ffb74d;
+            border-radius: 16px;
+            padding: 18px;
+            text-align: center;
+            margin: 15px 0;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .speak-prompt .sp-icon {
+            font-size: 2rem;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .speak-prompt .sp-text {
             font-size: 0.95rem;
-            margin-bottom: 12px;
+            font-weight: 700;
+            color: #e65100;
         }
 
-        .choice-btn {
+        .speak-prompt .sp-line {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #1a237e;
+            margin-top: 8px;
+            line-height: 1.5;
+            background: white;
+            padding: 12px 18px;
+            border-radius: 12px;
+            border-left: 4px solid #1a237e;
+        }
+
+        .speak-prompt .sp-hint {
+            font-size: 0.82rem;
+            color: #888;
+            margin-top: 8px;
+            font-style: italic;
+        }
+
+        /* ========== WAIT PROMPT ========== */
+        .wait-prompt {
+            background: linear-gradient(135deg, #f3e5f5, #fce4ec);
+            border: 2px solid #ce93d8;
+            border-radius: 16px;
+            padding: 18px;
+            text-align: center;
+            margin: 15px 0;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .wait-prompt .wp-icon {
+            font-size: 2rem;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .wait-prompt .wp-text {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #7b1fa2;
+        }
+
+        /* ========== NEXT BUTTON ========== */
+        .next-line-btn {
             display: block;
             width: 100%;
-            text-align: left;
-            background: white;
-            border: 2px solid #e0e0e0;
-            padding: 14px 18px;
-            margin-bottom: 10px;
+            background: linear-gradient(135deg, #1a237e, #283593);
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 1rem;
+            font-weight: 700;
             border-radius: 14px;
-            font-size: 0.95rem;
-            font-family: 'Nunito', sans-serif;
-            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
-            color: #333;
-        }
-
-        .choice-btn:hover {
-            border-color: #1a237e;
-            background: #f5f5ff;
-            transform: translateX(5px);
-        }
-
-        .choice-btn.correct {
-            border-color: #4caf50;
-            background: #e8f5e9;
-            color: #2e7d32;
-            animation: pulse 0.5s;
-        }
-
-        .choice-btn.incorrect {
-            border-color: #f44336;
-            background: #ffebee;
-            color: #c62828;
-            animation: shake 0.5s;
-        }
-
-        .choice-btn.disabled {
-            pointer-events: none;
-            opacity: 0.6;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.02); }
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-8px); }
-            75% { transform: translateX(8px); }
-        }
-
-        /* ========== FEEDBACK ========== */
-        .feedback-box {
-            padding: 15px;
-            border-radius: 14px;
+            font-family: 'Nunito', sans-serif;
             margin-top: 15px;
-            animation: fadeIn 0.4s ease;
-            display: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(26,35,126,0.2);
         }
 
-        .feedback-box.correct {
+        .next-line-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(26,35,126,0.3);
+        }
+
+        .next-line-btn.green {
+            background: linear-gradient(135deg, #2e7d32, #43a047);
+            box-shadow: 0 4px 15px rgba(46,125,50,0.3);
+        }
+
+        /* ========== TIP BOX ========== */
+        .tip-box {
             background: #e8f5e9;
             border-left: 4px solid #4caf50;
-            display: block;
+            border-radius: 0 12px 12px 0;
+            padding: 14px 16px;
+            margin: 15px 0;
+            animation: fadeIn 0.4s ease;
         }
 
-        .feedback-box.incorrect {
-            background: #ffebee;
-            border-left: 4px solid #f44336;
-            display: block;
-        }
-
-        .feedback-box h4 {
-            font-size: 0.95rem;
+        .tip-box h4 {
+            color: #2e7d32;
+            font-size: 0.9rem;
             margin-bottom: 5px;
         }
 
-        .feedback-box.correct h4 { color: #2e7d32; }
-        .feedback-box.incorrect h4 { color: #c62828; }
-
-        .feedback-box p {
-            font-size: 0.9rem;
+        .tip-box p {
             color: #555;
+            font-size: 0.88rem;
             line-height: 1.5;
         }
 
-        .next-btn {
-            background: linear-gradient(135deg, #1a237e, #283593);
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            font-size: 1rem;
-            font-weight: 700;
-            border-radius: 25px;
-            cursor: pointer;
-            font-family: 'Nunito', sans-serif;
+        /* ========== SCENARIO LIST ========== */
+        .scenario-list {
             margin-top: 15px;
-            transition: transform 0.2s;
         }
 
-        .next-btn:hover {
-            transform: translateY(-2px);
-        }
-
-        /* ========== DRAG & DROP ========== */
-        .drag-instruction {
-            background: #fff3e0;
-            border-left: 4px solid #ff9800;
-            padding: 12px 15px;
-            border-radius: 0 12px 12px 0;
-            margin-bottom: 15px;
-            font-size: 0.9rem;
-            color: #e65100;
-            font-weight: 600;
-        }
-
-        .sentence-builder {
-            background: #f5f5f5;
-            border: 2px dashed #ccc;
-            border-radius: 14px;
-            min-height: 60px;
-            padding: 15px;
+        .scenario-list-item {
             display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
             align-items: center;
-            margin-bottom: 15px;
-            transition: border-color 0.3s;
-        }
-
-        .sentence-builder.active {
-            border-color: #1a237e;
-            background: #f5f5ff;
-        }
-
-        .sentence-builder .placeholder-text {
-            color: #aaa;
-            font-style: italic;
-            font-size: 0.9rem;
-        }
-
-        .word-bank {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 15px;
-        }
-
-        .word-chip {
-            background: white;
-            border: 2px solid #1a237e;
-            color: #1a237e;
-            padding: 8px 16px;
-            border-radius: 25px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            cursor: grab;
-            transition: all 0.2s;
-            user-select: none;
-            font-family: 'Nunito', sans-serif;
-        }
-
-        .word-chip:hover {
-            background: #1a237e;
-            color: white;
-        }
-
-        .word-chip.placed {
-            background: #e8eaf6;
-            border-color: #9fa8da;
-            color: #5c6bc0;
-            cursor: pointer;
-        }
-
-        .word-chip.in-sentence {
-            background: #1a237e;
-            color: white;
-            cursor: pointer;
-            border-color: #1a237e;
-        }
-
-        .check-sentence-btn {
-            background: linear-gradient(135deg, #ff9800, #f57c00);
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            font-size: 1rem;
-            font-weight: 700;
-            border-radius: 25px;
-            cursor: pointer;
-            font-family: 'Nunito', sans-serif;
-            transition: transform 0.2s;
-        }
-
-        .check-sentence-btn:hover {
-            transform: translateY(-2px);
-        }
-
-        /* ========== LISTENING SECTION ========== */
-        .audio-btn {
-            background: linear-gradient(135deg, #1a237e, #283593);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 25px;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            font-family: 'Nunito', sans-serif;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 15px;
-            transition: transform 0.2s;
-        }
-
-        .audio-btn:hover {
-            transform: translateY(-2px);
-        }
-
-        /* ========== FILL IN BLANK ========== */
-        .fill-sentence {
-            font-size: 1.1rem;
-            line-height: 2;
-            color: #333;
-            margin-bottom: 15px;
-        }
-
-        .fill-blank {
-            display: inline-block;
-            border-bottom: 3px solid #1a237e;
-            min-width: 120px;
-            padding: 2px 8px;
-            margin: 0 4px;
-            color: #1a237e;
-            font-weight: 700;
-        }
-
-        /* ========== MATCHING ========== */
-        .matching-grid {
-            display: grid;
-            grid-template-columns: 1fr auto 1fr;
-            gap: 10px;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .match-item {
+            gap: 12px;
             background: white;
             border: 2px solid #e0e0e0;
-            padding: 12px;
-            border-radius: 12px;
-            text-align: center;
-            font-size: 0.9rem;
-            font-weight: 600;
+            border-radius: 14px;
+            padding: 14px 18px;
+            margin-bottom: 10px;
             cursor: pointer;
             transition: all 0.3s;
         }
 
-        .match-item:hover {
+        .scenario-list-item:hover {
             border-color: #1a237e;
+            transform: translateX(5px);
         }
 
-        .match-item.selected {
-            border-color: #1a237e;
-            background: #e8eaf6;
-        }
-
-        .match-item.matched {
+        .scenario-list-item.completed {
             border-color: #4caf50;
-            background: #e8f5e9;
-            pointer-events: none;
+            background: #f1f8e9;
         }
 
-        .match-arrow {
-            color: #ccc;
+        .scenario-list-item .sli-num {
+            background: #1a237e;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .scenario-list-item.completed .sli-num {
+            background: #4caf50;
+        }
+
+        .scenario-list-item .sli-info {
+            flex: 1;
+        }
+
+        .scenario-list-item .sli-title {
+            font-weight: 700;
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        .scenario-list-item .sli-desc {
+            font-size: 0.82rem;
+            color: #888;
+        }
+
+        .scenario-list-item .sli-arrow {
+            color: #1a237e;
             font-size: 1.2rem;
         }
 
-        /* ========== SCORE SCREEN ========== */
-        .score-screen {
+        /* ========== COMPLETION SCREEN ========== */
+        .complete-screen {
             text-align: center;
-            padding: 40px 20px;
+            padding: 30px 20px;
+            animation: fadeIn 0.5s ease;
         }
 
-        .score-circle {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #1a237e, #42a5f5);
-            color: white;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 25px;
-            box-shadow: 0 8px 25px rgba(26,35,126,0.3);
+        .complete-screen .trophy {
+            font-size: 4rem;
+            margin-bottom: 15px;
         }
 
-        .score-circle .score-number {
-            font-size: 2.5rem;
-            font-weight: 800;
-        }
-
-        .score-circle .score-label {
-            font-size: 0.85rem;
-            opacity: 0.9;
-        }
-
-        .score-screen h2 {
+        .complete-screen h2 {
             color: #1a237e;
+            font-size: 1.5rem;
             margin-bottom: 10px;
         }
 
-        .score-screen p {
+        .complete-screen p {
             color: #555;
-            margin-bottom: 25px;
             line-height: 1.6;
-        }
-
-        .score-stars {
-            font-size: 2.5rem;
             margin-bottom: 20px;
         }
-
-        .score-breakdown {
-            background: white;
-            border-radius: 16px;
-            padding: 20px;
-            margin: 20px 0;
-            text-align: left;
-            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
-        }
-
-        .score-breakdown h3 {
-            color: #1a237e;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
-        .breakdown-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .breakdown-item:last-child {
-            border-bottom: none;
-        }
-
-        .breakdown-item .label {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 600;
-            color: #333;
-        }
-
-        .breakdown-item .result {
-            font-weight: 700;
-        }
-
-        .breakdown-item .result.pass { color: #4caf50; }
-        .breakdown-item .result.fail { color: #f44336; }
 
         .btn-group {
             display: flex;
@@ -716,16 +730,39 @@
             margin-top: 20px;
         }
 
-        .btn-secondary {
-            background: white;
-            color: #1a237e;
-            border: 2px solid #1a237e;
-            padding: 12px 25px;
+        .btn-primary {
+            background: linear-gradient(135deg, #1a237e, #283593);
+            color: white;
+            border: none;
+            padding: 13px 28px;
             font-size: 1rem;
             font-weight: 700;
             border-radius: 25px;
             cursor: pointer;
             font-family: 'Nunito', sans-serif;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: transform 0.2s;
+        }
+
+        .btn-primary:hover { transform: translateY(-2px); }
+
+        .btn-secondary {
+            background: white;
+            color: #1a237e;
+            border: 2px solid #1a237e;
+            padding: 13px 28px;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: 'Nunito', sans-serif;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
             transition: all 0.3s;
         }
 
@@ -734,51 +771,15 @@
             color: white;
         }
 
-        .hidden {
-            display: none !important;
-        }
+        .hidden { display: none !important; }
 
-        /* ========== TYPING INPUT ========== */
-        .type-input-container {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .type-input {
-            flex: 1;
-            padding: 12px 18px;
-            border: 2px solid #e0e0e0;
-            border-radius: 14px;
-            font-size: 1rem;
-            font-family: 'Nunito', sans-serif;
-            font-weight: 600;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-
-        .type-input:focus {
-            border-color: #1a237e;
-        }
-
-        .submit-input-btn {
-            background: linear-gradient(135deg, #1a237e, #283593);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 14px;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            font-family: 'Nunito', sans-serif;
-        }
-
-        /* ========== RESPONSIVE ========== */
         @media (max-width: 480px) {
             .header h1 { font-size: 1.4rem; }
+            .role-cards { grid-template-columns: 1fr; }
             .scenario-card { padding: 18px; }
-            .dialogue-text { max-width: 70%; }
+            .dialogue-text { max-width: 70%; font-size: 0.9rem; }
             .container { padding: 15px; }
+            .speak-prompt .sp-line { font-size: 1rem; }
         }
     </style>
 </head>
@@ -787,586 +788,456 @@
     <!-- HEADER -->
     <div class="header">
         <a href="https://teetalkenglish.github.io/AIRPORT-GAME-FindingTheGate/" class="back-btn">⬅</a>
-        <span class="plane-icon">✈️</span>
-        <h1>On the Plane</h1>
-        <p>Talk to flight attendants and other passengers</p>
+        <span class="icon-top">✈️</span>
+        <h1>On the Plane – Roleplay</h1>
+        <p>Practice with a partner!</p>
     </div>
 
-    <!-- PROGRESS BAR -->
+    <!-- PROGRESS -->
     <div class="progress-container" id="progressContainer">
         <div class="progress-bar-bg">
             <div class="progress-bar-fill" id="progressFill"></div>
         </div>
         <div class="progress-text">
-            <span id="progressLabel">Scenario 0 of 6</span>
-            <span id="scoreLabel">Score: 0</span>
+            <span id="progressLabel">Choose your role</span>
+            <span id="progressRight"></span>
         </div>
     </div>
 
-    <!-- MAIN CONTAINER -->
     <div class="container">
 
-        <!-- START SCREEN -->
-        <div id="startScreen" class="start-screen">
-            <div class="plane-illustration">🛫</div>
-            <h2>Welcome Aboard!</h2>
-            <p>You're now on the plane. In this activity, you'll practice useful English phrases for talking to <strong>flight attendants</strong> and <strong>other passengers</strong> during your flight.</p>
+        <!-- ===== ROLE SELECT SCREEN ===== -->
+        <div id="roleScreen" class="role-screen">
+            <div class="big-icon">🎭</div>
+            <h2>Choose Your Role</h2>
+            <p>You and your partner will each play a role. Pick yours below, then hand the other device to your partner (or switch roles after!)</p>
 
-            <div class="vocab-preview">
-                <h3>🗝️ Key Phrases You'll Learn</h3>
-                <div class="vocab-item"><span class="emoji">🍹</span> Ordering drinks and food</div>
-                <div class="vocab-item"><span class="emoji">🛏️</span> Asking for a blanket or pillow</div>
-                <div class="vocab-item"><span class="emoji">💬</span> Making small talk with passengers</div>
-                <div class="vocab-item"><span class="emoji">🚽</span> Asking to get past someone</div>
-                <div class="vocab-item"><span class="emoji">📋</span> Filling in the arrival card</div>
-                <div class="vocab-item"><span class="emoji">🛬</span> Understanding announcements</div>
+            <div class="role-cards">
+                <div class="role-card" id="roleA" onclick="selectRole('A')">
+                    <span class="role-avatar">🧑</span>
+                    <div class="role-name">Passenger</div>
+                    <div class="role-desc">You're flying to Australia for the first time. Order food, make small talk, and ask for help.</div>
+                    <span class="role-badge">✓ Selected</span>
+                </div>
+                <div class="role-card" id="roleB" onclick="selectRole('B')">
+                    <span class="role-avatar">👩‍✈️</span>
+                    <div class="role-name">Crew & Others</div>
+                    <div class="role-desc">You play the flight attendant, captain, and other passengers on the plane.</div>
+                    <span class="role-badge">✓ Selected</span>
+                </div>
             </div>
 
-            <button class="start-btn" onclick="startGame()">Let's Fly! ✈️</button>
+            <div class="how-it-works">
+                <h3>📖 How It Works</h3>
+                <div class="how-step">
+                    <span class="step-icon">1️⃣</span>
+                    <span>Each player picks a role and opens the game on their own phone/tablet</span>
+                </div>
+                <div class="how-step">
+                    <span class="step-icon">2️⃣</span>
+                    <span>You'll see <strong>your lines highlighted</strong> — read them out loud!</span>
+                </div>
+                <div class="how-step">
+                    <span class="step-icon">3️⃣</span>
+                    <span>Listen to your partner, then tap <strong>"Next"</strong> to continue</span>
+                </div>
+                <div class="how-step">
+                    <span class="step-icon">4️⃣</span>
+                    <span>Complete all 6 scenarios, then <strong>switch roles</strong> and play again!</span>
+                </div>
+            </div>
+
+            <button class="start-btn" id="startBtn" onclick="startRoleplay()">Start Roleplay 🎬</button>
         </div>
 
-        <!-- GAME AREA -->
+        <!-- ===== SCENARIO SELECT ===== -->
+        <div id="scenarioSelect" class="hidden">
+            <div class="role-banner" id="roleBanner"></div>
+            <h2 style="color:#1a237e; margin-bottom:5px; font-size:1.3rem;">Scenarios</h2>
+            <p style="color:#666; font-size:0.9rem; margin-bottom:15px;">Tap a scenario to start the roleplay dialogue</p>
+            <div class="scenario-list" id="scenarioList"></div>
+        </div>
+
+        <!-- ===== GAME AREA ===== -->
         <div id="gameArea" class="hidden"></div>
 
-        <!-- SCORE SCREEN -->
-        <div id="scoreScreen" class="score-screen hidden"></div>
+        <!-- ===== COMPLETE SCREEN ===== -->
+        <div id="completeScreen" class="hidden complete-screen"></div>
 
     </div>
 
     <script>
-        // ========== GAME DATA ==========
-        const scenarios = [
-            // SCENARIO 1: Ordering a Drink
-            {
-                label: "Drink Service",
-                scene: {
-                    icon: "🍹",
-                    text: "The flight attendant is coming down the aisle with the drink cart. She stops at your row and smiles at you."
-                },
-                dialogue: [
-                    { speaker: "npc", name: "Flight Attendant", avatar: "👩‍✈️", text: "Good afternoon! Would you like something to drink?" }
-                ],
-                type: "choice",
-                question: "What do you say to order a drink?",
-                choices: [
-                    { text: "\"Could I have some orange juice, please?\"", correct: true },
-                    { text: "\"Give me juice now.\"", correct: false },
-                    { text: "\"I want to eat dinner.\"", correct: false },
-                    { text: "\"Where is the bathroom?\"", correct: false }
-                ],
-                correctFeedback: {
-                    title: "✅ Perfect!",
-                    text: "\"Could I have...please?\" is a very polite way to order something on a plane. You can also say \"May I have...\" or \"I'd like..., please.\""
-                },
-                incorrectFeedback: {
-                    title: "❌ Not quite!",
-                    text: "The best answer is: \"Could I have some orange juice, please?\" Remember to be polite when ordering. Use phrases like \"Could I have...\" or \"I'd like...\""
-                },
-                followUpDialogue: [
-                    { speaker: "player", name: "You", avatar: "🧑", text: "Could I have some orange juice, please?" },
-                    { speaker: "npc", name: "Flight Attendant", avatar: "👩‍✈️", text: "Of course! Here you go. Would you like some ice with that?" },
-                    { speaker: "player", name: "You", avatar: "🧑", text: "Yes, please. Thank you!" }
-                ]
-            },
-
-            // SCENARIO 2: Asking for a Blanket
-            {
-                label: "Comfort Request",
-                scene: {
-                    icon: "🥶",
-                    text: "The cabin is quite cold and you're feeling chilly. You see a flight attendant walking past your row."
-                },
-                dialogue: [
-                    { speaker: "player", name: "You", avatar: "🧑", text: "(You need to get the flight attendant's attention and ask for a blanket)" }
-                ],
-                type: "sentence-builder",
-                instruction: "Put the words in the correct order to ask for a blanket:",
-                words: ["Excuse", "could", "a", "blanket", "me,", "I", "please?", "have"],
-                correctOrder: ["Excuse", "me,", "could", "I", "have", "a", "blanket", "please?"],
-                correctFeedback: {
-                    title: "✅ Great job!",
-                    text: "\"Excuse me, could I have a blanket please?\" is perfect! Always start with \"Excuse me\" to politely get someone's attention."
-                },
-                incorrectFeedback: {
-                    title: "❌ Not quite right!",
-                    text: "The correct sentence is: \"Excuse me, could I have a blanket please?\" Start with \"Excuse me\" and use \"could I have\" to make a polite request."
-                },
-                followUpDialogue: [
-                    { speaker: "player", name: "You", avatar: "🧑", text: "Excuse me, could I have a blanket please?" },
-                    { speaker: "npc", name: "Flight Attendant", avatar: "👩‍✈️", text: "Sure! Let me get one for you. Would you like a pillow too?" },
-                    { speaker: "player", name: "You", avatar: "🧑", text: "That would be great, thank you!" }
-                ]
-            },
-
-            // SCENARIO 3: Small Talk with Passenger
-            {
-                label: "Small Talk",
-                scene: {
-                    icon: "💬",
-                    text: "The passenger sitting next to you looks friendly. They turn to you and start a conversation."
-                },
-                dialogue: [
-                    { speaker: "npc", name: "Passenger", avatar: "👨", text: "Hi there! Is this your first time flying to Australia?" }
-                ],
-                type: "choice",
-                question: "How do you respond?",
-                choices: [
-                    { text: "\"I don't want to talk to you.\"", correct: false },
-                    { text: "\"Yes, it is! I'm really excited. Have you been before?\"", correct: true },
-                    { text: "\"Australia is a country.\"", correct: false },
-                    { text: "\"Please give me food.\"", correct: false }
-                ],
-                correctFeedback: {
-                    title: "✅ Wonderful!",
-                    text: "This is great small talk! Answering the question, sharing how you feel, and asking a question back keeps the conversation going naturally."
-                },
-                incorrectFeedback: {
-                    title: "❌ Not the best response!",
-                    text: "A good response is: \"Yes, it is! I'm really excited. Have you been before?\" When making small talk, answer the question and ask one back!"
-                },
-                followUpDialogue: [
-                    { speaker: "player", name: "You", avatar: "🧑", text: "Yes, it is! I'm really excited. Have you been before?" },
-                    { speaker: "npc", name: "Passenger", avatar: "👨", text: "Oh yes, many times! I live in Melbourne. You'll love it there. The coffee is amazing!" },
-                    { speaker: "player", name: "You", avatar: "🧑", text: "That sounds great! I can't wait to try it." }
-                ]
-            },
-
-            // SCENARIO 4: Getting Past Someone
-            {
-                label: "Getting Past",
-                scene: {
-                    icon: "🚶",
-                    text: "You need to go to the bathroom, but the passenger next to you is in the aisle seat and has their eyes closed."
-                },
-                dialogue: [],
-                type: "choice",
-                question: "What's the most polite way to ask them to let you through?",
-                choices: [
-                    { text: "\"Move! I need to go!\"", correct: false },
-                    { text: "\"Sorry to bother you, could I get past please? I need to use the bathroom.\"", correct: true },
-                    { text: "Just climb over them without saying anything.", correct: false },
-                    { text: "\"You are in my way.\"", correct: false }
-                ],
-                correctFeedback: {
-                    title: "✅ Perfect manners!",
-                    text: "\"Sorry to bother you\" shows you know they might be resting. \"Could I get past please?\" is a polite way to ask someone to move. Well done!"
-                },
-                incorrectFeedback: {
-                    title: "❌ That's not polite!",
-                    text: "The best answer is: \"Sorry to bother you, could I get past please? I need to use the bathroom.\" Use \"sorry to bother you\" when someone might be sleeping or resting."
-                },
-                followUpDialogue: [
-                    { speaker: "player", name: "You", avatar: "🧑", text: "Sorry to bother you, could I get past please? I need to use the bathroom." },
-                    { speaker: "npc", name: "Passenger", avatar: "👨", text: "Oh, of course! No problem at all." },
-                    { speaker: "player", name: "You", avatar: "🧑", text: "Thank you! Sorry about that." },
-                    { speaker: "npc", name: "Passenger", avatar: "👨", text: "Don't worry about it!" }
-                ]
-            },
-
-            // SCENARIO 5: Meal Service
-            {
-                label: "Meal Service",
-                scene: {
-                    icon: "🍱",
-                    text: "It's time for the in-flight meal. The flight attendant approaches with the food trolley."
-                },
-                dialogue: [
-                    { speaker: "npc", name: "Flight Attendant", avatar: "👩‍✈️", text: "For dinner tonight, we have chicken with rice or pasta with vegetables. Which would you prefer?" }
-                ],
-                type: "choice",
-                question: "How do you order your meal?",
-                choices: [
-                    { text: "\"Chicken.\"", correct: false },
-                    { text: "\"I don't like airplane food.\"", correct: false },
-                    { text: "\"I'd like the chicken with rice, please.\"", correct: true },
-                    { text: "\"What food do you have?\"", correct: false }
-                ],
-                correctFeedback: {
-                    title: "✅ Excellent!",
-                    text: "\"I'd like the..., please\" is the perfect way to order a meal on a plane. It's polite and clear. You can also say \"Could I have the... please?\""
-                },
-                incorrectFeedback: {
-                    title: "❌ Try again!",
-                    text: "The best answer is: \"I'd like the chicken with rice, please.\" While just saying \"Chicken\" is understood, adding \"I'd like...please\" is much more polite."
-                },
-                followUpDialogue: [
-                    { speaker: "player", name: "You", avatar: "🧑", text: "I'd like the chicken with rice, please." },
-                    { speaker: "npc", name: "Flight Attendant", avatar: "👩‍✈️", text: "Here you are. Would you like anything to drink with your meal?" },
-                    { speaker: "player", name: "You", avatar: "🧑", text: "Could I have some water, please?" },
-                    { speaker: "npc", name: "Flight Attendant", avatar: "👩‍✈️", text: "Of course! Enjoy your meal." }
-                ]
-            },
-
-            // SCENARIO 6: Landing Announcement
-            {
-                label: "Landing",
-                scene: {
-                    icon: "🛬",
-                    text: "The captain makes an announcement as the plane begins its descent. Listen carefully to what is said."
-                },
-                dialogue: [
-                    { speaker: "npc", name: "Captain", avatar: "👨‍✈️", text: "Ladies and gentlemen, we are now beginning our descent into Melbourne. Please return to your seats, fasten your seatbelts, and put your tray tables in the upright position. The local time is 3:45 PM and the temperature is 22 degrees. Thank you for flying with us today." }
-                ],
-                type: "choice",
-                question: "What should you do right now based on the announcement?",
-                choices: [
-                    { text: "Go to the bathroom", correct: false },
-                    { text: "Order another drink", correct: false },
-                    { text: "Return to your seat and fasten your seatbelt", correct: true },
-                    { text: "Open the window shade", correct: false }
-                ],
-                correctFeedback: {
-                    title: "✅ You understood perfectly!",
-                    text: "The captain said to return to your seat, fasten your seatbelt, and put your tray table up. Understanding announcements is very important for safety!"
-                },
-                incorrectFeedback: {
-                    title: "❌ Listen again!",
-                    text: "The captain said: \"Please return to your seats, fasten your seatbelts, and put your tray tables in the upright position.\" These are safety instructions for landing."
-                },
-                followUpDialogue: [
-                    { speaker: "npc", name: "Passenger", avatar: "👨", text: "Well, we're almost there! It was nice chatting with you." },
-                    { speaker: "player", name: "You", avatar: "🧑", text: "Yes, it was really nice meeting you too! Thanks for all the tips about Melbourne." },
-                    { speaker: "npc", name: "Passenger", avatar: "👨", text: "No worries! Enjoy your time in Australia. 😊" }
-                ]
+    // ================ ROLEPLAY DATA ================
+    const roleplayScenarios = [
+        {
+            id: 1,
+            title: "Ordering a Drink",
+            desc: "The drink cart comes to your row",
+            icon: "🍹",
+            scene: "The flight attendant pushes the drink cart down the aisle and stops at your row with a friendly smile.",
+            lines: [
+                { role: "B", speaker: "Flight Attendant", avatar: "👩‍✈️", text: "Good afternoon! Would you like something to drink?" },
+                { role: "A", speaker: "Passenger", avatar: "🧑", text: "Could I have some orange juice, please?" },
+                { role: "B", speaker: "Flight Attendant", avatar: "👩‍✈️", text: "Of course! Would you like some ice with that?" },
+                { role: "A", speaker: "Passenger", avatar: "🧑", text: "Yes, please. Thank you!" },
+                { role: "B", speaker: "Flight Attendant", avatar: "👩‍✈️", text: "Here you go. Enjoy!" },
+                { role: "A", speaker: "Passenger", avatar: "🧑", text: "Thanks very much!" }
+            ],
+            tip: {
+                title: "💡 Polite Ordering Phrases",
+                text: "Use \"Could I have...\", \"May I have...\", or \"I'd like...please\" when ordering on a plane. Always add \"please\" and \"thank you\"!"
             }
-        ];
-
-        // ========== GAME STATE ==========
-        let currentScenario = 0;
-        let score = 0;
-        let totalQuestions = scenarios.length;
-        let results = [];
-
-        // ========== START GAME ==========
-        function startGame() {
-            document.getElementById('startScreen').classList.add('hidden');
-            document.getElementById('gameArea').classList.remove('hidden');
-            currentScenario = 0;
-            score = 0;
-            results = [];
-            loadScenario(currentScenario);
-        }
-
-        // ========== UPDATE PROGRESS ==========
-        function updateProgress() {
-            const pct = ((currentScenario) / totalQuestions) * 100;
-            document.getElementById('progressFill').style.width = pct + '%';
-            document.getElementById('progressLabel').textContent = `Scenario ${currentScenario} of ${totalQuestions}`;
-            document.getElementById('scoreLabel').textContent = `Score: ${score}`;
-        }
-
-        // ========== LOAD SCENARIO ==========
-        function loadScenario(index) {
-            updateProgress();
-            if (index >= scenarios.length) {
-                showScore();
-                return;
+        },
+        {
+            id: 2,
+            title: "Asking for a Blanket",
+            desc: "The cabin is cold and you need help",
+            icon: "🥶",
+            scene: "The cabin is quite cold. You see a flight attendant walking past your row. You need to get their attention.",
+            lines: [
+                { role: "A", speaker: "Passenger", avatar: "🧑", text: "Excuse me!" },
+                { role: "B", speaker: "Flight Attendant", avatar: "👩‍✈️", text: "Yes? How can I help you?" },
+                { role: "A", speaker: "Passenger", avatar: "🧑", text: "Could I have a blanket, please? It's a bit cold." },
+                { role: "B", speaker: "Flight Attendant", avatar: "👩‍✈️", text: "Sure! Let me get one for you. Would you like a pillow too?" },
+                { role: "A", speaker: "Passenger", avatar: "🧑", text: "That would be great, thank you so much!" },
+                { role: "B", speaker: "Flight Attendant", avatar: "👩‍✈️", text: "Here you are. If you need anything else, just press the call button above your seat." },
+                { role: "A", speaker: "Passenger", avatar: "🧑", text: "Okay, thank you! I appreciate it." }
+            ],
+            tip: {
+                title: "💡 Getting Attention Politely",
+                text: "Say \"Excuse me\" to get someone's attention. Use \"Could I have...\" for requests. The call button (above your seat) can also be used to call a flight attendant."
             }
-
-            const s = scenarios[index];
-            const area = document.getElementById('gameArea');
-            let html = `<div class="scenario-card">`;
-            html += `<span class="scenario-label">Scenario ${index + 1} of ${totalQuestions} — ${s.label}</span>`;
-
-            // Scene description
-            html += `<div class="scene-description">
-                        <span class="scene-icon">${s.scene.icon}</span>
-                        ${s.scene.text}
-                      </div>`;
-
-            // Dialogue
-            if (s.dialogue && s.dialogue.length > 0) {
-                html += `<div class="dialogue-container">`;
-                s.dialogue.forEach(d => {
-                    html += createDialogueBubble(d);
-                });
-                html += `</div>`;
+        },
+        {
+            id: 3,
+            title: "Small Talk with a Passenger",
+            desc: "Chat with the person sitting next to you",
+            icon: "💬",
+            scene: "The passenger next to you looks friendly and turns to start a conversation as the plane cruises at altitude.",
+            lines: [
+                { role: "B", speaker: "Passenger", avatar: "👨", text: "Hi there! Is this your first time flying to Australia?" },
+                { role: "A", speaker: "You", avatar: "🧑", text: "Yes, it is! I'm really excited. Have you been before?" },
+                { role: "B", speaker: "Passenger", avatar: "👨", text: "Oh yes, many times! I actually live in Melbourne. What brings you to Australia?" },
+                { role: "A", speaker: "You", avatar: "🧑", text: "I'm going to study English there. I'll be staying for about six months." },
+                { role: "B", speaker: "Passenger", avatar: "👨", text: "That's wonderful! Melbourne is a great city for students. The coffee is amazing — you have to try it!" },
+                { role: "A", speaker: "You", avatar: "🧑", text: "That sounds great! Do you have any other tips for me?" },
+                { role: "B", speaker: "Passenger", avatar: "👨", text: "Definitely! Make sure you visit the Great Ocean Road. And try some Vegemite — it's very Australian!" },
+                { role: "A", speaker: "You", avatar: "🧑", text: "Ha! I've heard about Vegemite. I'll give it a try. Thanks for the tips!" },
+                { role: "B", speaker: "Passenger", avatar: "👨", text: "No worries! That's actually a very Australian thing to say — 'no worries'!" },
+                { role: "A", speaker: "You", avatar: "🧑", text: "Ha! No worries! I'm already learning. 😄" }
+            ],
+            tip: {
+                title: "💡 Small Talk Tips",
+                text: "Good small talk: answer the question, share something about yourself, then ask a question back. Topics like travel, food, and where you're from are safe and friendly!"
             }
-
-            // Interaction type
-            if (s.type === "choice") {
-                html += createChoiceUI(s, index);
-            } else if (s.type === "sentence-builder") {
-                html += createSentenceBuilderUI(s, index);
+        },
+        {
+            id: 4,
+            title: "Getting Past Someone",
+            desc: "You need to use the bathroom",
+            icon: "🚶",
+            scene: "You need to go to the bathroom, but the passenger next to you in the aisle seat has their eyes closed. You need to politely ask them to move.",
+            lines: [
+                { role: "A", speaker: "You", avatar: "🧑", text: "Sorry to bother you..." },
+                { role: "B", speaker: "Passenger", avatar: "👨", text: "(Opens eyes) Oh, hi! No problem. What's up?" },
+                { role: "A", speaker: "You", avatar: "🧑", text: "Could I get past, please? I need to use the bathroom." },
+                { role: "B", speaker: "Passenger", avatar: "👨", text: "Of course! Let me get out of your way." },
+                { role: "A", speaker: "You", avatar: "🧑", text: "Thank you! Sorry about that." },
+                { role: "B", speaker: "Passenger", avatar: "👨", text: "Don't worry about it at all!" },
+                { role: "A", speaker: "You", avatar: "🧑", text: "(Coming back) Excuse me, sorry, could I get back in?" },
+                { role: "B", speaker: "Passenger", avatar: "👨", text: "Sure! (stands up) There you go." },
+                { role: "A", speaker: "You", avatar: "🧑", text: "Thanks so much! Sorry to disturb you again." },
+                { role: "B", speaker: "Passenger", avatar: "👨", text: "No worries at all! Happens all the time on flights." }
+            ],
+            tip: {
+                title: "💡 Polite Phrases for Moving Past",
+                text: "\"Sorry to bother you\" is great when someone is resting. \"Could I get past?\" or \"Excuse me, could I squeeze through?\" are polite ways to ask someone to move."
             }
-
-            html += `</div>`;
-            area.innerHTML = html;
-
-            // Init sentence builder if needed
-            if (s.type === "sentence-builder") {
-                initSentenceBuilder(s, index);
+        },
+        {
+            id: 5,
+            title: "Meal Service",
+            desc: "Choosing and ordering your in-flight meal",
+            icon: "🍱",
+            scene: "It's dinner time on the flight. The flight attendant approaches with the food trolley and stops at your row.",
+            lines: [
+                { role: "B", speaker: "Flight Attendant", avatar: "👩‍✈️", text: "Good evening! For dinner tonight, we have chicken with rice or pasta with vegetables. Which would you prefer?" },
+                { role: "A", speaker: "Passenger", avatar: "🧑", text: "I'd like the chicken with rice, please." },
+                { role: "B", speaker: "Flight Attendant", avatar: "👩‍✈️", text: "Great choice! And would you like anything to drink with your meal?" },
+                { role: "A", speaker: "Passenger", avatar: "🧑", text: "Could I have some water, please?" },
+                { role: "B", speaker: "Flight Attendant", avatar: "👩‍✈️", text: "Of course! Here's your meal and your water. Enjoy!" },
+                { role: "A", speaker: "Passenger", avatar: "🧑", text: "Thank you very much!" },
+                { role: "B", speaker: "Flight Attendant", avatar: "👩‍✈️", text: "(Comes back later) Are you finished with your tray?" },
+                { role: "A", speaker: "Passenger", avatar: "🧑", text: "Yes, I am. Thank you, the chicken was really good!" },
+                { role: "B", speaker: "Flight Attendant", avatar: "👩‍✈️", text: "I'm glad you enjoyed it! I'll take that for you." }
+            ],
+            tip: {
+                title: "💡 Ordering Meals",
+                text: "\"I'd like the..., please\" is the perfect phrase for ordering. You can also say \"Could I have the...\" or \"I'll have the..., please.\" If you have dietary needs, say \"Do you have any vegetarian options?\""
+            }
+        },
+        {
+            id: 6,
+            title: "Landing & Goodbye",
+            desc: "The plane prepares to land in Melbourne",
+            icon: "🛬",
+            scene: "The captain makes a landing announcement. The plane begins its descent into Melbourne. You and your seat neighbour prepare for arrival.",
+            lines: [
+                { role: "B", speaker: "Captain (Announcement)", avatar: "👨‍✈️", text: "Ladies and gentlemen, we are now beginning our descent into Melbourne. Please return to your seats, fasten your seatbelts, and put your tray tables in the upright position. The local time is 3:45 PM and the temperature is 22 degrees Celsius. Thank you for flying with us today." },
+                { role: "A", speaker: "You", avatar: "🧑", text: "Oh, we're nearly there! I'm so excited!" },
+                { role: "B", speaker: "Passenger", avatar: "👨", text: "Almost! Don't forget to fill in your arrival card before we land. Do you have a pen?" },
+                { role: "A", speaker: "You", avatar: "🧑", text: "Oh! I forgot about that. No, I don't have a pen. Could I borrow yours?" },
+                { role: "B", speaker: "Passenger", avatar: "👨", text: "Sure, here you go! You just need to fill in your name, passport number, flight number, and where you're staying." },
+                { role: "A", speaker: "You", avatar: "🧑", text: "Thank you so much! That's really helpful." },
+                { role: "B", speaker: "Passenger", avatar: "👨", text: "No worries! Well, it was really nice chatting with you. I hope you have a wonderful time in Australia!" },
+                { role: "A", speaker: "You", avatar: "🧑", text: "It was lovely meeting you too! Thanks for all the tips about Melbourne." },
+                { role: "B", speaker: "Passenger", avatar: "👨", text: "My pleasure! Enjoy your stay. And remember — try the coffee! ☕" },
+                { role: "A", speaker: "You", avatar: "🧑", text: "I will! Goodbye, and thanks again! 😊" }
+            ],
+            tip: {
+                title: "💡 Arrival Tips",
+                text: "Remember to fill in your arrival/incoming passenger card before landing. You'll need your passport, flight number, and accommodation address. \"Could I borrow...\" is a polite way to ask for something temporarily."
             }
         }
+    ];
 
-        // ========== DIALOGUE BUBBLE ==========
-        function createDialogueBubble(d) {
-            return `
-                <div class="dialogue-bubble ${d.speaker}">
-                    <div class="dialogue-avatar">${d.avatar}</div>
-                    <div class="dialogue-text">
-                        <div class="speaker-name">${d.name}</div>
-                        ${d.text}
+    // ================ STATE ================
+    let selectedRole = null;
+    let currentScenarioIndex = -1;
+    let currentLineIndex = 0;
+    let completedScenarios = new Set();
+
+    // ================ ROLE SELECTION ================
+    function selectRole(role) {
+        selectedRole = role;
+        document.getElementById('roleA').classList.toggle('selected', role === 'A');
+        document.getElementById('roleB').classList.toggle('selected', role === 'B');
+        document.getElementById('startBtn').classList.add('active');
+    }
+
+    // ================ START ================
+    function startRoleplay() {
+        if (!selectedRole) return;
+        document.getElementById('roleScreen').classList.add('hidden');
+        document.getElementById('scenarioSelect').classList.remove('hidden');
+        renderRoleBanner();
+        renderScenarioList();
+        updateProgressBar();
+    }
+
+    // ================ ROLE BANNER ================
+    function renderRoleBanner() {
+        const banner = document.getElementById('roleBanner');
+        if (selectedRole === 'A') {
+            banner.innerHTML = `
+                <span class="rb-avatar">🧑</span>
+                <div class="rb-info">
+                    <div class="rb-label">Your Role</div>
+                    <div class="rb-name">Passenger</div>
+                </div>
+                <button class="switch-role-btn" onclick="switchRole()">🔄 Switch</button>`;
+        } else {
+            banner.innerHTML = `
+                <span class="rb-avatar">👩‍✈️</span>
+                <div class="rb-info">
+                    <div class="rb-label">Your Role</div>
+                    <div class="rb-name">Crew & Others</div>
+                </div>
+                <button class="switch-role-btn" onclick="switchRole()">🔄 Switch</button>`;
+        }
+    }
+
+    function switchRole() {
+        selectedRole = selectedRole === 'A' ? 'B' : 'A';
+        renderRoleBanner();
+    }
+
+    // ================ SCENARIO LIST ================
+    function renderScenarioList() {
+        const list = document.getElementById('scenarioList');
+        list.innerHTML = '';
+        roleplayScenarios.forEach((s, i) => {
+            const done = completedScenarios.has(s.id);
+            list.innerHTML += `
+                <div class="scenario-list-item ${done ? 'completed' : ''}" onclick="openScenario(${i})">
+                    <div class="sli-num">${done ? '✓' : s.id}</div>
+                    <div class="sli-info">
+                        <div class="sli-title">${s.icon} ${s.title}</div>
+                        <div class="sli-desc">${s.desc}</div>
                     </div>
+                    <div class="sli-arrow">➡️</div>
                 </div>`;
-        }
+        });
+    }
 
-        // ========== CHOICE UI ==========
-        function createChoiceUI(s, index) {
-            let html = `<div class="choices-container">
-                          <h4>💬 ${s.question}</h4>`;
-            s.choices.forEach((c, ci) => {
-                html += `<button class="choice-btn" onclick="handleChoice(${index}, ${ci})" id="choice-${ci}">${c.text}</button>`;
-            });
-            html += `<div id="feedback-${index}" class="feedback-box"></div>`;
-            html += `</div>`;
-            return html;
-        }
+    // ================ PROGRESS ================
+    function updateProgressBar() {
+        const pct = (completedScenarios.size / roleplayScenarios.length) * 100;
+        document.getElementById('progressFill').style.width = pct + '%';
+        document.getElementById('progressLabel').textContent = `${completedScenarios.size} of ${roleplayScenarios.length} completed`;
+        document.getElementById('progressRight').textContent = selectedRole === 'A' ? '🧑 Passenger' : '👩‍✈️ Crew';
+    }
 
-        // ========== HANDLE CHOICE ==========
-        function handleChoice(scenarioIndex, choiceIndex) {
-            const s = scenarios[scenarioIndex];
-            const chosen = s.choices[choiceIndex];
-            const feedbackEl = document.getElementById(`feedback-${scenarioIndex}`);
+    // ================ OPEN SCENARIO ================
+    function openScenario(index) {
+        currentScenarioIndex = index;
+        currentLineIndex = 0;
+        document.getElementById('scenarioSelect').classList.add('hidden');
+        document.getElementById('gameArea').classList.remove('hidden');
+        renderCurrentLine();
+    }
 
-            // Disable all choices
-            s.choices.forEach((_, ci) => {
-                const btn = document.getElementById(`choice-${ci}`);
-                btn.classList.add('disabled');
-                if (s.choices[ci].correct) {
-                    btn.classList.add('correct');
+    // ================ RENDER DIALOGUE ================
+    function renderCurrentLine() {
+        const s = roleplayScenarios[currentScenarioIndex];
+        const area = document.getElementById('gameArea');
+
+        let html = `
+            <div class="role-banner" style="margin-bottom:15px;">
+                <span class="rb-avatar">${selectedRole === 'A' ? '🧑' : '👩‍✈️'}</span>
+                <div class="rb-info">
+                    <div class="rb-label">You are</div>
+                    <div class="rb-name">${selectedRole === 'A' ? 'Passenger' : 'Crew & Others'}</div>
+                </div>
+            </div>
+            <div class="scenario-card">
+                <span class="scenario-label">${s.icon} Scenario ${s.id} — ${s.title}</span>
+                <div class="scene-description">
+                    <span class="scene-icon">📍</span>
+                    ${s.scene}
+                </div>
+                <div class="dialogue-container">`;
+
+        // Show all lines up to current
+        for (let i = 0; i <= currentLineIndex && i < s.lines.length; i++) {
+            const line = s.lines[i];
+            const isMyLine = line.role === selectedRole;
+            const isCurrent = i === currentLineIndex;
+            const side = line.role === 'A' ? 'player' : 'npc';
+
+            if (isCurrent) {
+                // Current line - show prompt
+                if (isMyLine) {
+                    html += `
+                        <div class="speak-prompt">
+                            <span class="sp-icon">🎤</span>
+                            <span class="sp-text">YOUR TURN — Read this out loud:</span>
+                            <div class="sp-line">"${line.text}"</div>
+                            <span class="sp-hint">As: ${line.speaker}</span>
+                        </div>`;
+                } else {
+                    html += `
+                        <div class="wait-prompt">
+                            <span class="wp-icon">👂</span>
+                            <span class="wp-text">LISTEN — It's your partner's turn (${line.speaker})</span>
+                        </div>`;
                 }
-            });
-
-            if (!chosen.correct) {
-                document.getElementById(`choice-${choiceIndex}`).classList.add('incorrect');
-            }
-
-            const isCorrect = chosen.correct;
-            if (isCorrect) {
-                score++;
-                results.push({ label: s.label, passed: true });
-                feedbackEl.className = 'feedback-box correct';
-                feedbackEl.innerHTML = `<h4>${s.correctFeedback.title}</h4><p>${s.correctFeedback.text}</p>`;
             } else {
-                results.push({ label: s.label, passed: false });
-                feedbackEl.className = 'feedback-box incorrect';
-                feedbackEl.innerHTML = `<h4>${s.incorrectFeedback.title}</h4><p>${s.incorrectFeedback.text}</p>`;
-            }
-
-            // Show follow up dialogue and next button
-            setTimeout(() => {
-                showFollowUpAndNext(scenarioIndex);
-            }, 800);
-        }
-
-        // ========== SENTENCE BUILDER UI ==========
-        function createSentenceBuilderUI(s, index) {
-            let html = `<div class="drag-instruction">📝 ${s.instruction}</div>`;
-            html += `<div class="sentence-builder" id="sentence-area-${index}">
-                        <span class="placeholder-text">Tap words below to build the sentence...</span>
-                     </div>`;
-            html += `<div class="word-bank" id="word-bank-${index}">`;
-            // Shuffle words
-            const shuffled = [...s.words].sort(() => Math.random() - 0.5);
-            shuffled.forEach((word, wi) => {
-                html += `<span class="word-chip" id="word-${index}-${wi}" data-word="${word}">${word}</span>`;
-            });
-            html += `</div>`;
-            html += `<button class="check-sentence-btn" onclick="checkSentence(${index})" id="checkBtn-${index}">Check Answer ✓</button>`;
-            html += `<div id="feedback-${index}" class="feedback-box"></div>`;
-            return html;
-        }
-
-        // ========== INIT SENTENCE BUILDER ==========
-        function initSentenceBuilder(s, index) {
-            const sentenceArea = document.getElementById(`sentence-area-${index}`);
-            const wordBank = document.getElementById(`word-bank-${index}`);
-            const chips = wordBank.querySelectorAll('.word-chip');
-
-            chips.forEach(chip => {
-                chip.addEventListener('click', () => {
-                    if (chip.classList.contains('placed')) {
-                        // Move back to bank
-                        chip.classList.remove('placed');
-                        wordBank.appendChild(chip);
-                        // Remove from sentence area
-                        const inSentence = sentenceArea.querySelector(`[data-ref="${chip.id}"]`);
-                        if (inSentence) inSentence.remove();
-
-                        // Check if sentence area is empty
-                        if (sentenceArea.querySelectorAll('.word-chip').length === 0) {
-                            if (!sentenceArea.querySelector('.placeholder-text')) {
-                                sentenceArea.innerHTML = '<span class="placeholder-text">Tap words below to build the sentence...</span>';
-                            }
-                        }
-                    } else {
-                        // Remove placeholder
-                        const ph = sentenceArea.querySelector('.placeholder-text');
-                        if (ph) ph.remove();
-
-                        // Add to sentence
-                        chip.classList.add('placed');
-                        const clone = document.createElement('span');
-                        clone.className = 'word-chip in-sentence';
-                        clone.textContent = chip.textContent;
-                        clone.dataset.ref = chip.id;
-                        clone.dataset.word = chip.dataset.word;
-                        clone.addEventListener('click', () => {
-                            // Return to bank
-                            chip.classList.remove('placed');
-                            clone.remove();
-                            if (sentenceArea.querySelectorAll('.word-chip').length === 0) {
-                                sentenceArea.innerHTML = '<span class="placeholder-text">Tap words below to build the sentence...</span>';
-                            }
-                        });
-                        sentenceArea.appendChild(clone);
-                    }
-                });
-            });
-        }
-
-        // ========== CHECK SENTENCE ==========
-        function checkSentence(scenarioIndex) {
-            const s = scenarios[scenarioIndex];
-            const sentenceArea = document.getElementById(`sentence-area-${scenarioIndex}`);
-            const wordsInSentence = sentenceArea.querySelectorAll('.word-chip');
-            const feedbackEl = document.getElementById(`feedback-${scenarioIndex}`);
-            const checkBtn = document.getElementById(`checkBtn-${scenarioIndex}`);
-
-            const builtSentence = Array.from(wordsInSentence).map(w => w.dataset.word);
-            const isCorrect = JSON.stringify(builtSentence) === JSON.stringify(s.correctOrder);
-
-            checkBtn.style.display = 'none';
-
-            if (isCorrect) {
-                score++;
-                results.push({ label: s.label, passed: true });
-                feedbackEl.className = 'feedback-box correct';
-                feedbackEl.innerHTML = `<h4>${s.correctFeedback.title}</h4><p>${s.correctFeedback.text}</p>`;
-            } else {
-                results.push({ label: s.label, passed: false });
-                feedbackEl.className = 'feedback-box incorrect';
-                feedbackEl.innerHTML = `<h4>${s.incorrectFeedback.title}</h4><p>${s.incorrectFeedback.text}</p><p style="margin-top:8px"><strong>Correct answer:</strong> ${s.correctOrder.join(' ')}</p>`;
-            }
-
-            // Disable interaction
-            const allChips = document.querySelectorAll(`#word-bank-${scenarioIndex} .word-chip, #sentence-area-${scenarioIndex} .word-chip`);
-            allChips.forEach(c => c.style.pointerEvents = 'none');
-
-            setTimeout(() => {
-                showFollowUpAndNext(scenarioIndex);
-            }, 800);
-        }
-
-        // ========== FOLLOW UP + NEXT ==========
-        function showFollowUpAndNext(scenarioIndex) {
-            const s = scenarios[scenarioIndex];
-            const area = document.getElementById('gameArea');
-            const card = area.querySelector('.scenario-card');
-
-            // Add follow-up dialogue
-            if (s.followUpDialogue && s.followUpDialogue.length > 0) {
-                let followHTML = `<div class="dialogue-container" style="margin-top:20px; border-top: 2px solid #f0f0f0; padding-top: 15px;">
-                    <p style="font-size:0.85rem; color:#888; margin-bottom:10px; font-weight:600;">💬 How the conversation continues:</p>`;
-                s.followUpDialogue.forEach(d => {
-                    followHTML += createDialogueBubble(d);
-                });
-                followHTML += `</div>`;
-                card.insertAdjacentHTML('beforeend', followHTML);
-            }
-
-            // Add next button
-            const isLast = scenarioIndex === scenarios.length - 1;
-            const btnText = isLast ? "See Results 🏆" : "Next Scenario ➡️";
-            card.insertAdjacentHTML('beforeend', `
-                <div style="text-align:center; margin-top:20px;">
-                    <button class="next-btn" onclick="nextScenario()">${btnText}</button>
-                </div>
-            `);
-
-            // Scroll to feedback
-            card.scrollIntoView({ behavior: 'smooth', block: 'end' });
-        }
-
-        // ========== NEXT SCENARIO ==========
-        function nextScenario() {
-            currentScenario++;
-            if (currentScenario >= scenarios.length) {
-                showScore();
-            } else {
-                loadScenario(currentScenario);
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-        }
-
-        // ========== SHOW SCORE ==========
-        function showScore() {
-            document.getElementById('gameArea').classList.add('hidden');
-            const scoreScreen = document.getElementById('scoreScreen');
-            scoreScreen.classList.remove('hidden');
-
-            const pct = Math.round((score / totalQuestions) * 100);
-            document.getElementById('progressFill').style.width = '100%';
-            document.getElementById('progressLabel').textContent = 'Complete!';
-            document.getElementById('scoreLabel').textContent = `Final Score: ${score}/${totalQuestions}`;
-
-            let stars = '';
-            let message = '';
-            if (pct === 100) {
-                stars = '⭐⭐⭐';
-                message = "Outstanding! You're a confident English speaker on the plane! 🎉";
-            } else if (pct >= 66) {
-                stars = '⭐⭐';
-                message = "Great job! You handled most situations well. A little more practice and you'll be perfect! 👏";
-            } else if (pct >= 33) {
-                stars = '⭐';
-                message = "Good try! Review the phrases and try again to improve your score. 💪";
-            } else {
-                stars = '☆';
-                message = "Keep practicing! Learning these phrases will help you feel more comfortable on your next flight. 📚";
-            }
-
-            let breakdownHTML = '';
-            results.forEach((r, i) => {
-                breakdownHTML += `
-                    <div class="breakdown-item">
-                        <span class="label"><span>${i+1}.</span> ${r.label}</span>
-                        <span class="result ${r.passed ? 'pass' : 'fail'}">${r.passed ? '✅ Correct' : '❌ Incorrect'}</span>
+                // Past lines - show as dialogue bubbles
+                html += `
+                    <div class="dialogue-bubble ${side}">
+                        <div class="dialogue-avatar">${line.avatar}</div>
+                        <div class="dialogue-text">
+                            <div class="speaker-name">${isMyLine ? '🟠 You' : line.speaker}</div>
+                            ${line.text}
+                        </div>
                     </div>`;
-            });
-
-            scoreScreen.innerHTML = `
-                <div class="score-stars">${stars}</div>
-                <div class="score-circle">
-                    <span class="score-number">${score}/${totalQuestions}</span>
-                    <span class="score-label">${pct}%</span>
-                </div>
-                <h2>${pct >= 66 ? 'Well Done!' : 'Keep Practicing!'}</h2>
-                <p>${message}</p>
-                <div class="score-breakdown">
-                    <h3>📊 Your Results</h3>
-                    ${breakdownHTML}
-                </div>
-                <div class="btn-group">
-                    <button class="start-btn" onclick="restartGame()">Play Again 🔄</button>
-                    <a href="https://teetalkenglish.github.io/AIRPORT-GAME-FindingTheGate/" class="btn-secondary" style="text-decoration:none; display:inline-flex; align-items:center;">Back to Menu 🏠</a>
-                </div>
-            `;
-
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
         }
 
-        // ========== RESTART ==========
-        function restartGame() {
-            document.getElementById('scoreScreen').classList.add('hidden');
-            currentScenario = 0;
-            score = 0;
-            results = [];
-            document.getElementById('gameArea').classList.remove('hidden');
-            loadScenario(0);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        html += `</div>`; // close dialogue-container
+
+        // Next button
+        const isLastLine = currentLineIndex >= s.lines.length - 1;
+        if (isLastLine) {
+            // Show tip + finish
+            html += `
+                <div class="tip-box">
+                    <h4>${s.tip.title}</h4>
+                    <p>${s.tip.text}</p>
+                </div>
+                <button class="next-line-btn green" onclick="finishScenario()">✅ Complete — Back to Scenarios</button>`;
+        } else {
+            html += `<button class="next-line-btn" onclick="advanceLine()">Next Line ➡️</button>`;
         }
+
+        html += `</div>`; // close scenario-card
+        area.innerHTML = html;
+
+        // Scroll to bottom
+        setTimeout(() => {
+            const card = area.querySelector('.scenario-card');
+            if (card) {
+                card.scrollIntoView({ behavior: 'smooth', block: 'end' });
+            }
+        }, 100);
+    }
+
+    // ================ ADVANCE ================
+    function advanceLine() {
+        const s = roleplayScenarios[currentScenarioIndex];
+        if (currentLineIndex < s.lines.length - 1) {
+            currentLineIndex++;
+            renderCurrentLine();
+        }
+    }
+
+    // ================ FINISH SCENARIO ================
+    function finishScenario() {
+        const s = roleplayScenarios[currentScenarioIndex];
+        completedScenarios.add(s.id);
+        document.getElementById('gameArea').classList.add('hidden');
+        updateProgressBar();
+
+        // Check if all done
+        if (completedScenarios.size === roleplayScenarios.length) {
+            showComplete();
+        } else {
+            document.getElementById('scenarioSelect').classList.remove('hidden');
+            renderScenarioList();
+        }
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ================ ALL COMPLETE ================
+    function showComplete() {
+        const cs = document.getElementById('completeScreen');
+        cs.classList.remove('hidden');
+        document.getElementById('progressFill').style.width = '100%';
+        document.getElementById('progressLabel').textContent = 'All scenarios complete!';
+
+        cs.innerHTML = `
+            <div class="trophy">🏆</div>
+            <h2>Amazing Work!</h2>
+            <p>You've completed all 6 on-the-plane roleplay scenarios as <strong>${selectedRole === 'A' ? '🧑 Passenger' : '👩‍✈️ Crew & Others'}</strong>!</p>
+            <p>Now <strong>switch roles</strong> with your partner and practice again to learn both sides of the conversation!</p>
+            <div class="btn-group">
+                <button class="btn-primary" onclick="restartOtherRole()">🔄 Switch Roles & Replay</button>
+                <button class="btn-secondary" onclick="restartSameRole()">🔁 Play Again (Same Role)</button>
+                <a href="https://teetalkenglish.github.io/AIRPORT-GAME-FindingTheGate/" class="btn-secondary">🏠 Back to Menu</a>
+            </div>`;
+    }
+
+    function restartOtherRole() {
+        selectedRole = selectedRole === 'A' ? 'B' : 'A';
+        completedScenarios.clear();
+        document.getElementById('completeScreen').classList.add('hidden');
+        document.getElementById('scenarioSelect').classList.remove('hidden');
+        renderRoleBanner();
+        renderScenarioList();
+        updateProgressBar();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function restartSameRole() {
+        completedScenarios.clear();
+        document.getElementById('completeScreen').classList.add('hidden');
+        document.getElementById('scenarioSelect').classList.remove('hidden');
+        renderScenarioList();
+        updateProgressBar();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
     </script>
 </body>
 </html>
