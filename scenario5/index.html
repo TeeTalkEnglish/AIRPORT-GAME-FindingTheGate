@@ -437,4 +437,552 @@
     </div>
 
 <!-- ✅ END OF PART 1 — Ask for Part 2 (JavaScript) -->
+    <script>
+    // ================ SCENARIO DATA ================
+    const roleplayScenarios = [
+        {
+            id: 1, title: "Ordering a Drink", desc: "The drink cart comes to your row", icon: "🍹",
+            scene: "The flight attendant pushes the drink cart down the aisle and stops at your row.",
+            lines: [
+                { role: "B", speaker: "Flight Attendant", avatar: "👩‍✈️", text: "Good afternoon! Would you like something to drink?", hints: ["good afternoon", "something", "drink"], challenge: "Greet the passenger and offer drinks" },
+                { role: "A", speaker: "Passenger", avatar: "🧑", text: "Could I have some orange juice, please?", hints: ["could", "orange juice", "please"], challenge: "Order a drink politely" },
+                { role: "B", speaker: "Flight Attendant", avatar: "👩‍✈️", text: "Of course! Would you like some ice with that?", hints: ["of course", "ice", "with that"], challenge: "Say yes and offer ice" },
+                { role: "A", speaker: "Passenger", avatar: "🧑", text: "Yes, please. Thank you!", hints: ["yes please", "thank you"], challenge: "Accept politely" },
+                { role: "B", speaker: "Flight Attendant", avatar: "👩‍✈️", text: "Here you go. Enjoy!", hints: ["here you go", "enjoy"], challenge: "Give the drink" },
+                { role: "A", speaker: "Passenger", avatar: "🧑", text: "Thanks very much!", hints: ["thanks", "very much"], challenge: "Say thank you" }
+            ],
+            tip: { title: "💡 Polite Ordering", text: "Use \"Could I have...\", \"May I have...\", or \"I'd like...please\" when ordering." }
+        },
+        {
+            id: 2, title: "Asking for a Blanket", desc: "The cabin is cold", icon: "🥶",
+            scene: "The cabin is quite cold. You see a flight attendant walking past your row.",
+            lines: [
+                { role: "A", speaker: "Passenger", avatar: "🧑", text: "Excuse me!", hints: ["excuse me"], challenge: "Get the flight attendant's attention" },
+                { role: "B", speaker: "Flight Attendant", avatar: "👩‍✈️", text: "Yes? How can I help you?", hints: ["how", "help"], challenge: "Respond and offer help" },
+                { role: "A", speaker: "Passenger", avatar: "🧑", text: "Could I have a blanket, please? It's a bit cold.", hints: ["could", "blanket", "please", "cold"], challenge: "Ask for a blanket politely and explain why" },
+                { role: "B", speaker: "Flight Attendant", avatar: "👩‍✈️", text: "Sure! Let me get one for you. Would you like a pillow too?", hints: ["sure", "get one", "pillow", "too"], challenge: "Say yes and offer something extra" },
+                { role: "A", speaker: "Passenger", avatar: "🧑", text: "That would be great, thank you so much!", hints: ["great", "thank you", "so much"], challenge: "Accept the offer gratefully" },
+                { role: "B", speaker: "Flight Attendant", avatar: "👩‍✈️", text: "Here you are. If you need anything else, just press the call button.", hints: ["here you are", "anything else", "call button"], challenge: "Give the items and explain the call button" },
+                { role: "A", speaker: "Passenger", avatar: "🧑", text: "Okay, thank you! I appreciate it.", hints: ["thank you", "appreciate"], challenge: "Thank them warmly" }
+            ],
+            tip: { title: "💡 Getting Attention", text: "Say \"Excuse me\" to politely get someone's attention. Use the call button above your seat too!" }
+        },
+        {
+            id: 3, title: "Small Talk", desc: "Chat with the person next to you", icon: "💬",
+            scene: "The passenger next to you turns to start a conversation as the plane cruises.",
+            lines: [
+                { role: "B", speaker: "Passenger", avatar: "👨", text: "Hi there! Is this your first time flying to Australia?", hints: ["hi", "first time", "Australia"], challenge: "Start a friendly conversation" },
+                { role: "A", speaker: "You", avatar: "🧑", text: "Yes, it is! I'm really excited. Have you been before?", hints: ["yes", "excited", "have you", "before"], challenge: "Answer and ask a question back" },
+                { role: "B", speaker: "Passenger", avatar: "👨", text: "Oh yes, many times! I actually live in Melbourne. What brings you to Australia?", hints: ["many times", "live in Melbourne", "what brings you"], challenge: "Share about yourself and ask why they're going" },
+                { role: "A", speaker: "You", avatar: "🧑", text: "I'm going to study English there. I'll be staying for about six months.", hints: ["study English", "staying", "six months"], challenge: "Explain why you're going to Australia" },
+                { role: "B", speaker: "Passenger", avatar: "👨", text: "That's wonderful! Melbourne is great for students. The coffee is amazing!", hints: ["wonderful", "great for students", "coffee", "amazing"], challenge: "React positively and share a tip" },
+                { role: "A", speaker: "You", avatar: "🧑", text: "That sounds great! Do you have any other tips for me?", hints: ["sounds great", "any tips"], challenge: "Show interest and ask for more" },
+                { role: "B", speaker: "Passenger", avatar: "👨", text: "Visit the Great Ocean Road. And try Vegemite — it's very Australian!", hints: ["Great Ocean Road", "Vegemite", "very Australian"], challenge: "Give travel tips about Australia" },
+                { role: "A", speaker: "You", avatar: "🧑", text: "I've heard about Vegemite! I'll give it a try. Thanks for the tips!", hints: ["heard about", "give it a try", "thanks", "tips"], challenge: "Show interest and thank them" }
+            ],
+            tip: { title: "💡 Small Talk", text: "Answer, share something about yourself, then ask a question back!" }
+        },
+        {
+            id: 4, title: "Getting Past Someone", desc: "You need to use the bathroom", icon: "🚶",
+            scene: "You need the bathroom, but the aisle-seat passenger has their eyes closed.",
+            lines: [
+                { role: "A", speaker: "You", avatar: "🧑", text: "Sorry to bother you...", hints: ["sorry", "bother"], challenge: "Get the sleeping passenger's attention politely" },
+                { role: "B", speaker: "Passenger", avatar: "👨", text: "(Opens eyes) Oh, hi! No problem. What's up?", hints: ["no problem", "what's up"], challenge: "Wake up and respond casually" },
+                { role: "A", speaker: "You", avatar: "🧑", text: "Could I get past, please? I need to use the bathroom.", hints: ["could", "get past", "please", "bathroom"], challenge: "Ask to move past to the bathroom" },
+                { role: "B", speaker: "Passenger", avatar: "👨", text: "Of course! Let me get out of your way.", hints: ["of course", "get out", "your way"], challenge: "Agree and move aside" },
+                { role: "A", speaker: "You", avatar: "🧑", text: "Thank you! Sorry about that.", hints: ["thank you", "sorry"], challenge: "Thank them and apologise briefly" },
+                { role: "B", speaker: "Passenger", avatar: "👨", text: "Don't worry about it at all!", hints: ["don't worry", "at all"], challenge: "Tell them it's totally fine" },
+                { role: "A", speaker: "You", avatar: "🧑", text: "Excuse me, sorry, could I get back in?", hints: ["excuse me", "sorry", "get back in"], challenge: "Ask to return to your seat" },
+                { role: "B", speaker: "Passenger", avatar: "👨", text: "Sure! (Stands up) There you go.", hints: ["sure", "there you go"], challenge: "Let them back in cheerfully" }
+            ],
+            tip: { title: "💡 Moving Past", text: "\"Sorry to bother you\" + \"Could I get past?\" is the perfect polite combo." }
+        },
+        {
+            id: 5, title: "Meal Service", desc: "Choosing your in-flight meal", icon: "🍱",
+            scene: "It's dinner time. The flight attendant approaches with the food trolley.",
+            lines: [
+                { role: "B", speaker: "Flight Attendant", avatar: "👩‍✈️", text: "Good evening! For dinner we have chicken with rice or pasta with vegetables. Which would you prefer?", hints: ["good evening", "chicken with rice", "pasta with vegetables", "prefer"], challenge: "Greet and offer meal options" },
+                { role: "A", speaker: "Passenger", avatar: "🧑", text: "I'd like the chicken with rice, please.", hints: ["I'd like", "chicken", "rice", "please"], challenge: "Choose your meal politely" },
+                { role: "B", speaker: "Flight Attendant", avatar: "👩‍✈️", text: "Great choice! Would you like anything to drink with your meal?", hints: ["great choice", "anything to drink", "with your meal"], challenge: "Compliment their choice and offer a drink" },
+                { role: "A", speaker: "Passenger", avatar: "🧑", text: "Could I have some water, please?", hints: ["could", "water", "please"], challenge: "Order a drink politely" },
+                { role: "B", speaker: "Flight Attendant", avatar: "👩‍✈️", text: "Of course! Here's your meal and your water. Enjoy!", hints: ["of course", "here's your", "enjoy"], challenge: "Give the food and drink" },
+                { role: "A", speaker: "Passenger", avatar: "🧑", text: "Thank you very much!", hints: ["thank you", "very much"], challenge: "Say thank you" },
+                { role: "B", speaker: "Flight Attendant", avatar: "👩‍✈️", text: "Are you finished with your tray?", hints: ["finished", "tray"], challenge: "Come back to collect the tray" },
+                { role: "A", speaker: "Passenger", avatar: "🧑", text: "Yes, I am. Thank you, the chicken was really good!", hints: ["yes", "thank you", "really good"], challenge: "Say you're done and compliment the food" }
+            ],
+            tip: { title: "💡 Ordering Meals", text: "\"I'd like the..., please\" or \"Could I have the...\" — always say please!" }
+        },
+        {
+            id: 6, title: "Landing & Goodbye", desc: "The plane prepares to land", icon: "🛬",
+            scene: "The captain announces descent into Melbourne. You prepare for arrival.",
+            lines: [
+                { role: "B", speaker: "Captain", avatar: "👨‍✈️", text: "Ladies and gentlemen, we are beginning our descent into Melbourne. Please fasten your seatbelts and put tray tables up. Local time is 3:45 PM, 22°C.", hints: ["descent", "Melbourne", "seatbelts", "tray tables", "3:45 PM", "22°C"], challenge: "Make a landing announcement" },
+                { role: "A", speaker: "You", avatar: "🧑", text: "Oh, we're nearly there! I'm so excited!", hints: ["nearly there", "excited"], challenge: "React to the landing announcement" },
+                { role: "B", speaker: "Passenger", avatar: "👨", text: "Almost! Don't forget your arrival card. Do you have a pen?", hints: ["almost", "arrival card", "pen"], challenge: "Remind about the arrival card" },
+                { role: "A", speaker: "You", avatar: "🧑", text: "Oh, I forgot! No, I don't have a pen. Could I borrow yours?", hints: ["forgot", "don't have", "could", "borrow", "yours"], challenge: "Ask to borrow a pen politely" },
+                { role: "B", speaker: "Passenger", avatar: "👨", text: "Sure! Fill in your name, passport number, flight number, and where you're staying.", hints: ["sure", "name", "passport", "flight number", "where staying"], challenge: "Give pen and explain what to fill in" },
+                { role: "A", speaker: "You", avatar: "🧑", text: "Thank you so much! That's really helpful.", hints: ["thank you", "really helpful"], challenge: "Thank them" },
+                { role: "B", speaker: "Passenger", avatar: "👨", text: "It was really nice chatting with you. I hope you have a wonderful time!", hints: ["nice chatting", "wonderful time"], challenge: "Say goodbye warmly" },
+                { role: "A", speaker: "You", avatar: "🧑", text: "It was lovely meeting you too! Thanks for all the tips about Melbourne.", hints: ["lovely meeting", "thanks", "tips", "Melbourne"], challenge: "Say goodbye and thank them" },
+                { role: "B", speaker: "Passenger", avatar: "👨", text: "My pleasure! Enjoy your stay. And remember — try the coffee! ☕", hints: ["my pleasure", "enjoy", "try the coffee"], challenge: "Final farewell with a tip" },
+                { role: "A", speaker: "You", avatar: "🧑", text: "I will! Goodbye, and thanks again! 😊", hints: ["I will", "goodbye", "thanks again"], challenge: "Warm final goodbye" }
+            ],
+            tip: { title: "💡 Arrival Tips", text: "Fill in your arrival card before landing. \"Could I borrow...\" is polite for temporary requests." }
+        }
+    ];
+
+    // ================ STATE ================
+    let selectedRole = null;
+    let difficulty = 'medium';
+    let currentScenarioIndex = -1;
+    let currentLineIndex = 0;
+    let lineRevealed = false;
+    let lineRated = false;
+    let completedScenarios = new Set();
+    let scenarioRatings = {};
+
+    // ================ ROLE SELECTION ================
+    function selectRole(role) {
+        selectedRole = role;
+        document.getElementById('roleA').classList.toggle('selected', role === 'A');
+        document.getElementById('roleB').classList.toggle('selected', role === 'B');
+        checkReady();
+    }
+
+    function selectDifficulty(diff) {
+        difficulty = diff;
+        document.getElementById('diffEasy').classList.toggle('selected', diff === 'easy');
+        document.getElementById('diffMedium').classList.toggle('selected', diff === 'medium');
+        document.getElementById('diffHard').classList.toggle('selected', diff === 'hard');
+        checkReady();
+    }
+
+    function checkReady() {
+        if (selectedRole) {
+            document.getElementById('startBtn').classList.add('active');
+        }
+    }
+
+    // ================ START ================
+    function startRoleplay() {
+        if (!selectedRole) return;
+        document.getElementById('roleScreen').classList.add('hidden');
+        document.getElementById('scenarioSelect').classList.remove('hidden');
+        renderRoleBanner();
+        renderScenarioList();
+        updateProgressBar();
+    }
+
+    function renderRoleBanner() {
+        const banner = document.getElementById('roleBanner');
+        const diffNames = { easy: '📖 Easy', medium: '💡 Hints', hard: '🧠 Challenge' };
+        const isA = selectedRole === 'A';
+        banner.innerHTML = `
+            <span class="rb-avatar">${isA ? '🧑' : '👩‍✈️'}</span>
+            <div class="rb-info">
+                <div class="rb-label">Your Role · ${diffNames[difficulty]}</div>
+                <div class="rb-name">${isA ? 'Passenger' : 'Crew & Others'}</div>
+            </div>
+            <button class="switch-role-btn" onclick="switchRole()">🔄 Switch</button>`;
+    }
+
+    function switchRole() {
+        selectedRole = selectedRole === 'A' ? 'B' : 'A';
+        renderRoleBanner();
+    }
+
+    // ================ SCENARIO LIST ================
+    function renderScenarioList() {
+        const list = document.getElementById('scenarioList');
+        list.innerHTML = '';
+        roleplayScenarios.forEach((s, i) => {
+            const done = completedScenarios.has(s.id);
+            const r = scenarioRatings[s.id];
+            let starsHTML = '';
+            if (done && r) {
+                const total = r.nailed + r.close + r.needhelp;
+                const pct = total > 0 ? Math.round((r.nailed / total) * 100) : 0;
+                starsHTML = pct >= 80 ? '⭐⭐⭐' : pct >= 50 ? '⭐⭐' : '⭐';
+            }
+            list.innerHTML += `
+                <div class="scenario-list-item ${done ? 'completed' : ''}" onclick="openScenario(${i})">
+                    <div class="sli-num">${done ? '✓' : s.id}</div>
+                    <div class="sli-info">
+                        <div class="sli-title">${s.icon} ${s.title}</div>
+                        <div class="sli-desc">${s.desc}</div>
+                    </div>
+                    ${starsHTML ? `<div class="sli-stars">${starsHTML}</div>` : ''}
+                    <div class="sli-arrow">➡️</div>
+                </div>`;
+        });
+    }
+
+    function updateProgressBar() {
+        const pct = (completedScenarios.size / roleplayScenarios.length) * 100;
+        document.getElementById('progressFill').style.width = pct + '%';
+        document.getElementById('progressLabel').textContent = `${completedScenarios.size} of ${roleplayScenarios.length} completed`;
+        const diffIcon = { easy: '📖', medium: '💡', hard: '🧠' };
+        document.getElementById('progressRight').textContent = `${selectedRole === 'A' ? '🧑' : '👩‍✈️'} ${diffIcon[difficulty]}`;
+    }
+
+    // ================ OPEN SCENARIO ================
+    function openScenario(index) {
+        currentScenarioIndex = index;
+        currentLineIndex = 0;
+        lineRevealed = false;
+        lineRated = false;
+        const s = roleplayScenarios[index];
+        if (!scenarioRatings[s.id]) {
+            scenarioRatings[s.id] = { nailed: 0, close: 0, needhelp: 0 };
+        }
+        document.getElementById('scenarioSelect').classList.add('hidden');
+        document.getElementById('gameArea').classList.remove('hidden');
+        renderCurrentLine();
+    }
+
+    // ================ BUILD YOUR-LINE PROMPT ================
+    function buildMyLinePrompt(line) {
+        if (difficulty === 'easy') {
+            // EASY: Show the full sentence
+            return `
+                <div class="speak-prompt">
+                    <span class="sp-icon">🎤</span>
+                    <span class="sp-text">YOUR TURN — Read this out loud:</span>
+                    <div class="sp-line">"${line.text}"</div>
+                    <span class="sp-hint">As: ${line.speaker}</span>
+                </div>`;
+        } else if (difficulty === 'medium') {
+            // MEDIUM: Show keyword hints + reveal button
+            let hintsHTML = '';
+            line.hints.forEach((h, i) => {
+                hintsHTML += `<span class="keyword-chip" style="animation-delay:${(i+1)*0.1}s">${h}</span>`;
+            });
+            return `
+                <div class="hint-prompt">
+                    <span class="hp-icon">🎤</span>
+                    <div class="hp-label">Your Turn — Try to say it!</div>
+                    <div class="hp-instruction">Use these keywords to build your sentence:</div>
+                    <div class="keyword-hints">${hintsHTML}</div>
+                    <div class="hp-context">As: ${line.speaker}</div>
+                    <div class="reveal-section" id="revealSection">
+                        <button class="reveal-btn" onclick="revealAnswer()">👁️ Show Full Answer</button>
+                    </div>
+                    <div id="revealedAnswer" class="hidden">
+                        <div class="revealed-answer">
+                            <div class="ra-label">✅ Full Sentence</div>
+                            <div class="ra-text">"${line.text}"</div>
+                        </div>
+                        <div class="self-rate" id="selfRate">
+                            <button class="rate-btn nailed" onclick="rateLine('nailed')">😄 Nailed it!</button>
+                            <button class="rate-btn close" onclick="rateLine('close')">🤔 Close</button>
+                            <button class="rate-btn needhelp" onclick="rateLine('needhelp')">😅 Need help</button>
+                        </div>
+                    </div>
+                </div>`;
+        } else {
+            // HARD: Only show the challenge/situation
+            return `
+                <div class="challenge-prompt">
+                    <span class="cp-icon">🧠</span>
+                    <div class="cp-label">Your Turn — Challenge Mode!</div>
+                    <div class="cp-text">${line.challenge}</div>
+                    <div style="font-size:0.82rem; color:#999; margin-top:8px; font-style:italic;">As: ${line.speaker}</div>
+                    <div class="reveal-section" id="revealSection" style="margin-top:15px;">
+                        <button class="reveal-btn" onclick="revealAnswer()">👁️ Show Answer</button>
+                    </div>
+                    <div id="revealedAnswer" class="hidden">
+                        <div class="revealed-answer">
+                            <div class="ra-label">✅ Suggested Answer</div>
+                            <div class="ra-text">"${line.text}"</div>
+                        </div>
+                        <div style="margin-top:8px;">
+                            <div class="keyword-hints">
+                                ${line.hints.map((h,i) => `<span class="keyword-chip" style="animation-delay:${(i+1)*0.1}s">${h}</span>`).join('')}
+                            </div>
+                        </div>
+                        <div class="self-rate" id="selfRate">
+                            <button class="rate-btn nailed" onclick="rateLine('nailed')">😄 Nailed it!</button>
+                            <button class="rate-btn close" onclick="rateLine('close')">🤔 Close</button>
+                            <button class="rate-btn needhelp" onclick="rateLine('needhelp')">😅 Need help</button>
+                        </div>
+                    </div>
+                </div>`;
+        }
+    }
+
+    // ================ BUILD PARTNER LINE PROMPT ================
+    function buildPartnerLinePrompt(line) {
+        return `
+            <div class="wait-prompt">
+                <span class="wp-icon">👂</span>
+                <span class="wp-text">LISTEN — It's your partner's turn (${line.speaker})</span>
+            </div>`;
+    }
+
+    // ================ RENDER CURRENT LINE ================
+    function renderCurrentLine() {
+        const s = roleplayScenarios[currentScenarioIndex];
+        const area = document.getElementById('gameArea');
+        const diffNames = { easy: '📖 Easy', medium: '💡 Hints', hard: '🧠 Challenge' };
+        const isA = selectedRole === 'A';
+
+        let html = `
+            <div class="role-banner" style="margin-bottom:15px;">
+                <span class="rb-avatar">${isA ? '🧑' : '👩‍✈️'}</span>
+                <div class="rb-info">
+                    <div class="rb-label">You are · ${diffNames[difficulty]}</div>
+                    <div class="rb-name">${isA ? 'Passenger' : 'Crew & Others'}</div>
+                </div>
+            </div>
+            <div class="scenario-card">
+                <span class="scenario-label">${s.icon} Scenario ${s.id} — ${s.title}</span>
+                <div class="scene-description">
+                    <span class="scene-icon">📍</span>
+                    ${s.scene}
+                </div>
+                <div class="dialogue-container">`;
+
+        // Show all PAST lines as dialogue bubbles
+        for (let i = 0; i < currentLineIndex; i++) {
+            const line = s.lines[i];
+            const isMyLine = line.role === selectedRole;
+            const side = line.role === 'A' ? 'player' : 'npc';
+            html += `
+                <div class="dialogue-bubble ${side}">
+                    <div class="dialogue-avatar">${line.avatar}</div>
+                    <div class="dialogue-text">
+                        <div class="speaker-name">${isMyLine ? '🟠 You' : line.speaker}</div>
+                        ${line.text}
+                    </div>
+                </div>`;
+        }
+
+        // Show CURRENT line prompt
+        if (currentLineIndex < s.lines.length) {
+            const currentLine = s.lines[currentLineIndex];
+            const isMyLine = currentLine.role === selectedRole;
+
+            if (isMyLine) {
+                html += buildMyLinePrompt(currentLine);
+            } else {
+                html += buildPartnerLinePrompt(currentLine);
+            }
+        }
+
+        html += `</div>`; // close dialogue-container
+
+        // Show next button logic
+        const isLastLine = currentLineIndex >= s.lines.length - 1;
+        const currentLine = s.lines[currentLineIndex];
+        const isMyLine = currentLine ? currentLine.role === selectedRole : false;
+
+        if (isLastLine) {
+            // Last line
+            html += `
+                <div class="tip-box">
+                    <h4>${s.tip.title}</h4>
+                    <p>${s.tip.text}</p>
+                </div>`;
+
+            if (difficulty === 'easy' || !isMyLine) {
+                html += `<button class="next-line-btn green" onclick="finishScenario()">✅ Complete Scenario</button>`;
+            } else {
+                // Need to reveal + rate first
+                html += `<button class="next-line-btn green disabled" id="nextBtn" onclick="finishScenario()">✅ Complete Scenario</button>`;
+            }
+        } else {
+            if (difficulty === 'easy' || !isMyLine) {
+                html += `<button class="next-line-btn" onclick="advanceLine()">Next Line ➡️</button>`;
+            } else {
+                // Disabled until rated
+                html += `<button class="next-line-btn disabled" id="nextBtn" onclick="advanceLine()">Next Line ➡️</button>`;
+            }
+        }
+
+        html += `</div>`; // close scenario-card
+        area.innerHTML = html;
+
+        lineRevealed = false;
+        lineRated = false;
+
+        // Auto-enable next for easy mode or partner lines
+        // (already handled above by not adding .disabled)
+
+        setTimeout(() => {
+            const card = area.querySelector('.scenario-card');
+            if (card) card.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        }, 150);
+    }
+
+    // ================ REVEAL ANSWER ================
+    function revealAnswer() {
+        lineRevealed = true;
+        const revealSection = document.getElementById('revealSection');
+        const revealedAnswer = document.getElementById('revealedAnswer');
+        if (revealSection) revealSection.classList.add('hidden');
+        if (revealedAnswer) revealedAnswer.classList.remove('hidden');
+    }
+
+    // ================ RATE LINE ================
+    function rateLine(rating) {
+        lineRated = true;
+        const s = roleplayScenarios[currentScenarioIndex];
+        scenarioRatings[s.id][rating]++;
+
+        // Highlight chosen button
+        const buttons = document.querySelectorAll('.rate-btn');
+        buttons.forEach(btn => {
+            btn.classList.add('chosen');
+            btn.style.pointerEvents = 'none';
+            btn.style.opacity = '0.5';
+        });
+
+        // Find the clicked one
+        const ratingMap = { nailed: 0, close: 1, needhelp: 2 };
+        const chosenBtn = buttons[ratingMap[rating]];
+        if (chosenBtn) {
+            chosenBtn.style.opacity = '1';
+            chosenBtn.classList.add('chosen');
+        }
+
+        // Enable next button
+        const nextBtn = document.getElementById('nextBtn');
+        if (nextBtn) {
+            nextBtn.classList.remove('disabled');
+        }
+    }
+
+    // ================ ADVANCE LINE ================
+    function advanceLine() {
+        const s = roleplayScenarios[currentScenarioIndex];
+        if (currentLineIndex < s.lines.length - 1) {
+            currentLineIndex++;
+            renderCurrentLine();
+        }
+    }
+
+    // ================ FINISH SCENARIO ================
+    function finishScenario() {
+        const s = roleplayScenarios[currentScenarioIndex];
+        completedScenarios.add(s.id);
+        document.getElementById('gameArea').classList.add('hidden');
+        updateProgressBar();
+
+        if (completedScenarios.size === roleplayScenarios.length) {
+            showComplete();
+        } else {
+            document.getElementById('scenarioSelect').classList.remove('hidden');
+            renderScenarioList();
+        }
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ================ SHOW COMPLETE ================
+    function showComplete() {
+        const cs = document.getElementById('completeScreen');
+        cs.classList.remove('hidden');
+        document.getElementById('progressFill').style.width = '100%';
+        document.getElementById('progressLabel').textContent = 'All scenarios complete!';
+
+        // Calculate totals
+        let totalNailed = 0, totalClose = 0, totalNeedHelp = 0;
+        Object.values(scenarioRatings).forEach(r => {
+            totalNailed += r.nailed;
+            totalClose += r.close;
+            totalNeedHelp += r.needhelp;
+        });
+        const totalRated = totalNailed + totalClose + totalNeedHelp;
+
+        let summaryHTML = '';
+        roleplayScenarios.forEach(s => {
+            const r = scenarioRatings[s.id];
+            if (r) {
+                const total = r.nailed + r.close + r.needhelp;
+                let stars = '';
+                if (total > 0) {
+                    const pct = Math.round((r.nailed / total) * 100);
+                    stars = pct >= 80 ? '⭐⭐⭐' : pct >= 50 ? '⭐⭐' : '⭐';
+                }
+                summaryHTML += `
+                    <div class="summary-row">
+                        <span>${s.icon} ${s.title}</span>
+                        <span>${stars} ${r.nailed}✅ ${r.close}🤔 ${r.needhelp}😅</span>
+                    </div>`;
+            }
+        });
+
+        const diffNames = { easy: '📖 Easy', medium: '💡 Hints', hard: '🧠 Challenge' };
+        const roleName = selectedRole === 'A' ? '🧑 Passenger' : '👩‍✈️ Crew & Others';
+
+        cs.innerHTML = `
+            <div class="trophy">🏆</div>
+            <h2>Amazing Work!</h2>
+            <p>You completed all 6 scenarios as <strong>${roleName}</strong> on <strong>${diffNames[difficulty]}</strong> mode!</p>
+            ${totalRated > 0 ? `
+            <div class="score-summary">
+                <h3>📊 Your Self-Assessment</h3>
+                <div class="summary-row">
+                    <span>😄 Nailed it</span>
+                    <span style="color:#2e7d32; font-weight:800;">${totalNailed}</span>
+                </div>
+                <div class="summary-row">
+                    <span>🤔 Close</span>
+                    <span style="color:#e65100; font-weight:800;">${totalClose}</span>
+                </div>
+                <div class="summary-row">
+                    <span>😅 Need help</span>
+                    <span style="color:#c62828; font-weight:800;">${totalNeedHelp}</span>
+                </div>
+            </div>
+            <div class="score-summary">
+                <h3>📋 By Scenario</h3>
+                ${summaryHTML}
+            </div>` : ''}
+            <p>Now try <strong>switching roles</strong> or increasing the <strong>difficulty</strong>!</p>
+            <div class="btn-group">
+                <button class="btn-primary" onclick="restartOtherRole()">🔄 Switch Roles</button>
+                <button class="btn-secondary" onclick="increaseDifficulty()">⬆️ Harder Mode</button>
+                <button class="btn-secondary" onclick="restartSameRole()">🔁 Play Again</button>
+                <a href="https://teetalkenglish.github.io/AIRPORT-GAME-FindingTheGate/" class="btn-secondary">🏠 Menu</a>
+            </div>`;
+    }
+
+    // ================ RESTART OPTIONS ================
+    function restartOtherRole() {
+        selectedRole = selectedRole === 'A' ? 'B' : 'A';
+        completedScenarios.clear();
+        scenarioRatings = {};
+        document.getElementById('completeScreen').classList.add('hidden');
+        document.getElementById('scenarioSelect').classList.remove('hidden');
+        renderRoleBanner();
+        renderScenarioList();
+        updateProgressBar();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function restartSameRole() {
+        completedScenarios.clear();
+        scenarioRatings = {};
+        document.getElementById('completeScreen').classList.add('hidden');
+        document.getElementById('scenarioSelect').classList.remove('hidden');
+        renderScenarioList();
+        updateProgressBar();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function increaseDifficulty() {
+        if (difficulty === 'easy') difficulty = 'medium';
+        else if (difficulty === 'medium') difficulty = 'hard';
+        completedScenarios.clear();
+        scenarioRatings = {};
+        document.getElementById('completeScreen').classList.add('hidden');
+        document.getElementById('scenarioSelect').classList.remove('hidden');
+        renderRoleBanner();
+        renderScenarioList();
+        updateProgressBar();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
+</body>
+</html>
     
