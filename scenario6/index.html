@@ -442,4 +442,547 @@
         <div id="completeScreen" class="hidden complete-screen"></div>
     </div>
 
-<!-- ✅ END OF PART 1 — Part 2 goes below -->
+<script>
+    // ================ SCENARIO DATA ================
+    const roleplayScenarios = [
+        {
+            id: 1, title: "Immigration / Passport Control", desc: "Show your passport and answer questions", icon: "🛂",
+            scene: "You've left the plane and followed the signs to Immigration. You're standing in the queue for 'Foreign Passports'. It's now your turn. The immigration officer calls you forward.",
+            lines: [
+                { role: "B", speaker: "Immigration Officer", avatar: "🛂", text: "Next, please. Good afternoon. Can I see your passport and arrival card?", hints: ["next please", "passport", "arrival card"], challenge: "Call the traveller forward and ask for documents" },
+                { role: "A", speaker: "Traveller", avatar: "🧑", text: "Good afternoon. Here you go.", hints: ["good afternoon", "here you go"], challenge: "Greet them and hand over your documents" },
+                { role: "B", speaker: "Immigration Officer", avatar: "🛂", text: "Thank you. What is the purpose of your visit to Australia?", hints: ["purpose", "visit", "Australia"], challenge: "Ask why they are coming to Australia" },
+                { role: "A", speaker: "Traveller", avatar: "🧑", text: "I'm here for work. I'll be working as a meat butcher at a processing plant.", hints: ["work", "meat butcher", "processing plant"], challenge: "Explain you're coming for work as a meat butcher" },
+                { role: "B", speaker: "Immigration Officer", avatar: "🛂", text: "I see. Do you have your work visa and sponsorship letter?", hints: ["work visa", "sponsorship letter"], challenge: "Ask for their work visa and sponsorship documents" },
+                { role: "A", speaker: "Traveller", avatar: "🧑", text: "Yes, here they are. I have my visa approval and the letter from my employer.", hints: ["yes", "visa approval", "letter", "employer"], challenge: "Show your visa and employer letter" },
+                { role: "B", speaker: "Immigration Officer", avatar: "🛂", text: "How long will you be staying in Australia?", hints: ["how long", "staying", "Australia"], challenge: "Ask about the length of stay" },
+                { role: "A", speaker: "Traveller", avatar: "🧑", text: "I have a two-year work visa, so I plan to stay for about two years.", hints: ["two-year", "work visa", "plan", "two years"], challenge: "Tell them how long you plan to stay" },
+                { role: "B", speaker: "Immigration Officer", avatar: "🛂", text: "And where will you be staying?", hints: ["where", "staying"], challenge: "Ask about their accommodation" },
+                { role: "A", speaker: "Traveller", avatar: "🧑", text: "My employer has arranged accommodation for me in Colac, near Melbourne.", hints: ["employer", "arranged", "accommodation", "Colac", "near Melbourne"], challenge: "Explain where you will live" },
+                { role: "B", speaker: "Immigration Officer", avatar: "🛂", text: "Everything looks good. Welcome to Australia. Enjoy your stay.", hints: ["everything", "looks good", "welcome", "enjoy"], challenge: "Approve them and welcome them to Australia" },
+                { role: "A", speaker: "Traveller", avatar: "🧑", text: "Thank you very much!", hints: ["thank you", "very much"], challenge: "Say thank you" }
+            ],
+            tip: { title: "💡 Immigration Tips", text: "Always have your passport, arrival card, visa, and any supporting letters ready. Answer questions clearly and honestly. Common questions: purpose of visit, length of stay, and accommodation address." }
+        },
+        {
+            id: 2, title: "Collecting Your Luggage", desc: "Find your bags at the baggage carousel", icon: "🧳",
+            scene: "You've passed through immigration. Now you need to find the baggage claim area and collect your luggage. You see signs pointing to 'Baggage Claim' and lots of carousels.",
+            lines: [
+                { role: "A", speaker: "Traveller", avatar: "🧑", text: "Excuse me, which carousel is for the flight from Bangkok?", hints: ["excuse me", "which carousel", "flight from Bangkok"], challenge: "Ask which baggage carousel to go to" },
+                { role: "B", speaker: "Airport Staff", avatar: "👷", text: "Let me check... That would be carousel number 4. It's just down there on your right.", hints: ["let me check", "carousel 4", "down there", "right"], challenge: "Tell them which carousel and give directions" },
+                { role: "A", speaker: "Traveller", avatar: "🧑", text: "Thank you! How long does it usually take for the bags to come out?", hints: ["thank you", "how long", "bags", "come out"], challenge: "Ask how long the bags will take" },
+                { role: "B", speaker: "Airport Staff", avatar: "👷", text: "It usually takes about 15 to 20 minutes. Your bags should be coming through soon.", hints: ["15 to 20 minutes", "bags", "coming through", "soon"], challenge: "Tell them how long the bags will take" },
+                { role: "A", speaker: "Traveller", avatar: "🧑", text: "Oh no, I can see my suitcase but it looks damaged. Who should I talk to?", hints: ["suitcase", "damaged", "who", "talk to"], challenge: "Tell them your suitcase is damaged and ask for help" },
+                { role: "B", speaker: "Airport Staff", avatar: "👷", text: "I'm sorry about that. You'll need to go to the baggage service counter over there. They'll help you make a claim.", hints: ["sorry", "baggage service counter", "over there", "make a claim"], challenge: "Direct them to the baggage service counter" },
+                { role: "A", speaker: "Traveller", avatar: "🧑", text: "Okay, thank you. Where exactly is the baggage service counter?", hints: ["where exactly", "baggage service counter"], challenge: "Ask for the exact location" },
+                { role: "B", speaker: "Airport Staff", avatar: "👷", text: "It's at the end of this hall, on the left. Look for the sign that says 'Baggage Services'.", hints: ["end of this hall", "on the left", "sign", "Baggage Services"], challenge: "Give clear directions to the counter" },
+                { role: "A", speaker: "Traveller", avatar: "🧑", text: "Great, thank you so much for your help!", hints: ["great", "thank you", "so much", "help"], challenge: "Thank them for their help" },
+                { role: "B", speaker: "Airport Staff", avatar: "👷", text: "No worries! Good luck with everything.", hints: ["no worries", "good luck"], challenge: "Wish them well" }
+            ],
+            tip: { title: "💡 Baggage Claim Tips", text: "Check the screens for your flight number and carousel number. If your bag is damaged or lost, go to the 'Baggage Services' counter immediately. Keep your baggage claim tag from your boarding pass!" }
+        },
+        {
+            id: 3, title: "Customs & Biosecurity", desc: "Declare items and go through customs", icon: "🔍",
+            scene: "After collecting your bags, you must go through Australian Customs and Biosecurity. Australia has very strict rules about bringing food, plants, and animal products into the country. A customs officer stops you.",
+            lines: [
+                { role: "B", speaker: "Customs Officer", avatar: "👮", text: "Good afternoon. Do you have anything to declare? Any food, plants, seeds, or animal products?", hints: ["anything to declare", "food", "plants", "seeds", "animal products"], challenge: "Ask if they have anything to declare" },
+                { role: "A", speaker: "Traveller", avatar: "🧑", text: "Yes, I have some dried noodles and some traditional snacks from home.", hints: ["yes", "dried noodles", "traditional snacks", "from home"], challenge: "Declare the food items you brought" },
+                { role: "B", speaker: "Customs Officer", avatar: "👮", text: "Okay, can you open your bag and show me those items, please?", hints: ["open your bag", "show me", "items", "please"], challenge: "Ask them to open their bag" },
+                { role: "A", speaker: "Traveller", avatar: "🧑", text: "Sure, here they are. The noodles are in this packet and the snacks are in this bag.", hints: ["sure", "here they are", "noodles", "packet", "snacks", "bag"], challenge: "Show them the items" },
+                { role: "B", speaker: "Customs Officer", avatar: "👮", text: "The dried noodles are fine, but I'm afraid these snacks contain meat. We'll need to confiscate those.", hints: ["noodles are fine", "snacks contain meat", "confiscate"], challenge: "Explain which items are allowed and which are not" },
+                { role: "A", speaker: "Traveller", avatar: "🧑", text: "Oh, I didn't know that. I'm sorry. Is there a fine for that?", hints: ["didn't know", "sorry", "fine"], challenge: "Apologise and ask if there is a penalty" },
+                { role: "B", speaker: "Customs Officer", avatar: "👮", text: "Since you declared it honestly, there's no fine. We just need to take the items. Thank you for being honest.", hints: ["declared honestly", "no fine", "take the items", "thank you", "honest"], challenge: "Explain there's no fine because they declared it" },
+                { role: "A", speaker: "Traveller", avatar: "🧑", text: "Thank you for explaining. I'll be more careful next time.", hints: ["thank you", "explaining", "more careful", "next time"], challenge: "Thank them and say you'll be careful" },
+                { role: "B", speaker: "Customs Officer", avatar: "👮", text: "No problem. You can check the Australian Border Force website for a full list of restricted items. Welcome to Australia!", hints: ["no problem", "Australian Border Force", "website", "restricted items", "welcome"], challenge: "Give them helpful information and welcome them" },
+                { role: "A", speaker: "Traveller", avatar: "🧑", text: "I will. Thank you very much!", hints: ["I will", "thank you", "very much"], challenge: "Thank them" }
+            ],
+            tip: { title: "💡 Customs & Biosecurity", text: "Australia has VERY strict biosecurity laws. Always declare food, plant, and animal products — even if you're not sure. If you declare it, you won't get a fine. If you don't declare and get caught, fines can be over \$600! Check abf.gov.au before you travel." }
+        },
+        {
+            id: 4, title: "Finding the Exit & Information", desc: "Ask for help at the information desk", icon: "ℹ️",
+            scene: "You've passed through customs and you're now in the arrivals hall. There are lots of people, signs, and shops. You're not sure where to go next. You see an Information Desk.",
+            lines: [
+                { role: "A", speaker: "Traveller", avatar: "🧑", text: "Excuse me, I just arrived and I need some help. Where can I get a taxi?", hints: ["excuse me", "just arrived", "help", "where", "taxi"], challenge: "Ask for directions to the taxi rank" },
+                { role: "B", speaker: "Info Desk Staff", avatar: "💁", text: "Welcome to Melbourne! The taxi rank is just outside through those doors, to the left.", hints: ["welcome", "taxi rank", "outside", "doors", "left"], challenge: "Welcome them and give directions to taxis" },
+                { role: "A", speaker: "Traveller", avatar: "🧑", text: "Thank you! Also, I need to buy a SIM card for my phone. Is there a shop here?", hints: ["thank you", "buy", "SIM card", "phone", "shop", "here"], challenge: "Ask where to buy a SIM card" },
+                { role: "B", speaker: "Info Desk Staff", avatar: "💁", text: "Yes! There are a few shops just around the corner. You'll see Optus, Vodafone, and Telstra. I'd recommend getting a prepaid SIM.", hints: ["shops", "around the corner", "Optus", "Vodafone", "Telstra", "prepaid SIM"], challenge: "Tell them where to buy a SIM and recommend prepaid" },
+                { role: "A", speaker: "Traveller", avatar: "🧑", text: "Great! One more question — is there an ATM nearby? I need to get some Australian dollars.", hints: ["one more question", "ATM", "nearby", "Australian dollars"], challenge: "Ask about getting Australian money" },
+                { role: "B", speaker: "Info Desk Staff", avatar: "💁", text: "There are ATMs right over there next to the currency exchange. You can also use your card at most places — we use tap-and-go a lot here.", hints: ["ATMs", "over there", "currency exchange", "card", "tap-and-go"], challenge: "Show them where ATMs are and explain card payments" },
+                { role: "A", speaker: "Traveller", avatar: "🧑", text: "Oh, that's good to know! Can I use my international card here?", hints: ["good to know", "use", "international card", "here"], challenge: "Ask if you can use your bank card" },
+                { role: "B", speaker: "Info Desk Staff", avatar: "💁", text: "Most Visa and Mastercard work here. You might get a small fee for international transactions though.", hints: ["Visa", "Mastercard", "work here", "small fee", "international"], challenge: "Explain which cards work and mention fees" },
+                { role: "A", speaker: "Traveller", avatar: "🧑", text: "Thank you so much! You've been really helpful.", hints: ["thank you", "so much", "really helpful"], challenge: "Thank them warmly" },
+                { role: "B", speaker: "Info Desk Staff", avatar: "💁", text: "My pleasure! If you need anything else, don't hesitate to ask. Enjoy Melbourne!", hints: ["my pleasure", "don't hesitate", "ask", "enjoy Melbourne"], challenge: "Say you're happy to help and wish them well" }
+            ],
+            tip: { title: "💡 Arrival Essentials", text: "Three things to sort at the airport: 1) SIM card for internet & calls, 2) Some local currency or check your card works, 3) Transport to your accommodation. The Information Desk is your best friend!" }
+        },
+        {
+            id: 5, title: "Getting a Taxi / Rideshare", desc: "Take transport to your accommodation", icon: "🚕",
+            scene: "You've got your SIM card and some cash. Now you need to get a taxi or rideshare to your temporary accommodation. You walk outside to the taxi rank.",
+            lines: [
+                { role: "B", speaker: "Taxi Driver", avatar: "🚕", text: "G'day mate! Where are you headed?", hints: ["g'day", "mate", "where", "headed"], challenge: "Greet the passenger in an Australian way and ask where they're going" },
+                { role: "A", speaker: "Traveller", avatar: "🧑", text: "Hi! I need to go to the Quest Apartment Hotel on Flinders Street, please.", hints: ["hi", "need to go", "Quest Apartment Hotel", "Flinders Street", "please"], challenge: "Tell the driver your destination" },
+                { role: "B", speaker: "Taxi Driver", avatar: "🚕", text: "No worries! That's in the CBD, about 25 minutes from here. Pop your bags in the boot.", hints: ["no worries", "CBD", "25 minutes", "pop", "bags", "boot"], challenge: "Confirm the location and tell them to put bags in the trunk" },
+                { role: "A", speaker: "Traveller", avatar: "🧑", text: "Sorry, the boot? What's the boot?", hints: ["sorry", "boot", "what's"], challenge: "Ask what 'boot' means — you don't understand the Australian word" },
+                { role: "B", speaker: "Taxi Driver", avatar: "🚕", text: "Ha! Sorry, the boot is the trunk — the back of the car. Australian slang!", hints: ["boot", "trunk", "back of the car", "Australian slang"], challenge: "Explain that 'boot' means 'trunk' in Australian English" },
+                { role: "A", speaker: "Traveller", avatar: "🧑", text: "Oh! Ha, thanks! I'm going to learn a lot of new words here. How much will the fare be?", hints: ["thanks", "learn", "new words", "how much", "fare"], challenge: "Laugh about it and ask how much the ride will cost" },
+                { role: "B", speaker: "Taxi Driver", avatar: "🚕", text: "It'll be around 50 to 60 dollars. You can pay by card or cash — whatever you prefer.", hints: ["50 to 60 dollars", "pay by card", "cash", "whatever you prefer"], challenge: "Tell them the estimated fare and payment options" },
+                { role: "A", speaker: "Traveller", avatar: "🧑", text: "I'll pay by card, thanks. Is it okay to pay with tap?", hints: ["pay by card", "thanks", "okay", "pay with tap"], challenge: "Say you want to pay by card" },
+                { role: "B", speaker: "Taxi Driver", avatar: "🚕", text: "Yeah, tap is fine! So what brings you to Melbourne? Holiday?", hints: ["tap is fine", "what brings you", "Melbourne", "holiday"], challenge: "Confirm card payment and make small talk" },
+                { role: "A", speaker: "Traveller", avatar: "🧑", text: "No, I'm here for work actually. I'll be working as a meat butcher. It's my first time in Australia!", hints: ["work", "meat butcher", "first time", "Australia"], challenge: "Tell the driver why you're here" },
+                { role: "B", speaker: "Taxi Driver", avatar: "🚕", text: "Good on ya! There's heaps of work for butchers here. You'll love Melbourne — best city in the world!", hints: ["good on ya", "heaps of work", "butchers", "love Melbourne", "best city"], challenge: "React positively with Australian expressions" },
+                { role: "A", speaker: "Traveller", avatar: "🧑", text: "I hope so! What does 'good on ya' mean?", hints: ["hope so", "what does", "good on ya", "mean"], challenge: "Ask what the Australian expression means" },
+                { role: "B", speaker: "Taxi Driver", avatar: "🚕", text: "It means 'good for you' or 'well done'. You'll hear it a lot here!", hints: ["means", "good for you", "well done", "hear it a lot"], challenge: "Explain the Australian slang" },
+                { role: "A", speaker: "Traveller", avatar: "🧑", text: "Ha! I love it. Good on ya for teaching me! Thanks for the ride!", hints: ["love it", "good on ya", "teaching me", "thanks", "ride"], challenge: "Use the new expression and thank the driver" },
+                { role: "B", speaker: "Taxi Driver", avatar: "🚕", text: "Ha! You're a natural! Here we are — Quest on Flinders. That'll be \$55. Welcome to Melbourne, mate!", hints: ["natural", "here we are", "\$55", "welcome", "Melbourne", "mate"], challenge: "Arrive at the destination and tell them the fare" }
+            ],
+            tip: { title: "💡 Aussie Slang You'll Hear", text: "🚗 Boot = Trunk (of a car) · 👍 Good on ya = Well done/Good for you · 😊 No worries = No problem · 📍 CBD = City centre · 🤙 Mate = Friend · 📦 Heaps = A lot. Don't be afraid to ask what words mean — Australians love explaining their slang!" }
+        },
+        {
+            id: 6, title: "Checking In to Accommodation", desc: "Arrive and check in to your temporary home", icon: "🏨",
+            scene: "The taxi has dropped you off at the Quest Apartment Hotel. You walk inside with your luggage and go to the reception desk. This is your temporary accommodation while you sort out your long-term housing.",
+            lines: [
+                { role: "A", speaker: "Traveller", avatar: "🧑", text: "Hi, good afternoon! I have a reservation under the name Somchai Prasert.", hints: ["hi", "good afternoon", "reservation", "under the name"], challenge: "Greet the receptionist and give your booking name" },
+                { role: "B", speaker: "Receptionist", avatar: "🏨", text: "Good afternoon! Welcome to Quest Flinders. Let me look that up... Yes, I can see your booking. One studio apartment for 5 nights, is that correct?", hints: ["welcome", "look that up", "booking", "studio apartment", "5 nights", "correct"], challenge: "Welcome them and confirm the booking details" },
+                { role: "A", speaker: "Traveller", avatar: "🧑", text: "Yes, that's right. My employer booked it for me.", hints: ["yes", "that's right", "employer", "booked", "for me"], challenge: "Confirm the booking" },
+                { role: "B", speaker: "Receptionist", avatar: "🏨", text: "Great. Can I see some ID, please? A passport is fine.", hints: ["ID", "please", "passport", "fine"], challenge: "Ask for identification" },
+                { role: "A", speaker: "Traveller", avatar: "🧑", text: "Sure, here's my passport.", hints: ["sure", "here's", "passport"], challenge: "Hand over your passport" },
+                { role: "B", speaker: "Receptionist", avatar: "🏨", text: "Perfect. You're in room 412 on the fourth floor. Here's your key card. The lift is just behind you.", hints: ["room 412", "fourth floor", "key card", "lift", "behind you"], challenge: "Give them their room details and key" },
+                { role: "A", speaker: "Traveller", avatar: "🧑", text: "Thank you! What time is check-out?", hints: ["thank you", "what time", "check-out"], challenge: "Ask about check-out time" },
+                { role: "B", speaker: "Receptionist", avatar: "🏨", text: "Check-out is at 10 AM. Breakfast is included — it's served in the dining area from 6:30 to 9:30.", hints: ["check-out", "10 AM", "breakfast included", "dining area", "6:30 to 9:30"], challenge: "Tell them check-out time and breakfast details" },
+                { role: "A", speaker: "Traveller", avatar: "🧑", text: "That's great! Is there Wi-Fi in the room? What's the password?", hints: ["Wi-Fi", "room", "what's", "password"], challenge: "Ask about internet access" },
+                { role: "B", speaker: "Receptionist", avatar: "🏨", text: "Yes, free Wi-Fi! The network name is 'QuestGuest' and the password is on this card. There's also a small kitchen in your room if you want to cook.", hints: ["free Wi-Fi", "QuestGuest", "password", "card", "kitchen", "cook"], challenge: "Give Wi-Fi details and mention room facilities" },
+                { role: "A", speaker: "Traveller", avatar: "🧑", text: "Oh, that's perfect. One last question — is there a supermarket nearby?", hints: ["perfect", "last question", "supermarket", "nearby"], challenge: "Ask where to buy groceries" },
+                { role: "B", speaker: "Receptionist", avatar: "🏨", text: "There's a Woolworths about a 5-minute walk from here. Turn left out the door and it's on the corner. We also have a map here for you.", hints: ["Woolworths", "5-minute walk", "turn left", "corner", "map"], challenge: "Give directions to the nearest supermarket" },
+                { role: "A", speaker: "Traveller", avatar: "🧑", text: "Wonderful, thank you so much! You've been so helpful. I really appreciate it.", hints: ["wonderful", "thank you", "so helpful", "appreciate"], challenge: "Thank them warmly" },
+                { role: "B", speaker: "Receptionist", avatar: "🏨", text: "You're very welcome! If you need anything at all, just call reception. We're here 24 hours. Enjoy your stay!", hints: ["welcome", "need anything", "call reception", "24 hours", "enjoy your stay"], challenge: "Offer ongoing help and wish them well" },
+                { role: "A", speaker: "Traveller", avatar: "🧑", text: "Thank you! I think I'm going to like it here in Australia! 😊", hints: ["thank you", "going to like it", "Australia"], challenge: "Express excitement about being in Australia" }
+            ],
+            tip: { title: "💡 Accommodation Check-in", text: "Key phrases: \"I have a reservation under...\" · \"What time is check-out?\" · \"Is Wi-Fi included?\" · \"Is there a supermarket nearby?\" Always ask about breakfast, Wi-Fi, and nearby shops when you check in!" }
+        }
+    ];
+
+    // ================ STATE ================
+    let selectedRole = null;
+    let difficulty = 'medium';
+    let currentScenarioIndex = -1;
+    let currentLineIndex = 0;
+    let lineRevealed = false;
+    let lineRated = false;
+    let completedScenarios = new Set();
+    let scenarioRatings = {};
+
+    // ================ ROLE SELECTION ================
+    function selectRole(role) {
+        selectedRole = role;
+        document.getElementById('roleA').classList.toggle('selected', role === 'A');
+        document.getElementById('roleB').classList.toggle('selected', role === 'B');
+        checkReady();
+    }
+
+    function selectDifficulty(diff) {
+        difficulty = diff;
+        document.getElementById('diffEasy').classList.toggle('selected', diff === 'easy');
+        document.getElementById('diffMedium').classList.toggle('selected', diff === 'medium');
+        document.getElementById('diffHard').classList.toggle('selected', diff === 'hard');
+        checkReady();
+    }
+
+    function checkReady() {
+        if (selectedRole) document.getElementById('startBtn').classList.add('active');
+    }
+
+    // ================ START ================
+    function startRoleplay() {
+        if (!selectedRole) return;
+        document.getElementById('roleScreen').classList.add('hidden');
+        document.getElementById('scenarioSelect').classList.remove('hidden');
+        renderRoleBanner();
+        renderScenarioList();
+        updateProgressBar();
+    }
+
+    function renderRoleBanner() {
+        const banner = document.getElementById('roleBanner');
+        const diffNames = { easy: '📖 Easy', medium: '💡 Hints', hard: '🧠 Challenge' };
+        const isA = selectedRole === 'A';
+        banner.innerHTML = `
+            <span class="rb-avatar">${isA ? '🧑' : '🛂'}</span>
+            <div class="rb-info">
+                <div class="rb-label">Your Role · ${diffNames[difficulty]}</div>
+                <div class="rb-name">${isA ? 'Traveller' : 'Officials & Staff'}</div>
+            </div>
+            <button class="switch-role-btn" onclick="switchRole()">🔄 Switch</button>`;
+    }
+
+    function switchRole() {
+        selectedRole = selectedRole === 'A' ? 'B' : 'A';
+        renderRoleBanner();
+    }
+
+    // ================ SCENARIO LIST ================
+    function renderScenarioList() {
+        const list = document.getElementById('scenarioList');
+        list.innerHTML = '';
+        roleplayScenarios.forEach((s, i) => {
+            const done = completedScenarios.has(s.id);
+            const r = scenarioRatings[s.id];
+            let starsHTML = '';
+            if (done && r) {
+                const total = r.nailed + r.close + r.needhelp;
+                const pct = total > 0 ? Math.round((r.nailed / total) * 100) : 0;
+                starsHTML = pct >= 80 ? '⭐⭐⭐' : pct >= 50 ? '⭐⭐' : '⭐';
+            }
+            list.innerHTML += `
+                <div class="scenario-list-item ${done ? 'completed' : ''}" onclick="openScenario(${i})">
+                    <div class="sli-num">${done ? '✓' : s.id}</div>
+                    <div class="sli-info">
+                        <div class="sli-title">${s.icon} ${s.title}</div>
+                        <div class="sli-desc">${s.desc}</div>
+                    </div>
+                    ${starsHTML ? `<div class="sli-stars">${starsHTML}</div>` : ''}
+                    <div class="sli-arrow">➡️</div>
+                </div>`;
+        });
+    }
+
+    function updateProgressBar() {
+        const pct = (completedScenarios.size / roleplayScenarios.length) * 100;
+        document.getElementById('progressFill').style.width = pct + '%';
+        document.getElementById('progressLabel').textContent = `${completedScenarios.size} of ${roleplayScenarios.length} completed`;
+        const diffIcon = { easy: '📖', medium: '💡', hard: '🧠' };
+        document.getElementById('progressRight').textContent = `${selectedRole === 'A' ? '🧑' : '🛂'} ${diffIcon[difficulty]}`;
+    }
+
+    // ================ OPEN SCENARIO ================
+    function openScenario(index) {
+        currentScenarioIndex = index;
+        currentLineIndex = 0;
+        lineRevealed = false;
+        lineRated = false;
+        const s = roleplayScenarios[index];
+        if (!scenarioRatings[s.id]) {
+            scenarioRatings[s.id] = { nailed: 0, close: 0, needhelp: 0 };
+        }
+        document.getElementById('scenarioSelect').classList.add('hidden');
+        document.getElementById('gameArea').classList.remove('hidden');
+        renderCurrentLine();
+    }
+
+    // ================ PROMPTS ================
+    function buildMyLinePrompt(line) {
+        if (difficulty === 'easy') {
+            return `
+                <div class="speak-prompt">
+                    <span class="sp-icon">🎤</span>
+                    <span class="sp-text">YOUR TURN — Read this out loud:</span>
+                    <div class="sp-line">"${line.text}"</div>
+                    <span class="sp-hint">As: ${line.speaker}</span>
+                </div>`;
+        } else if (difficulty === 'medium') {
+            let hintsHTML = line.hints.map((h, i) =>
+                `<span class="keyword-chip" style="animation-delay:${(i+1)*0.1}s">${h}</span>`
+            ).join('');
+            return `
+                <div class="hint-prompt">
+                    <span class="hp-icon">🎤</span>
+                    <div class="hp-label">Your Turn — Try to say it!</div>
+                    <div class="hp-instruction">Use these keywords to build your sentence:</div>
+                    <div class="keyword-hints">${hintsHTML}</div>
+                    <div class="hp-context">As: ${line.speaker}</div>
+                    <div class="reveal-section" id="revealSection">
+                        <button class="reveal-btn" onclick="revealAnswer()">👁️ Show Full Answer</button>
+                    </div>
+                    <div id="revealedAnswer" class="hidden">
+                        <div class="revealed-answer">
+                            <div class="ra-label">✅ Full Sentence</div>
+                            <div class="ra-text">"${line.text}"</div>
+                        </div>
+                        <div class="self-rate" id="selfRate">
+                            <button class="rate-btn nailed" onclick="rateLine('nailed')">😄 Nailed it!</button>
+                            <button class="rate-btn close" onclick="rateLine('close')">🤔 Close</button>
+                            <button class="rate-btn needhelp" onclick="rateLine('needhelp')">😅 Need help</button>
+                        </div>
+                    </div>
+                </div>`;
+        } else {
+            return `
+                <div class="challenge-prompt">
+                    <span class="cp-icon">🧠</span>
+                    <div class="cp-label">Your Turn — Challenge Mode!</div>
+                    <div class="cp-text">${line.challenge}</div>
+                    <div style="font-size:0.82rem; color:#999; margin-top:8px; font-style:italic;">As: ${line.speaker}</div>
+                    <div class="reveal-section" id="revealSection" style="margin-top:15px;">
+                        <button class="reveal-btn" onclick="revealAnswer()">👁️ Show Answer</button>
+                    </div>
+                    <div id="revealedAnswer" class="hidden">
+                        <div class="revealed-answer">
+                            <div class="ra-label">✅ Suggested Answer</div>
+                            <div class="ra-text">"${line.text}"</div>
+                        </div>
+                        <div style="margin-top:8px;">
+                            <div class="keyword-hints">
+                                ${line.hints.map((h,i) => `<span class="keyword-chip" style="animation-delay:${(i+1)*0.1}s">${h}</span>`).join('')}
+                            </div>
+                        </div>
+                        <div class="self-rate" id="selfRate">
+                            <button class="rate-btn nailed" onclick="rateLine('nailed')">😄 Nailed it!</button>
+                            <button class="rate-btn close" onclick="rateLine('close')">🤔 Close</button>
+                            <button class="rate-btn needhelp" onclick="rateLine('needhelp')">😅 Need help</button>
+                        </div>
+                    </div>
+                </div>`;
+        }
+    }
+
+    function buildPartnerLinePrompt(line) {
+        return `
+            <div class="wait-prompt">
+                <span class="wp-icon">👂</span>
+                <span class="wp-text">LISTEN — It's your partner's turn (${line.speaker})</span>
+            </div>`;
+    }
+
+    // ================ RENDER CURRENT LINE ================
+    function renderCurrentLine() {
+        const s = roleplayScenarios[currentScenarioIndex];
+        const area = document.getElementById('gameArea');
+        const diffNames = { easy: '📖 Easy', medium: '💡 Hints', hard: '🧠 Challenge' };
+        const isA = selectedRole === 'A';
+
+        let html = `
+            <div class="role-banner" style="margin-bottom:15px;">
+                <span class="rb-avatar">${isA ? '🧑' : '🛂'}</span>
+                <div class="rb-info">
+                    <div class="rb-label">You are · ${diffNames[difficulty]}</div>
+                    <div class="rb-name">${isA ? 'Traveller' : 'Officials & Staff'}</div>
+                </div>
+            </div>
+            <div class="scenario-card">
+                <span class="scenario-label">${s.icon} Step ${s.id} — ${s.title}</span>
+                <div class="scene-description">
+                    <span class="scene-icon">📍</span>
+                    ${s.scene}
+                </div>
+                <div class="dialogue-container">`;
+
+        // Past lines
+        for (let i = 0; i < currentLineIndex; i++) {
+            const line = s.lines[i];
+            const isMyLine = line.role === selectedRole;
+            const side = line.role === 'A' ? 'player' : 'npc';
+            html += `
+                <div class="dialogue-bubble ${side}">
+                    <div class="dialogue-avatar">${line.avatar}</div>
+                    <div class="dialogue-text">
+                        <div class="speaker-name">${isMyLine ? '🟠 You' : line.speaker}</div>
+                        ${line.text}
+                    </div>
+                </div>`;
+        }
+
+        // Current line
+        if (currentLineIndex < s.lines.length) {
+            const currentLine = s.lines[currentLineIndex];
+            const isMyLine = currentLine.role === selectedRole;
+            html += isMyLine ? buildMyLinePrompt(currentLine) : buildPartnerLinePrompt(currentLine);
+        }
+
+        html += `</div>`; // close dialogue-container
+
+        // Buttons
+        const isLastLine = currentLineIndex >= s.lines.length - 1;
+        const currentLine = s.lines[currentLineIndex];
+        const isMyLine = currentLine ? currentLine.role === selectedRole : false;
+        const needsReveal = (difficulty !== 'easy') && isMyLine;
+
+        if (isLastLine) {
+            html += `
+                <div class="tip-box">
+                    <h4>${s.tip.title}</h4>
+                    <p>${s.tip.text}</p>
+                </div>`;
+            html += needsReveal
+                ? `<button class="next-line-btn green disabled" id="nextBtn" onclick="finishScenario()">✅ Complete Step</button>`
+                : `<button class="next-line-btn green" onclick="finishScenario()">✅ Complete Step</button>`;
+        } else {
+            html += needsReveal
+                ? `<button class="next-line-btn disabled" id="nextBtn" onclick="advanceLine()">Next Line ➡️</button>`
+                : `<button class="next-line-btn" onclick="advanceLine()">Next Line ➡️</button>`;
+        }
+
+        html += `</div>`; // close scenario-card
+        area.innerHTML = html;
+        lineRevealed = false;
+        lineRated = false;
+
+        setTimeout(() => {
+            const card = area.querySelector('.scenario-card');
+            if (card) card.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        }, 150);
+    }
+
+    // ================ REVEAL ================
+    function revealAnswer() {
+        lineRevealed = true;
+        const rs = document.getElementById('revealSection');
+        const ra = document.getElementById('revealedAnswer');
+        if (rs) rs.classList.add('hidden');
+        if (ra) ra.classList.remove('hidden');
+    }
+
+    // ================ RATE ================
+    function rateLine(rating) {
+        lineRated = true;
+        const s = roleplayScenarios[currentScenarioIndex];
+        scenarioRatings[s.id][rating]++;
+
+        const buttons = document.querySelectorAll('.rate-btn');
+        buttons.forEach(btn => {
+            btn.style.pointerEvents = 'none';
+            btn.style.opacity = '0.5';
+        });
+
+        const ratingMap = { nailed: 0, close: 1, needhelp: 2 };
+        const chosenBtn = buttons[ratingMap[rating]];
+        if (chosenBtn) {
+            chosenBtn.style.opacity = '1';
+            chosenBtn.classList.add('chosen');
+        }
+
+        const nextBtn = document.getElementById('nextBtn');
+        if (nextBtn) nextBtn.classList.remove('disabled');
+    }
+
+    // ================ ADVANCE ================
+    function advanceLine() {
+        const s = roleplayScenarios[currentScenarioIndex];
+        if (currentLineIndex < s.lines.length - 1) {
+            currentLineIndex++;
+            renderCurrentLine();
+        }
+    }
+
+    // ================ FINISH ================
+    function finishScenario() {
+        const s = roleplayScenarios[currentScenarioIndex];
+        completedScenarios.add(s.id);
+        document.getElementById('gameArea').classList.add('hidden');
+        updateProgressBar();
+
+        if (completedScenarios.size === roleplayScenarios.length) {
+            showComplete();
+        } else {
+            document.getElementById('scenarioSelect').classList.remove('hidden');
+            renderScenarioList();
+        }
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ================ COMPLETE ================
+    function showComplete() {
+        const cs = document.getElementById('completeScreen');
+        cs.classList.remove('hidden');
+        document.getElementById('progressFill').style.width = '100%';
+        document.getElementById('progressLabel').textContent = 'All steps complete!';
+
+        let totalNailed = 0, totalClose = 0, totalNeedHelp = 0;
+        Object.values(scenarioRatings).forEach(r => {
+            totalNailed += r.nailed;
+            totalClose += r.close;
+            totalNeedHelp += r.needhelp;
+        });
+        const totalRated = totalNailed + totalClose + totalNeedHelp;
+
+        let summaryHTML = '';
+        roleplayScenarios.forEach(s => {
+            const r = scenarioRatings[s.id];
+            if (r) {
+                const total = r.nailed + r.close + r.needhelp;
+                let stars = '';
+                if (total > 0) {
+                    const pct = Math.round((r.nailed / total) * 100);
+                    stars = pct >= 80 ? '⭐⭐⭐' : pct >= 50 ? '⭐⭐' : '⭐';
+                }
+                summaryHTML += `
+                    <div class="summary-row">
+                        <span>${s.icon} ${s.title}</span>
+                        <span>${stars} ${r.nailed}✅ ${r.close}🤔 ${r.needhelp}😅</span>
+                    </div>`;
+            }
+        });
+
+        const diffNames = { easy: '📖 Easy', medium: '💡 Hints', hard: '🧠 Challenge' };
+        const roleName = selectedRole === 'A' ? '🧑 Traveller' : '🛂 Officials & Staff';
+
+        cs.innerHTML = `
+            <div class="trophy">🇦🇺</div>
+            <h2>Welcome to Australia!</h2>
+            <p>You've completed all 6 arrival steps as <strong>${roleName}</strong> on <strong>${diffNames[difficulty]}</strong> mode!</p>
+            <p>You successfully went through immigration, collected your bags, passed customs, got information, took a taxi, and checked in!</p>
+            ${totalRated > 0 ? `
+            <div class="score-summary">
+                <h3>📊 Your Self-Assessment</h3>
+                <div class="summary-row">
+                    <span>😄 Nailed it</span>
+                    <span style="color:#2e7d32; font-weight:800;">${totalNailed}</span>
+                </div>
+                <div class="summary-row">
+                    <span>🤔 Close</span>
+                    <span style="color:#e65100; font-weight:800;">${totalClose}</span>
+                </div>
+                <div class="summary-row">
+                    <span>😅 Need help</span>
+                    <span style="color:#c62828; font-weight:800;">${totalNeedHelp}</span>
+                </div>
+            </div>
+            <div class="score-summary">
+                <h3>📋 By Step</h3>
+                ${summaryHTML}
+            </div>` : ''}
+            <p>Now try <strong>switching roles</strong> or increasing the <strong>difficulty</strong>!</p>
+            <div class="btn-group">
+                <button class="btn-primary" onclick="restartOtherRole()">🔄 Switch Roles</button>
+                <button class="btn-secondary" onclick="increaseDifficulty()">⬆️ Harder Mode</button>
+                <button class="btn-secondary" onclick="restartSameRole()">🔁 Play Again</button>
+                <a href="https://teetalkenglish.github.io/AIRPORT-GAME-FindingTheGate/" class="btn-secondary">🏠 Menu</a>
+            </div>`;
+    }
+
+    // ================ RESTART ================
+    function restartOtherRole() {
+        selectedRole = selectedRole === 'A' ? 'B' : 'A';
+        completedScenarios.clear();
+        scenarioRatings = {};
+        document.getElementById('completeScreen').classList.add('hidden');
+        document.getElementById('scenarioSelect').classList.remove('hidden');
+        renderRoleBanner();
+        renderScenarioList();
+        updateProgressBar();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function restartSameRole() {
+        completedScenarios.clear();
+        scenarioRatings = {};
+        document.getElementById('completeScreen').classList.add('hidden');
+        document.getElementById('scenarioSelect').classList.remove('hidden');
+        renderScenarioList();
+        updateProgressBar();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function increaseDifficulty() {
+        if (difficulty === 'easy') difficulty = 'medium';
+        else if (difficulty === 'medium') difficulty = 'hard';
+        completedScenarios.clear();
+        scenarioRatings = {};
+        document.getElementById('completeScreen').classList.add('hidden');
+        document.getElementById('scenarioSelect').classList.remove('hidden');
+        renderRoleBanner();
+        renderScenarioList();
+        updateProgressBar();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
+</body>
+</html>
