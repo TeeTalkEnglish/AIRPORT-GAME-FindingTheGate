@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Immigration Conversation Game</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      padding: 20px;
+    }
+
+    .home-screen,
+    .game-screen,
+    .complete-screen {
+      width: 100%;
+      max-width: 800px;
+    }
+
+    .home-screen {
+      text-align: center;
+    }
+
+    .home-screen h1 {
+      font-size: 2.5rem;
+      color: #e94560;
+      margin-bottom: 10px;
+    }
+
+    .home-screen p {
+      color: #c7d2fe;
+      margin-bottom: 30px;
+    }
+
+    .role-cards {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .role-card {
+      width: 240px;
+      padding: 30px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .role-card:hover {
+      transform: translateY(-5px);
+      border-color: #e94560;
+    }
+
+    .role-card .emoji {
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+
+    .role-card h2 {
+      color: #e94560;
+      margin-bottom: 8px;
+    }
+
+    .role-card p {
+      color: #c7d2fe;
+      font-size: 0.9rem;
+    }
+
+    .game-screen,
+    .complete-screen {
+      display: none;
+    }
+
+    .game-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .back-btn {
+      background: transparent;
+      color: #c7d2fe;
+      border: 1px solid #c7d2fe;
+      padding: 8px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .back-btn:hover {
+      border-color: #e94560;
+      color: #e94560;
+    }
+
+    .role-badge {
+      background: #e94560;
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+
+    .step-counter {
+      color: #c7d2fe;
+      font-size: 0.9rem;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: #e94560;
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+
+    .conversation-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 18px;
+      padding: 28px;
+    }
+
+    .scene-label {
+      font-size: 0.8rem;
+      color: #c7d2fe;
+      margin-bottom: 18px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    /* OFFICER */
+    .officer-instruction {
+      background: rgba(233, 69, 96, 0.12);
+      border: 1px solid rgba(233, 69, 96, 0.3);
+      border-radius: 14px;
+      padding: 18px 22px;
+      margin-bottom: 18px;
+    }
+
+    .officer-instruction h3 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #e94560;
+      margin-bottom: 10px;
+    }
+
+    .officer-instruction p {
+      font-size: 1.25rem;
+      font-weight: bold;
+      line-height: 1.5;
+    }
+
+    .waiting-box {
+      text-align: center;
+      color: #c7d2fe;
+      border: 1px dashed rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.03);
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 18px;
+      font-size: 0.95rem;
+    }
+
+    .tip-box {
+      background: rgba(120, 220, 120, 0.08);
+      border: 1px solid rgba(120, 220, 120, 0.25);
+      color: #b8f5b8;
+      font-size: 0.9rem;
+      border-radius: 14px;
+      padding: 14px 18px;
+    }
+
+    /* PASSENGER */
+    .situation-box {
+      background: rgba(100, 150, 255, 0.12);
+      border: 1px solid rgba(100, 150, 255, 0.35);
+      border-radius: 14px;
+      padding: 22px;
+      margin-bottom: 24px;
+    }
+
+    .situation-box h3 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #6496ff;
+      margin-bottom: 10px;
+    }
+
+    .situation-box p {
+      font-size: 1.2rem;
+      font-weight: bold;
+      line-height: 1.5;
+    }
+
+    .speak-prompt {
+      text-align: center;
+      color: #c7d2fe;
+      font-size: 1rem;
+      margin-bottom: 24px;
+      padding: 16px;
+      border: 1px dashed rgba(255,255,255,0.15);
+      border-radius: 14px;
+      background: rgba(255,255,255,0.02);
+    }
+
+    .speak-prompt span {
+      font-size: 1.8rem;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    /* SUGGESTION BOX */
+    .suggestion-box {
+      display: none;
+      background: rgba(120, 220, 120, 0.08);
+      border: 1px solid rgba(120, 220, 120, 0.3);
+      border-radius: 14px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+
+    .suggestion-box h4 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #b8f5b8;
+      margin-bottom: 10px;
+    }
+
+    .suggestion-box .suggested {
+      font-size: 1.15rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+
+    .suggestion-box .note {
+      font-size: 0.88rem;
+      color: #c7d2fe;
+      font-style: italic;
+      line-height: 1.5;
+    }
+
+    /* BUTTONS */
+    .btn-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 12px;
+      padding: 13px 22px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 0.95rem;
+      transition: 0.2s ease;
+    }
+
+    .btn-show {
+      background: rgba(120, 220, 120, 0.15);
+      color: #b8f5b8;
+      border: 1px solid rgba(120, 220, 120, 0.35);
+      flex: 1;
+    }
+
+    .btn-show:hover {
+      background: rgba(120, 220, 120, 0.28);
+    }
+
+    .btn-next {
+      background: #e94560;
+      color: white;
+      flex: 1;
+    }
+
+    .btn-next:hover {
+      background: #c73652;
+    }
+
+    .btn-officer-next {
+      background: #e94560;
+      color: white;
+      width: 100%;
+      margin-top: 18px;
+      padding: 14px;
+      font-size: 1rem;
+      border-radius: 14px;
+    }
+
+    .btn-officer-next:hover {
+      background: #c73652;
+    }
+
+    /* COMPLETE */
+    .complete-screen {
+      text-align: center;
+    }
+
+    .complete-screen .big-emoji {
+      font-size: 4rem;
+      margin-bottom: 16px;
+    }
+
+    .complete-screen h2 {
+      color: #e94560;
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .complete-screen p {
+      color: #c7d2fe;
+      margin-bottom: 28px;
+      font-size: 1.05rem;
+      line-height: 1.6;
+    }
+
+    .play-again-btn {
+      background: #e94560;
+      color: white;
+      border: none;
+      padding: 14px 36px;
+      border-radius: 14px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 1rem;
+      transition: 0.2s ease;
+    }
+
+    .play-again-btn:hover {
+      background: #c73652;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HOME SCREEN -->
+  <div class="home-screen" id="homeScreen">
+    <h1>🛂 Immigration Control</h1>
+    <p>Choose your role to begin</p>
+    <div class="role-cards">
+
+      <div class="role-card" onclick="startGame('officer')">
+        <div class="emoji">👮</div>
+        <h2>Officer</h2>
+        <p>Ask the immigration questions</p>
+      </div>
+
+      <div class="role-card" onclick="startGame('passenger')">
+        <div class="emoji">🧳</div>
+        <h2>Passenger</h2>
+        <p>Say your answer out loud first</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- GAME SCREEN -->
+  <div class="game-screen" id="gameScreen">
+
+    <div class="game-header">
+      <button class="back-btn" onclick="goHome()">← Back</button>
+      <div class="role-badge" id="roleBadge"></div>
+      <div class="step-counter" id="stepCounter"></div>
+    </div>
+
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <!-- OFFICER VIEW -->
+    <div id="officerView">
+      <div class="conversation-card">
+        <div class="scene-label">✈️ Sydney Airport — Immigration Counter</div>
+
+        <div class="officer-instruction">
+          <h3>👮 You Say</h3>
+          <p id="officerLine"></p>
+        </div>
+
+        <div class="waiting-box">
+          ⏳ Wait for the passenger to answer
+        </div>
+
+        <div class="tip-box" id="officerTip"></div>
+      </div>
+
+      <button class="btn btn-officer-next" onclick="nextStep()">
+        Passenger answered → Next ➜
+      </button>
+    </div>
+
+    <!-- PASSENGER VIEW -->
+    <div id="passengerView" class="hidden">
+      <div class="conversation-card">
+        <div class="scene-label">✈️ Sydney Airport — Immigration Counter</div>
+
+
+        <div class="speak-prompt">
+          <span>🗣️</span>
+          Say your answer out loud first — then check the suggestion!
+        </div>
+
+        <div class="suggestion-box" id="suggestionBox">
+          <h4>✅ Suggestion</h4>
+          <div class="suggested" id="suggestedAnswer"></div>
+          <div class="note" id="answerNote"></div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn btn-show" id="showBtn" onclick="showSuggestion()">
+            💬 Show Suggestion
+          </button>
+          <button class="btn btn-next" id="nextBtn" onclick="nextStep()">
+            Next ➜
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- COMPLETE SCREEN -->
+  <div class="complete-screen" id="completeScreen">
+    <div class="big-emoji">🎉</div>
+    <h2>Well Done!</h2>
+    <p>You completed the immigration conversation!<br>You are ready to enter Australia 🇦🇺</p>
+    <button class="play-again-btn" onclick="goHome()">🔄 Play Again</button>
+  </div>
+
+  <script>
+    const conversation = [
+      {
+        officerLine: "Good morning. Passport please.",
+        officerTip: "The passenger should respond politely and hand over the passport.",
+        situation: "The officer greets you and needs to see your passport.",
+        answer: "Good morning. Here is my passport.",
+note: "Always be polite and smile , you can also say 'Here it is'"
+
+      },
+      {
+        officerLine: "What is the purpose of your visit to Australia?",
+        officerTip: "Listen carefully — are they here for holiday, study, or family?",
+        situation: "The officer wants to know why you came to Australia.",
+        answer: "I'm here to work in Australia.",
+note: "You can also say: 'I'm here for work.' or 'I'm here to work as a meat processing worker.'"
+
+    },
+      {
+        officerLine: "How long are you planning to stay?",
+        officerTip: "The passenger should give a clear length of time.",
+        situation: "The officer wants to know how long you will stay in Australia.",
+            answer: "I'm planning to stay for two years.",
+note: "If her visa is shorter or longer, change it to the real length. She can also say: 'I'll stay for the length of my work visa.'"
+    
+      },
+      {
+        officerLine: "Where will you be staying while you are in Australia?",
+        officerTip: "Listen for the type of place — hotel, friend's house, apartment.",
+        situation: "The officer wants to know where you will be staying.",
+       answer: "I'll be staying in employer-provided accommodation.",
+note: "She can also say: 'I'll be staying in accommodation arranged by my employer.'/ 'I'll be staying in a rental house near my workplace.' or Use the real city or address if she knows it."
+      },
+      {
+        officerLine: "Have you visited Australia before?",
+        officerTip: "A simple yes or no is fine, but more detail is even better.",
+        situation: "The officer asks if this is your first time in Australia.",
+        answer: "No, this is my first time in Australia. I'm very excited!",
+        note: "If yes: 'Yes, I visited Australia two years ago.'"
+      },
+      {
+        officerLine: "Are you traveling alone or with someone?",
+        officerTip: "The passenger should say who they are travelling with if not alone.",
+        situation: "The officer wants to know if you are by yourself or with other people.",
+        answer: "I'm traveling alone.",
+        note: "If with others: 'I'm traveling with my husband and two children.' 👨‍👩‍👧"
+      },
+      {
+        officerLine: "Do you have a return ticket?",
+        officerTip: "The passenger should confirm and offer to show the ticket.",
+        situation: "The officer wants to know if you have a ticket to go back home.",
+       answer: "No, not yet. I plan to book it later.",
+note: "Use this only if it matches her real travel situation."
+      },
+      {
+        officerLine: "Do you have anything to declare? Any food, plants, or animals?",
+        officerTip: "Australia has strict biosecurity rules. Listen carefully to what they declare.",
+        situation: "The officer asks if you are carrying anything that must be declared.",
+        answer: "No, I don't have anything to declare. I only have my personal belongings.",
+        note: "If yes: 'Yes, I have some dried fruit in my bag.' Always be honest! 🌿"
+      }
+    ];
+
+    let currentRole = "";
+    let currentStep = 0;
+
+    function startGame(role) {
+      currentRole = role;
+      currentStep = 0;
+      document.getElementById("homeScreen").style.display = "none";
+      document.getElementById("gameScreen").style.display = "block";
+      document.getElementById("completeScreen").style.display = "none";
+      loadStep();
+    }
+
+    function loadStep() {
+      const data = conversation[currentStep];
+      const total = conversation.length;
+
+      document.getElementById("stepCounter").textContent =
+        `Step ${currentStep + 1} of ${total}`;
+      document.getElementById("progressFill").style.width =
+        `${((currentStep + 1) / total) * 100}%`;
+
+      if (currentRole === "officer") {
+        document.getElementById("roleBadge").textContent = "👮 Officer";
+        document.getElementById("officerView").classList.remove("hidden");
+        document.getElementById("passengerView").classList.add("hidden");
+        document.getElementById("officerLine").textContent = data.officerLine;
+        document.getElementById("officerTip").textContent = data.officerTip;
+
+      } else {
+        document.getElementById("roleBadge").textContent = "🧳 Passenger";
+        document.getElementById("officerView").classList.add("hidden");
+        document.getElementById("passengerView").classList.remove("hidden");
+    //    document.getElementById("passengerSituation").textContent = data.situation;
+        document.getElementById("suggestedAnswer").textContent = data.answer;
+        document.getElementById("answerNote").textContent = data.note;
+
+        // Reset suggestion box
+        document.getElementById("suggestionBox").style.display = "none";
+        document.getElementById("showBtn").style.display = "block";
+        document.getElementById("showBtn").textContent = "💬 Show Suggestion";
+      }
+    }
+
+    function showSuggestion() {
+      document.getElementById("suggestionBox").style.display = "block";
+      document.getElementById("showBtn").style.display = "none";
+    }
+
+    function nextStep() {
+      currentStep++;
+      if (currentStep >= conversation.length) {
+        document.getElementById("gameScreen").style.display = "none";
+        document.getElementById("completeScreen").style.display = "block";
+      } else {
+        loadStep();
+      }
+    }
+
+    function goHome() {
+      document.getElementById("homeScreen").style.display = "block";
+      document.getElementById("gameScreen").style.display = "none";
+      document.getElementById("completeScreen").style.display = "none";
+      currentStep = 0;
+      currentRole = "";
+    }
+  </script>
+
+</body>
+</html>
